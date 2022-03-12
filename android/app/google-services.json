@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "480468269943",
+    "project_id": "asky-6cd79",
+    "storage_bucket": "asky-6cd79.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:480468269943:android:a33192b582ec72e33d7f72",
+        "android_client_info": {
+          "package_name": "tn.asky.asky.asky"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "480468269943-u39do30f9kdtcb285djvvhip0pu411ij.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZO7GaknTU1xC7sxUOhiLFxa6WODyCFTQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "480468269943-u39do30f9kdtcb285djvvhip0pu411ij.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
