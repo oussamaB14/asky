@@ -101,7 +101,7 @@ class SigninViewState extends State<SigninView> {
                           AuthService().signInWithEmail(usernameController.text,
                               passwordController.text, context);
                         },
-                        child: Container(
+                        child: SizedBox(
                           width: double.infinity,
                           height: 6.5.h,
                           child: Center(
