@@ -36,7 +36,15 @@ dependencies:
   cupertino_icons: ^1.0.2
   #UI AND STYLING 
   sizer: ^2.0.15
-  curved_navigation_bar: ^1.0.3
+
+  community_material_icon: ^5.9.55
+  carousel_slider: ^4.0.0
+  google_fonts: ^2.3.1
+
+  #list
+  flutter_form_builder: ^7.1.1
+  form_builder_validators: ^7.8.0
+  
   
   #Google Sign In
   firebase_auth: ^3.3.10
@@ -47,8 +55,14 @@ dependencies:
   #State Managment
   provider: ^6.0.2
   firebase_core: ^1.13.1
-  #social media buttons
+  cloud_firestore: ^3.1.10
+  flutter_facebook_auth: ^4.1.2
   
+  #social media buttons
+#   flutter_native_splash: ^2.1.2+1
+# color: "#42a5f5"
+# android 12 : 
+
  
 dev_dependencies:
   flutter_test:
@@ -59,7 +73,18 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
+  
   flutter_lints: ^1.0.0
+  flutter_launcher_icons: ^0.9.2
+flutter_icons:
+ image_path: "assets/images/logo1.png"
+ android: true
+ ios: true
+
+
+
+
+   
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -73,8 +98,11 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  #assets:
-   #  - images
+  assets:
+    - assets/
+    - assets/images/
+    - assets/svgs/
+      
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

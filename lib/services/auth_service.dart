@@ -26,7 +26,7 @@ class AuthService with ChangeNotifier {
       print(e.message);
       rethrow;
     }
-    user = _auth.currentUser;
+    return user;
     notifyListeners();
   }
 
@@ -35,12 +35,11 @@ class AuthService with ChangeNotifier {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password)
           .whenComplete(() {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("You are logged in")));
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Wrapper()),
-        );
+        if (FirebaseAuth.instance.currentUser != null) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text("You are logged in")));
+          Navigator.popAndPushNamed(context, "/homepage");
+        }
       });
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(context)
@@ -60,9 +59,9 @@ class AuthService with ChangeNotifier {
 
   void signOut(context) {
     FirebaseAuth.instance.signOut();
-    Navigator.push(
+    Navigator.popAndPushNamed(
       context,
-      MaterialPageRoute(builder: (context) => Wrapper()),
+      'Welcomepage',
     );
   }
 }

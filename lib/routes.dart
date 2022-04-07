@@ -1,14 +1,24 @@
+import 'package:asky/views/QuestionViews/AddQuestionView.dart';
+import 'package:asky/views/Wrapper.dart';
 import 'package:asky/views/authentification/signin_view.dart';
 import 'package:asky/views/authentification/signup_view.dart';
+import 'package:asky/views/authentification/welcome_view.dart';
+import 'package:asky/views/explore/explore_view.dart';
 import 'package:asky/views/home/home_View.dart';
 import 'package:asky/views/profile/student_profile.dart';
+import 'package:asky/views/registration/student_view.dart';
 import 'package:flutter/widgets.dart';
 
 final Map<String, WidgetBuilder> routes = {
-  "/welcomePage": (context) => HomePage(),
-  "/StudentProfile": (context) => StudentProfile(),
-  "/spaces": (context) => HomePage(),
-  "/explore": (context) => StudentProfile(),
+  // "/welcomePage": (context) => Wrapper(),
+  // "/StudentProfile": (context) => StudentProfile(),
+  // "/spaces": (context) => Explore(),
+  // "/explore": (context) => Explore(),
   "/signin": (context) => SigninView(),
   "/signup": (context) => SignupView(),
+  "/homepage": ((context) => Wrapper()),
+  'Welcomepage': (context) => WelcomePage(),
+  "addPost": (context) => AddQuestionView(),
+  'Student': (context) => Student(),
+  
 };

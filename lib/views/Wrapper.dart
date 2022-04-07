@@ -1,11 +1,13 @@
 import 'package:asky/styles/colors.dart';
+import 'package:asky/styles/theme.dart';
 import 'package:asky/views/explore/explore_view.dart';
 import 'package:asky/views/home/home_View.dart';
 import 'package:asky/views/profile/student_profile.dart';
 import 'package:asky/views/spaces/spaces_view.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+
+import 'package:community_material_icon/community_material_icon.dart';
 
 class Wrapper extends StatefulWidget {
   @override
@@ -14,7 +16,6 @@ class Wrapper extends StatefulWidget {
 
 class _WrapperState extends State<Wrapper> {
   @override
-  final navigationKey = GlobalKey<CurvedNavigationBarState>();
   int index = 0;
   final screens = [
     HomePage(),
@@ -23,21 +24,22 @@ class _WrapperState extends State<Wrapper> {
     StudentProfile(),
   ];
   Widget build(BuildContext context) {
-    TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      extendBody: true,
       body: screens[index],
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.transparent,
-        height: 55,
-        animationCurve: Curves.easeInOut,
-        animationDuration: const Duration(milliseconds: 300),
-        index: index,
+      bottomNavigationBar: BottomNavigationBar(
+        selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+        selectedItemColor: MyColors.black,
+        currentIndex: index,
+        unselectedItemColor: Theme.of(context).dividerColor,
         items: const [
-          Icon(Icons.home, size: 30),
-          Icon(Icons.explore, size: 30),
-          Icon(Icons.search, size: 30),
-          Icon(Icons.person, size: 30),
+          BottomNavigationBarItem(
+              icon: Icon(CommunityMaterialIcons.home), label: 'home'),
+          BottomNavigationBarItem(
+              icon: Icon(CommunityMaterialIcons.compass), label: 'explore'),
+          BottomNavigationBarItem(
+              icon: Icon(CommunityMaterialIcons.forum), label: 'spaces'),
+          BottomNavigationBarItem(
+              icon: Icon(CommunityMaterialIcons.account), label: 'profile'),
         ],
         onTap: (index) => setState(() => this.index = index),
       ),

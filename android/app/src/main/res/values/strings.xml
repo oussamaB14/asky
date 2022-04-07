@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="app_name">asky</string>
+   <string name="facebook_app_id">3319881068244153</string>
+   <string name="fb_login_protocol_scheme">fb3319881068244153</string>
+   <string name="facebook_client_token">4aa3dfa85032b7a97233b886a9277daf</string>
+</resources>
+
