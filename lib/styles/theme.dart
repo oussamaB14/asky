@@ -75,7 +75,7 @@ class MyThemes {
         style: TextButton.styleFrom(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       primary: Colors.black,
-      backgroundColor: MyColors.yellow,
+      backgroundColor: Color(0XFFEDEDED),
       //  padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 8),
       textStyle: TextStyle(
         fontFamily: "Montserrat",
@@ -202,13 +202,13 @@ class MyThemes {
         style: TextButton.styleFrom(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       primary: Colors.black,
-      backgroundColor: MyColors.yellow,
-      padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 12),
+      backgroundColor: Color(0XFFEDEDED),
+      // padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 12),
       textStyle: TextStyle(
         fontFamily: "Montserrat",
         fontWeight: FontWeight.w600,
-        fontSize: 14.sp,
-        color: MyColors.black,
+        fontSize: 13.sp,
+        color: Color(0XFFEDEDED),
       ),
     )),
 

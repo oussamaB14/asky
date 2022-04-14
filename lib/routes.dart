@@ -5,7 +5,12 @@ import 'package:asky/views/authentification/signup_view.dart';
 import 'package:asky/views/authentification/welcome_view.dart';
 import 'package:asky/views/explore/explore_view.dart';
 import 'package:asky/views/home/home_View.dart';
+import 'package:asky/views/profile/Bookmarks_view.dart';
+import 'package:asky/views/profile/EditProfile_view.dart';
+import 'package:asky/views/profile/MySpaces_view.dart';
+import 'package:asky/views/profile/Settings_view.dart';
 import 'package:asky/views/profile/student_profile.dart';
+import 'package:asky/views/quize/topics.dart';
 import 'package:asky/views/registration/student_view.dart';
 import 'package:flutter/widgets.dart';
 
@@ -20,5 +25,13 @@ final Map<String, WidgetBuilder> routes = {
   'Welcomepage': (context) => WelcomePage(),
   "addPost": (context) => AddQuestionView(),
   'Student': (context) => Student(),
+  "Settings":(context) => Settings(),
+  "MySpaces":(context) => MySpaces(),
+  "Bookmarks":(context) => Bookmarks(),
+  "EditProfile":(context) => EditProfile(),
+  '/topics': (context) => const TopicsScreen()
+  
+
+
   
 };

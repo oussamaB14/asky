@@ -1,27 +1,28 @@
 import 'dart:convert';
 
 class Space {
-  String spaceName;
+  String name;
   String id;
-  String spacePhoto;
+  String photo;
   String tag;
   Space({
-    required this.spaceName,
+    required this.name,
     required this.id,
-    required this.spacePhoto,
+    required this.photo,
     required this.tag,
   });
+  
 
   Space copyWith({
-    String? spaceName,
+    String? name,
     String? id,
-    String? spacePhoto,
+    String? photo,
     String? tag,
   }) {
     return Space(
-      spaceName: spaceName ?? this.spaceName,
+      name: name ?? this.name,
       id: id ?? this.id,
-      spacePhoto: spacePhoto ?? this.spacePhoto,
+      photo: photo ?? this.photo,
       tag: tag ?? this.tag,
     );
   }
@@ -29,9 +30,9 @@ class Space {
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
   
-    result.addAll({'spaceName': spaceName});
+    result.addAll({'name': name});
     result.addAll({'id': id});
-    result.addAll({'spacePhoto': spacePhoto});
+    result.addAll({'photo': photo});
     result.addAll({'tag': tag});
   
     return result;
@@ -39,9 +40,9 @@ class Space {
 
   factory Space.fromMap(Map<String, dynamic> map) {
     return Space(
-      spaceName: map['spaceName'] ?? '',
+      name: map['name'] ?? '',
       id: map['id'] ?? '',
-      spacePhoto: map['spacePhoto'] ?? '',
+      photo: map['photo'] ?? '',
       tag: map['tag'] ?? '',
     );
   }
@@ -52,7 +53,7 @@ class Space {
 
   @override
   String toString() {
-    return 'Space(spaceName: $spaceName, id: $id, spacePhoto: $spacePhoto, tag: $tag)';
+    return 'Space(name: $name, id: $id, photo: $photo, tag: $tag)';
   }
 
   @override
@@ -60,17 +61,17 @@ class Space {
     if (identical(this, other)) return true;
   
     return other is Space &&
-      other.spaceName == spaceName &&
+      other.name == name &&
       other.id == id &&
-      other.spacePhoto == spacePhoto &&
+      other.photo == photo &&
       other.tag == tag;
   }
 
   @override
   int get hashCode {
-    return spaceName.hashCode ^
+    return name.hashCode ^
       id.hashCode ^
-      spacePhoto.hashCode ^
+      photo.hashCode ^
       tag.hashCode;
   }
 }

@@ -41,6 +41,9 @@ dependencies:
   carousel_slider: ^4.0.0
   google_fonts: ^2.3.1
 
+  #toggle buttons
+  toggle_switch: ^1.4.0
+
   #list
   flutter_form_builder: ^7.1.1
   form_builder_validators: ^7.8.0
@@ -57,6 +60,8 @@ dependencies:
   firebase_core: ^1.13.1
   cloud_firestore: ^3.1.10
   flutter_facebook_auth: ^4.1.2
+  rxdart: 0.27.2
+  json_annotation: 4.3.0
   
   #social media buttons
 #   flutter_native_splash: ^2.1.2+1
@@ -75,6 +80,7 @@ dev_dependencies:
   # rules and activating additional ones.
   
   flutter_lints: ^1.0.0
+  json_serializable: 6.0.0
   flutter_launcher_icons: ^0.9.2
 flutter_icons:
  image_path: "assets/images/logo1.png"
@@ -102,6 +108,8 @@ flutter:
     - assets/
     - assets/images/
     - assets/svgs/
+    - assets/covers/
+    
       
 
   # An image asset can refer to one or more resolution-specific "variants", see

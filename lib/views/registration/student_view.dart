@@ -13,6 +13,7 @@ class Student extends StatefulWidget {
 }
 
 final _formKey = GlobalKey<FormBuilderState>();
+TextEditingController usernameController = TextEditingController();
 
 class _StudentState extends State<Student> {
   @override
@@ -35,7 +36,7 @@ class _StudentState extends State<Student> {
             Form(
                 child: Column(children: [
               TextFormField(
-                // controller: usernameController,
+                 controller: usernameController,
                 decoration: InputDecoration(
                   labelText: 'Username ',
                   hintText: 'enter your name here',

@@ -1,5 +1,7 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../services/auth_service.dart';
@@ -13,6 +15,7 @@ class SignupView extends StatefulWidget {
 
 class SignupViewState extends State<SignupView> {
   TextEditingController usernameController = TextEditingController();
+  TextEditingController username = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool _obscureText = true;
   @override
@@ -49,7 +52,7 @@ class SignupViewState extends State<SignupView> {
                           height: 3.5.h,
                         ),
                         TextFormField(
-                          controller: usernameController,
+                          controller: username,
                           decoration: InputDecoration(
                             filled: true,
                             labelText: 'full name',
@@ -98,7 +101,8 @@ class SignupViewState extends State<SignupView> {
                               borderSide: BorderSide(color: Colors.blue),
                               gapPadding: 10,
                             ),
-                            suffixIcon: Icon(CommunityMaterialIcons.email_outline),
+                            suffixIcon:
+                                Icon(CommunityMaterialIcons.email_outline),
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -186,6 +190,59 @@ class SignupViewState extends State<SignupView> {
                             }
                             return null;
                           },
+                        ),
+                        // FormBuilderRadioGroup(
+                        //   name: 'accept_terms',
+                        //   initialValue: false,
+                        //   // onChanged: _onChanged,
+
+                        //   validator: FormBuilderValidators.equal(
+                        //     context,
+                        //     true,
+                        //     errorText:
+                        //         'You must accept terms and conditions to continue',
+                        //   ), options: [
+
+                        //   ],
+                        // ),
+                        FormBuilderRadioGroup(
+                          name: "role",
+                          decoration: InputDecoration(
+                              labelText: "Role",
+                              labelStyle: TextStyle(
+                                  // color: MyColors.yellow,
+                                  fontSize: 2.h,
+                                  fontWeight: FontWeight.bold)),
+                          options: const [
+                            FormBuilderFieldOption(value: "Student"),
+                            FormBuilderFieldOption(value: "Teacher"),
+                          ],
+//  initialValue: _person.role,
+                        ),
+                        FormBuilderDropdown(
+                          name: 'education filed',
+                          decoration: InputDecoration(
+                              labelText: 'education filed',
+                              labelStyle: TextStyle(
+                                  // color: MyColors.yellow,
+                                  fontSize: 2.h,
+                                  fontWeight: FontWeight.bold)),
+                          // initialValue: 'Male',
+                          allowClear: true,
+                          hint: Text('Select education filed'),
+                          validator: FormBuilderValidators.compose(
+                              [FormBuilderValidators.required(context)]),
+                          items: [
+                            "LSIM",
+                            "LISI",
+                            "LTIC",
+                            "PREPA",
+                          ]
+                              .map((education) => DropdownMenuItem(
+                                    value: education,
+                                    child: Text('$education'),
+                                  ))
+                              .toList(),
                         ),
                         SizedBox(
                           height: 3.5.h,

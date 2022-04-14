@@ -1,4 +1,5 @@
 import 'package:asky/models/Question.dart';
+import 'package:asky/views/profile/student_profile.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -30,7 +31,7 @@ class QuestionCard extends StatelessWidget {
                   child: const Text('AH'),
                 ),
                 SizedBox(width: 2.h),
-                Text("user name"),
+                Text("username"),
               ],
             ),
             SizedBox(height: 1.5.h),
@@ -56,7 +57,7 @@ class QuestionCard extends StatelessWidget {
                 //   },
                 //   // child: Icon(saved ? Icons.bookmark : Icons.bookmark_outline),
                 // ),
-                Icon(CommunityMaterialIcons.comment_outline),
+                Icon(CommunityMaterialIcons.chat_outline),
                 Spacer(),
                 Icon(CommunityMaterialIcons.bookmark_outline),
               ],

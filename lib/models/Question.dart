@@ -3,27 +3,27 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Question {
-  // String username;
+  String username;
   String? id;
   String title;
   String content;
   String authorId;
   Question(
-      {
-        // required this.username,
-        required this.title,
+      {required this.username,
+      required this.title,
       required this.content,
       required this.authorId,
       this.id});
 
   Question copyWith({
+    String? username,
     String? title,
     String? content,
     String? authorId,
     String? id,
   }) {
     return Question(
-      // username: username ?? this.username,
+      username: username ?? this.username,
       title: title ?? this.title,
       content: content ?? this.content,
       authorId: authorId ?? this.authorId,
@@ -33,7 +33,7 @@ class Question {
 
   Map<String, dynamic> toDocument() {
     final result = <String, dynamic>{};
-
+    result.addAll({'username': username});
     result.addAll({'title': title});
     result.addAll({'content': content});
     result.addAll({'authorId': authorId});
@@ -45,6 +45,7 @@ class Question {
     dynamic data = doc.data();
     return Question(
       id: doc.id,
+      username: data['username'] ?? '',
       title: data['title'] ?? '',
       content: data['content'] ?? '',
       authorId: data['authorId'] ?? '',
@@ -58,18 +59,20 @@ class Question {
 
   @override
   String toString() =>
-      'Question(title: $title, content: $content, authorId: $authorId)';
+      'Question(username:$username, title: $title, content: $content, authorId: $authorId)';
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
     return other is Question &&
+        other.username == username &&
         other.title == title &&
         other.content == content &&
         other.authorId == authorId;
   }
 
   @override
-  int get hashCode => title.hashCode ^ content.hashCode ^ authorId.hashCode;
+  int get hashCode =>
+      username.hashCode ^ title.hashCode ^ content.hashCode ^ authorId.hashCode;
 }

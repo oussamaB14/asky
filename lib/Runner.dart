@@ -1,8 +1,10 @@
 import 'package:asky/routes.dart';
 import 'package:asky/services/auth_service.dart';
+import 'package:asky/services/test.dart';
 import 'package:asky/views/authentification/signin_view.dart';
 import 'package:asky/views/authentification/signup_view.dart';
 import 'package:asky/views/home/home_View.dart';
+import 'package:asky/views/profile/student_profile.dart';
 import 'package:asky/views/registration/registration_view.dart';
 import 'package:asky/views/registration/student_view.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -27,7 +29,7 @@ class Runner extends StatelessWidget {
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: WelcomePage(),
+            home: Wrapper(),
             theme: MyThemes().lightTheme,
             darkTheme: MyThemes().darkTheme,
             routes: routes,
