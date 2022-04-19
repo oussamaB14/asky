@@ -30,7 +30,7 @@ class PofileDrawer extends StatelessWidget {
                       backgroundColor: Colors.brown.shade800,
                       child: const Text('AH'),
                     ),
-                    Text(username.value.text,
+                    Text('username.value.text',
                         style: TextStyle(color: Colors.black)),
                   ],
                 ),

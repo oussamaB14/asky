@@ -1,4 +1,3 @@
-import 'package:asky/services/auth_service.dart';
 import 'package:asky/views/authentification/signin_view.dart';
 import 'package:asky/styles/colors.dart';
 import 'package:asky/views/profile/widgets/Profiledrawer.dart';
@@ -10,23 +9,54 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'package:toggle_switch/toggle_switch.dart';
-
 import '../../models/Question.dart';
+import '../../models/user.dart';
 import '../../services/QuestionsService.dart';
 import '../QuestionViews/widgets/QuestionCard.dart';
 
 class StudentProfile extends StatefulWidget {
-  const StudentProfile({Key? key}) : super(key: key);
+  final proffileId;
+  StudentProfile({this.proffileId});
 
   @override
   State<StudentProfile> createState() => StudentProfileViewState();
 }
 
-TextEditingController username = TextEditingController();
+// TextEditingController username = TextEditingController();
+//  late final UserModle user;
 
 class StudentProfileViewState extends State<StudentProfile> {
+  AccessToken? _accessToken;
+  bool _checking = true;
+  _checkIfisLoggedIn() async {
+    final accessToken = await FacebookAuth.instance.accessToken;
+
+    setState(() {
+      _checking = false;
+    });
+
+    if (accessToken != null) {
+      print(accessToken.toJson());
+      final userData = await FacebookAuth.instance.getUserData();
+      _accessToken = accessToken;
+      setState(() {
+        _userData = userData;
+      });
+    }
+  }
+
+  Map<String, dynamic>? _userData;
   QuestionsServices _questionsServices = QuestionsServices();
+  // User user;
+  int questionCount = 0;
+  int anwserCount = 0;
+  bool isToggle = true;
+  bool isLoading = false;
+  // UserModel users;
   int index = 0;
+  // currentUserId() {
+  //   return firebaseAuth.currentUser?.uid;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +69,7 @@ class StudentProfileViewState extends State<StudentProfile> {
             alignment: Alignment.topRight,
             child: Container(
               padding: EdgeInsets.all(15),
-              height: 45.h,
+              height: 51.h,
               child: PofileDrawer(),
             ),
           ),
@@ -54,18 +84,23 @@ class StudentProfileViewState extends State<StudentProfile> {
                 Row(
                   children: [
                     CircleAvatar(
-                      radius: 4.h,
-                      backgroundColor: Colors.brown.shade800,
-                      child: const Text('AH'),
-                    ),
+                        radius: 4.h,
+                        backgroundColor: Colors.brown.shade800,
+                        child: Text('data')
+                        // Image.network(_userData!['picture']['data']['url']),
+                        ),
                     SizedBox(width: 2.h),
                     Column(
                       children: [
-                        Text(
-                          "username",
-                          style: GoogleFonts.lato(
-                              textStyle: Theme.of(context).textTheme.headline1),
-                        ),
+                        _userData != null
+                            ? Text(
+                                'name: ${_userData!['name']}',
+                                // user?.username,
+                                style: GoogleFonts.lato(
+                                    textStyle:
+                                        Theme.of(context).textTheme.headline1),
+                              )
+                            : Text('useername'),
                         Text("Teacher/Student",
                             style: GoogleFonts.lato(
                                 textStyle:

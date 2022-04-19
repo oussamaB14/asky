@@ -5,6 +5,7 @@ import 'package:asky/views/explore/explore_view.dart';
 import 'package:asky/views/home/home_View.dart';
 import 'package:asky/views/profile/student_profile.dart';
 import 'package:asky/views/spaces/spaces_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -28,8 +29,8 @@ class _WrapperState extends State<Wrapper> {
     return Scaffold(
       body: screens[index],
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
-        selectedItemColor: MyColors.black,
         currentIndex: index,
         unselectedItemColor: Theme.of(context).dividerColor,
         items: const [

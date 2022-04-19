@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:asky/styles/colors.dart';
 import 'package:sizer/sizer.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 // class ThemeProvider extends ChangeNotifier {
 //   ThemeMode themeMode = ThemeMode.system;
@@ -52,7 +53,9 @@ class MyThemes {
         iconTheme: const IconThemeData(color: Colors.black),
         actionsIconTheme: const IconThemeData(color: Colors.black)),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        backgroundColor: MyColors.yellow, elevation: 1.0),
+        selectedItemColor: MyColors.black,
+        backgroundColor: Colors.white,
+        elevation: 1.0),
     bottomAppBarTheme:
         BottomAppBarTheme(color: MyColors.yellow, elevation: 1.0),
 
@@ -179,7 +182,9 @@ class MyThemes {
         iconTheme: const IconThemeData(color: Colors.white),
         actionsIconTheme: const IconThemeData(color: Colors.white)),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        backgroundColor: MyColors.yellow, elevation: 1.0),
+        selectedItemColor: Colors.white,
+        backgroundColor: Colors.black,
+        elevation: 1.0),
     bottomAppBarTheme:
         BottomAppBarTheme(color: MyColors.yellow, elevation: 1.0),
 

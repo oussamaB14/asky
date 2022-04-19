@@ -14,9 +14,12 @@ class SignupView extends StatefulWidget {
 }
 
 class SignupViewState extends State<SignupView> {
+  String imageUrl = '';
+  final _formKry = GlobalKey<FormState>();
   TextEditingController usernameController = TextEditingController();
   TextEditingController username = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
   bool _obscureText = true;
   @override
   Widget build(BuildContext context) {
@@ -37,14 +40,25 @@ class SignupViewState extends State<SignupView> {
               child: Column(
                 children: [
                   Text(
-                    'Sign in with your email and password  \nor contuniue with google or Facebook',
+                    'Welcome to Asky',
+                    textAlign: TextAlign.center,
+                    style: textTheme.headline1,
+                  ),
+                  Text(
+                    'Sign up with your email and password  \nor contuniue with google or Facebook',
                     textAlign: TextAlign.center,
                     style: textTheme.bodyText2,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
+                  // Userimage(onFilechanged: (imageUrl) {
+                  //   setState(() {
+                  //     this.imageUrl = imageUrl;
+                  //   });
+                  // }),
                   Form(
+                    key: _formKry,
                     child: Column(
                       children: [
                         Image.asset('assets/images/LOGO.png', height: 20.h),
@@ -52,160 +66,124 @@ class SignupViewState extends State<SignupView> {
                           height: 3.5.h,
                         ),
                         TextFormField(
-                          controller: username,
-                          decoration: InputDecoration(
-                            filled: true,
-                            labelText: 'full name',
-                            hintText: 'Enter your name',
-                            floatingLabelBehavior: FloatingLabelBehavior.auto,
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 42, vertical: 20),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(28),
-                              borderSide: BorderSide(color: MyColors.yellow),
-                              gapPadding: 10,
+                            controller: username,
+                            decoration: InputDecoration(
+                              filled: true,
+                              labelText: 'full name',
+                              hintText: 'Enter your name',
+                              floatingLabelBehavior: FloatingLabelBehavior.auto,
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 42, vertical: 20),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(28),
+                                borderSide: BorderSide(color: MyColors.black),
+                                gapPadding: 10,
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(28),
+                                borderSide: BorderSide(color: Colors.blue),
+                                gapPadding: 10,
+                              ),
+                              suffixIcon: Icon(CommunityMaterialIcons.account),
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(28),
-                              borderSide: BorderSide(color: Colors.blue),
-                              gapPadding: 10,
-                            ),
-                            suffixIcon: Icon(CommunityMaterialIcons.account),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your email';
-                            }
-                            return null;
-                          },
-                        ),
+                            validator: _requiredValidator),
                         SizedBox(
                           height: 3.5.h,
                         ),
                         TextFormField(
-                          controller: usernameController,
-                          decoration: InputDecoration(
-                            filled: true,
-                            labelText: 'Email',
-                            hintText: 'Enter your email',
-                            floatingLabelBehavior: FloatingLabelBehavior.auto,
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 42, vertical: 20),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(28),
-                              borderSide: BorderSide(color: MyColors.yellow),
-                              gapPadding: 10,
+                            controller: usernameController,
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecoration(
+                              filled: true,
+                              labelText: 'Email',
+                              hintText: 'Enter your email',
+                              floatingLabelBehavior: FloatingLabelBehavior.auto,
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 42, vertical: 20),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(28),
+                                borderSide: BorderSide(color: MyColors.black),
+                                gapPadding: 10,
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(28),
+                                borderSide: BorderSide(color: Colors.blue),
+                                gapPadding: 10,
+                              ),
+                              suffixIcon:
+                                  Icon(CommunityMaterialIcons.email_outline),
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(28),
-                              borderSide: BorderSide(color: Colors.blue),
-                              gapPadding: 10,
-                            ),
-                            suffixIcon:
-                                Icon(CommunityMaterialIcons.email_outline),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your email';
-                            }
-                            return null;
-                          },
-                        ),
+                            validator: _requiredValidator),
                         SizedBox(height: 2.5.h),
                         TextFormField(
-                          controller: passwordController,
-                          obscureText: _obscureText,
-                          decoration: InputDecoration(
-                            labelText: 'Password',
-                            hintText: 'Enter your password',
-                            floatingLabelBehavior: FloatingLabelBehavior.auto,
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 42, vertical: 20),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(28),
-                              borderSide: BorderSide(color: MyColors.yellow),
-                              gapPadding: 10,
+                            controller: passwordController,
+                            obscureText: _obscureText,
+                            decoration: InputDecoration(
+                              labelText: 'Password',
+                              hintText: 'Enter your password',
+                              floatingLabelBehavior: FloatingLabelBehavior.auto,
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 42, vertical: 20),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(28),
+                                borderSide: BorderSide(color: MyColors.black),
+                                gapPadding: 10,
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(28),
+                                borderSide: BorderSide(color: Colors.blue),
+                                gapPadding: 10,
+                              ),
+                              filled: true,
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _obscureText = !_obscureText;
+                                  });
+                                },
+                                child: Icon(_obscureText
+                                    ? Icons.visibility_off
+                                    : Icons.visibility),
+                              ),
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(28),
-                              borderSide: BorderSide(color: Colors.blue),
-                              gapPadding: 10,
-                            ),
-                            filled: true,
-                            suffixIcon: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _obscureText = !_obscureText;
-                                });
-                              },
-                              child: Icon(_obscureText
-                                  ? Icons.visibility_off
-                                  : Icons.visibility),
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your Password';
-                            }
-                            return null;
-                          },
-                        ),
+                            validator: _requiredValidator),
                         SizedBox(
                           height: 2.5.h,
                         ),
                         TextFormField(
-                          controller: passwordController,
-                          obscureText: _obscureText,
-                          decoration: InputDecoration(
-                            labelText: 'Password',
-                            hintText: 'confirme your password',
-                            floatingLabelBehavior: FloatingLabelBehavior.auto,
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 42, vertical: 20),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(28),
-                              borderSide: BorderSide(color: MyColors.yellow),
-                              gapPadding: 10,
+                            controller: confirmPasswordController,
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              labelText: 'Password',
+                              hintText: 'confirme your password',
+                              floatingLabelBehavior: FloatingLabelBehavior.auto,
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 42, vertical: 20),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(28),
+                                borderSide: BorderSide(color: MyColors.black),
+                                gapPadding: 10,
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(28),
+                                borderSide: BorderSide(color: Colors.blue),
+                                gapPadding: 10,
+                              ),
+                              filled: true,
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(28),
-                              borderSide: BorderSide(color: Colors.blue),
-                              gapPadding: 10,
-                            ),
-                            filled: true,
-                            suffixIcon: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _obscureText = !_obscureText;
-                                });
-                              },
-                              child: Icon(_obscureText
-                                  ? Icons.visibility_off
-                                  : Icons.visibility),
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your Password';
-                            }
-                            return null;
-                          },
-                        ),
-                        // FormBuilderRadioGroup(
-                        //   name: 'accept_terms',
-                        //   initialValue: false,
-                        //   // onChanged: _onChanged,
+                            validator: (String? passwordText) {
+                              if (passwordText == null ||
+                                  passwordText.trim().isEmpty) {
+                                return 'this filed is required';
+                              }
+                              if (passwordController.text != passwordText) {
+                                return "Password don't match";
+                              }
 
-                        //   validator: FormBuilderValidators.equal(
-                        //     context,
-                        //     true,
-                        //     errorText:
-                        //         'You must accept terms and conditions to continue',
-                        //   ), options: [
-
-                        //   ],
-                        // ),
+                              return null;
+                            }),
                         FormBuilderRadioGroup(
+                          validator: _requiredValidator,
                           name: "role",
                           decoration: InputDecoration(
                               labelText: "Role",
@@ -217,7 +195,7 @@ class SignupViewState extends State<SignupView> {
                             FormBuilderFieldOption(value: "Student"),
                             FormBuilderFieldOption(value: "Teacher"),
                           ],
-//  initialValue: _person.role,
+                          //  initialValue: _person.role,
                         ),
                         FormBuilderDropdown(
                           name: 'education filed',
@@ -227,11 +205,9 @@ class SignupViewState extends State<SignupView> {
                                   // color: MyColors.yellow,
                                   fontSize: 2.h,
                                   fontWeight: FontWeight.bold)),
-                          // initialValue: 'Male',
                           allowClear: true,
                           hint: Text('Select education filed'),
-                          validator: FormBuilderValidators.compose(
-                              [FormBuilderValidators.required(context)]),
+                          validator: _requiredValidator,
                           items: [
                             "LSIM",
                             "LISI",
@@ -255,10 +231,13 @@ class SignupViewState extends State<SignupView> {
                             borderRadius: BorderRadius.circular(35),
                           ))),
                           onPressed: () {
-                            AuthService().signUpWithEmail(
-                                usernameController.text,
-                                passwordController.text,
-                                context);
+                            if (_formKry.currentState != null &&
+                                _formKry.currentState!.validate()) {
+                              AuthService().signUpWithEmail(
+                                  usernameController.text,
+                                  passwordController.text,
+                                  context);
+                            }
                           },
                           child: SizedBox(
                             width: double.infinity,
@@ -271,27 +250,6 @@ class SignupViewState extends State<SignupView> {
                             ),
                           ),
                         ),
-                        // ElevatedButton(
-                        //   style: ButtonStyle(
-                        //       shape: MaterialStateProperty.all<
-                        //           RoundedRectangleBorder>(RoundedRectangleBorder(
-                        //     borderRadius: BorderRadius.circular(20),
-                        //   ))),
-                        //   onPressed: () {
-                        //     AuthService().signInWithEmail(usernameController.text,
-                        //         passwordController.text, context);
-                        //   },
-                        //   child: Container(
-                        //     width: double.infinity,
-                        //     height: 6.5.h,
-                        //     child: Center(
-                        //       child: Text(
-                        //         "Sign In",
-                        //         style: TextStyle(fontSize: 3.5.h),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
                         Divider(
                           height: 30,
                         ),
@@ -331,3 +289,21 @@ class SignupViewState extends State<SignupView> {
     );
   }
 }
+
+String? _requiredValidator(String? text) {
+  if (text == null || text.trim().isEmpty) {
+    return 'this filed is required';
+  }
+  return null;
+}
+
+// String? _confirmPassworddValidator(String? passwordText) {
+//   if (passwordText == null || passwordText.trim().isEmpty) {
+//     return 'this filed is required';
+//   }
+//   if (passwordController.text != passwordText) {
+//     return "Password don't match";
+//   }
+
+//   return null;
+// }

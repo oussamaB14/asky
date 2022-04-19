@@ -19,7 +19,7 @@ class TagModel {
     );
   }
 
-  final List<TagModel> _tagsToSelect = [
+  final List<TagModel> tagList = [
     TagModel(id: '1', title: 'JavaScript'),
     TagModel(id: '2', title: 'Python'),
     TagModel(id: '3', title: 'Java'),

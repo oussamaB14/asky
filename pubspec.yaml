@@ -62,11 +62,26 @@ dependencies:
   flutter_facebook_auth: ^4.1.2
   rxdart: 0.27.2
   json_annotation: 4.3.0
+  image_cropper: ^1.5.1
+  image_picker: ^0.8.5
+  path_provider: ^2.0.9
+  flutter_image_compress: ^1.1.0
+  firebase_storage: ^10.2.12
+  animated_splash_screen: ^1.2.0
+  file_picker: ^4.5.1
+  open_file: ^3.2.1
+  flutter_chat_ui: ^1.5.2
+  flutter_chat_types: ^3.2.0
+  mime: ^1.0.1
+  uuid: ^3.0.6
+  filter_list: ^1.0.1
+  
+  
   
   #social media buttons
-#   flutter_native_splash: ^2.1.2+1
-# color: "#42a5f5"
-# android 12 : 
+  # flutter_native_splash: ^2.1.2+1
+  # color: "#42a5f5"
+  # android 12 : 
 
  
 dev_dependencies:

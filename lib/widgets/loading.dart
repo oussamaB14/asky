@@ -22,7 +22,7 @@ class Loader extends StatelessWidget {
       width: 175,
       height: 175,
       child: CircularProgressIndicator(
-        color: Colors.red,
+        color: Colors.pink,
       ),
     );
   }

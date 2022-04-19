@@ -1,4 +1,4 @@
-import 'package:asky/services/tags.dart';
+import 'package:asky/models/tags.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {

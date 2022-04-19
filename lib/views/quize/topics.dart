@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'drawer.dart';
 import 'error.dart';
 import 'firestore.dart';
-import 'loading.dart';
+import '../../widgets/loading.dart';
 import 'models.dart';
 
 class TopicsScreen extends StatelessWidget {

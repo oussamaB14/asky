@@ -25,24 +25,33 @@ class _HomePageViewState extends State<HomePage> {
       ),
       floatingActionButton: questionButton(),
       body: SingleChildScrollView(
-        child: FutureBuilder<List<Question>>(
-            future: _questionsServices.getAllQuestions(),
-            builder: (context, snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.waiting:
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                case ConnectionState.done:
-                  return Column(
-                      children: List.generate(
-                          snapshot.data!.length,
-                          (index) =>
-                              QuestionCard(question: snapshot.data![index])));
-                default:
-                  return Text("Error");
-              }
-            }),
+        child: Padding(
+          padding: EdgeInsets.all(8),
+          child: FutureBuilder<List<Question>>(
+              future: _questionsServices.getAllQuestions(),
+              builder: (context, snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    return Center(
+                      child: SizedBox(
+                        width: 175,
+                        height: 175,
+                        child: CircularProgressIndicator(
+                          color: Colors.pink,
+                        ),
+                      ),
+                    );
+                  case ConnectionState.done:
+                    return Column(
+                        children: List.generate(
+                            snapshot.data!.length,
+                            (index) =>
+                                QuestionCard(question: snapshot.data![index])));
+                  default:
+                    return Text("Error");
+                }
+              }),
+        ),
       ),
     );
   }

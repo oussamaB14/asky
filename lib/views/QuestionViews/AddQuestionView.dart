@@ -9,6 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../styles/colors.dart';
+import '../tags/addTag.dart';
 
 class AddQuestionView extends StatefulWidget {
   const AddQuestionView({
@@ -34,7 +35,7 @@ class _AddQuestionViewState extends State<AddQuestionView> {
         onPressed: () {
           _questionsServices
               .addQuestion(Question(
-                  username: username.value.text,
+                  username: 'username.value.text,',
                   title: titleController.value.text,
                   content: contentController.value.text,
                   authorId: AuthService().user?.uid ?? 'ididididi'))
@@ -97,7 +98,8 @@ class _AddQuestionViewState extends State<AddQuestionView> {
                   },
                 ),
               ],
-            ))
+            )),
+            AddTag(),
           ],
         ),
       )),

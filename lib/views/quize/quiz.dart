@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-import 'loading.dart';
+import '../../widgets/loading.dart';
 import 'models.dart';
 
 class QuizScreen extends StatelessWidget {

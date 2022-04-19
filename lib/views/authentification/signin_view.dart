@@ -120,7 +120,7 @@ class SigninViewState extends State<SigninView> {
                               horizontal: 42, vertical: 20),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(28),
-                            borderSide: BorderSide(color: MyColors.yellow),
+                            borderSide: BorderSide(color: MyColors.black),
                             gapPadding: 10,
                           ),
                           focusedBorder: OutlineInputBorder(
@@ -150,7 +150,7 @@ class SigninViewState extends State<SigninView> {
                               horizontal: 42, vertical: 20),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(28),
-                            borderSide: BorderSide(color: MyColors.yellow),
+                            borderSide: BorderSide(color: MyColors.black),
                             gapPadding: 10,
                           ),
                           focusedBorder: OutlineInputBorder(
@@ -256,7 +256,7 @@ class SigninViewState extends State<SigninView> {
                             ))),
                         onPressed: () {
                           _userData != null ? _logout : _login;
-                          Navigator.pushNamed(context, '/homepage');
+                          Navigator.pushReplacementNamed(context, '/homepage');
                         },
                         child: SizedBox(
                           width: double.infinity,

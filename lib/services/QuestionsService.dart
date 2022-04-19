@@ -1,4 +1,5 @@
 import 'package:asky/models/Question.dart';
+import 'package:asky/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class QuestionsServices {
@@ -21,5 +22,12 @@ class QuestionsServices {
     });
     print(questions);
     return questions;
+  }
+
+  Future editQuestion(Question question) async {
+    await _db
+        .collection('questions')
+        .add(question.toDocument())
+        .then((value) => print(value));
   }
 }

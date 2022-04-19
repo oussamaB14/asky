@@ -1,4 +1,5 @@
 import 'package:asky/models/Question.dart';
+import 'package:asky/views/QuestionViews/EditQuestion.dart';
 import 'package:asky/views/profile/student_profile.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,10 @@ class QuestionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: Colors.blue, width: 20.h),
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: Container(
         padding: const EdgeInsets.all(8),
         width: double.infinity,
@@ -32,6 +37,30 @@ class QuestionCard extends StatelessWidget {
                 ),
                 SizedBox(width: 2.h),
                 Text("username"),
+                Spacer(),
+                // Icon(Icons.edit),
+                PopupMenuButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(25.0),
+                      ),
+                    ),
+                    onSelected: (int item) => onSelected(context, item),
+                    itemBuilder: (context) => const [
+                          PopupMenuItem<int>(
+                              value: 0,
+                              child: ListTile(
+                                title: Text('Edit'),
+                                leading: Icon(Icons.edit),
+                              )),
+                          PopupMenuItem<int>(
+                              value: 1,
+                              child: ListTile(
+                                  title: Text('Delete'),
+                                  leading: Icon(
+                                    Icons.delete,
+                                  )))
+                        ])
               ],
             ),
             SizedBox(height: 1.5.h),
@@ -57,7 +86,13 @@ class QuestionCard extends StatelessWidget {
                 //   },
                 //   // child: Icon(saved ? Icons.bookmark : Icons.bookmark_outline),
                 // ),
-                Icon(CommunityMaterialIcons.chat_outline),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, 'addanwser');
+                  },
+                  child: Icon(CommunityMaterialIcons.card_text_outline),
+                ),
+                // Icon(CommunityMaterialIcons.chat_outline),
                 Spacer(),
                 Icon(CommunityMaterialIcons.bookmark_outline),
               ],
@@ -66,5 +101,14 @@ class QuestionCard extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+void onSelected(BuildContext context, int item) {
+  switch (item) {
+    case 0:
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: ((context) => EditQuestion())));
+      break;
   }
 }

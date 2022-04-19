@@ -1,8 +1,10 @@
+import 'package:asky/views/AnwserView/AddAnwserView.dart';
 import 'package:asky/views/QuestionViews/AddQuestionView.dart';
 import 'package:asky/views/Wrapper.dart';
 import 'package:asky/views/authentification/signin_view.dart';
 import 'package:asky/views/authentification/signup_view.dart';
 import 'package:asky/views/authentification/welcome_view.dart';
+import 'package:asky/views/chat/chat_view.dart';
 import 'package:asky/views/explore/explore_view.dart';
 import 'package:asky/views/home/home_View.dart';
 import 'package:asky/views/profile/Bookmarks_view.dart';
@@ -25,13 +27,11 @@ final Map<String, WidgetBuilder> routes = {
   'Welcomepage': (context) => WelcomePage(),
   "addPost": (context) => AddQuestionView(),
   'Student': (context) => Student(),
-  "Settings":(context) => Settings(),
-  "MySpaces":(context) => MySpaces(),
-  "Bookmarks":(context) => Bookmarks(),
-  "EditProfile":(context) => EditProfile(),
-  '/topics': (context) => const TopicsScreen()
-  
-
-
-  
+  "Settings": (context) => Settings(),
+  "MySpaces": (context) => MySpaces(),
+  "Bookmarks": (context) => Bookmarks(),
+  "EditProfile": (context) => EditProfile(),
+  '/topics': (context) => const TopicsScreen(),
+  "addanwser": (context) => AddAnwser(),
+  "chatPage": (context) => ChatPage()
 };
