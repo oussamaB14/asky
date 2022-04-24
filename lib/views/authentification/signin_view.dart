@@ -1,4 +1,5 @@
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:sizer/sizer.dart';
@@ -15,6 +16,7 @@ class SigninView extends StatefulWidget {
 }
 
 class SigninViewState extends State<SigninView> {
+  final _formKry = GlobalKey<FormState>();
   Map<String, dynamic>? _userData;
   AccessToken? _accessToken;
   bool _checking = true;
@@ -69,9 +71,15 @@ class SigninViewState extends State<SigninView> {
     setState(() {});
   }
 
+  forgotPassword(String email) async {
+    await _auth.sendPasswordResetEmail(email: email);
+  }
+
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   bool _obscureText = true;
+  var loading = false;
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
@@ -103,6 +111,7 @@ class SigninViewState extends State<SigninView> {
                   height: 20,
                 ),
                 Form(
+                  key: _formKry,
                   child: Column(
                     children: [
                       Image.asset('assets/images/LOGO.png', height: 20.h),
@@ -110,34 +119,28 @@ class SigninViewState extends State<SigninView> {
                         height: 3.5.h,
                       ),
                       TextFormField(
-                        controller: usernameController,
-                        decoration: InputDecoration(
-                          filled: true,
-                          labelText: 'Email',
-                          hintText: 'Enter your email',
-                          floatingLabelBehavior: FloatingLabelBehavior.auto,
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 42, vertical: 20),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(28),
-                            borderSide: BorderSide(color: MyColors.black),
-                            gapPadding: 10,
+                          controller: usernameController,
+                          decoration: InputDecoration(
+                            filled: true,
+                            labelText: 'Email',
+                            hintText: 'Enter your email',
+                            floatingLabelBehavior: FloatingLabelBehavior.auto,
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 42, vertical: 20),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(28),
+                              borderSide: BorderSide(color: MyColors.black),
+                              gapPadding: 10,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(28),
+                              borderSide: BorderSide(color: Colors.blue),
+                              gapPadding: 10,
+                            ),
+                            suffixIcon:
+                                Icon(CommunityMaterialIcons.email_outline),
                           ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(28),
-                            borderSide: BorderSide(color: Colors.blue),
-                            gapPadding: 10,
-                          ),
-                          suffixIcon:
-                              Icon(CommunityMaterialIcons.email_outline),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your email';
-                          }
-                          return null;
-                        },
-                      ),
+                          validator: _requiredValidator),
                       SizedBox(height: 2.5.h),
                       TextFormField(
                         controller: passwordController,
@@ -172,12 +175,7 @@ class SigninViewState extends State<SigninView> {
                                 : Icons.visibility),
                           ),
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your Password';
-                          }
-                          return null;
-                        },
+                        validator: _requiredValidator,
                       ),
                       SizedBox(
                         height: 2.5.h,
@@ -189,8 +187,12 @@ class SigninViewState extends State<SigninView> {
                           borderRadius: BorderRadius.circular(35),
                         ))),
                         onPressed: () {
-                          AuthService().signInWithEmail(usernameController.text,
-                              passwordController.text, context);
+                          if (_formKry.currentState != null &&
+                              _formKry.currentState!.validate())
+                            AuthService().signInWithEmail(
+                                usernameController.text,
+                                passwordController.text,
+                                context);
                         },
                         child: SizedBox(
                           width: double.infinity,
@@ -206,45 +208,55 @@ class SigninViewState extends State<SigninView> {
                       Divider(
                         height: 30,
                       ),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                                Color.fromARGB(255, 241, 28, 21)),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(35),
-                            ))),
-                        onPressed: () {
-                          AuthService().signInwithGoogle().then((value) {
-                            if (value != null) {
-                              Navigator.pushNamed(context, '/homepage');
-                            }
-                          });
-                        },
-                        child: SizedBox(
-                          width: double.infinity,
-                          height: 6.h,
-                          child: Row(
-                            children: [
-                              Image.asset(
-                                'assets/images/icons8-google-48.png',
-                                height: 3.5.h,
-                              ),
-                              const SizedBox(width: 60),
-                              Center(
-                                child: Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Text(
-                                    "Sign in with Google",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(fontSize: 2.5.h),
+                      if (loading) ...[
+                        // const Center(
+                        //     child: AlertDialog(
+                        //         title: Text('please wait'),
+                        //         content: CircularProgressIndicator()))
+                        const Center(child: CircularProgressIndicator())
+                      ],
+                      if (!loading) ...[
+                        ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  Color.fromARGB(255, 241, 28, 21)),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(35),
+                              ))),
+                          onPressed: () {
+                            AuthService().signInwithGoogle().then((value) {
+                              if (value != null) {
+                                Navigator.pushNamed(context, '/homepage');
+                              }
+                            });
+                          },
+                          child: SizedBox(
+                            width: double.infinity,
+                            height: 6.h,
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  'assets/images/icons8-google-48.png',
+                                  height: 3.5.h,
+                                ),
+                                const SizedBox(width: 60),
+                                Center(
+                                  child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      "Sign in with Google",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(fontSize: 2.5.h),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                       SizedBox(height: 2.5.h),
                       ElevatedButton(
                         style: ButtonStyle(
@@ -320,4 +332,11 @@ class SigninViewState extends State<SigninView> {
           ),
         ));
   }
+}
+
+String? _requiredValidator(String? text) {
+  if (text == null || text.trim().isEmpty) {
+    return 'this filed is required';
+  }
+  return null;
 }

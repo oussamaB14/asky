@@ -11,7 +11,44 @@ class Registration extends StatefulWidget {
   State<Registration> createState() => _RegistrationState();
 }
 
-class _RegistrationState extends State<Registration> {
+class _RegistrationState extends State<Registration>
+    with TickerProviderStateMixin {
+  int _selectedIndex = 0;
+  List<String> _options = ['Woolha', 'Flutter', 'Dart'];
+
+  Widget _buildChips() {
+    List<Widget> chips = [];
+
+    for (int i = 0; i < _options.length; i++) {
+      ChoiceChip choiceChip = ChoiceChip(
+        selected: _selectedIndex == i,
+        label: Text(_options[i], style: TextStyle(color: Colors.white)),
+        avatar: FlutterLogo(),
+        elevation: 10,
+        pressElevation: 5,
+        shadowColor: Colors.teal,
+        backgroundColor: Colors.black54,
+        selectedColor: Colors.blue,
+        onSelected: (bool selected) {
+          setState(() {
+            if (selected) {
+              _selectedIndex = i;
+            }
+          });
+        },
+      );
+
+      chips.add(Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10), child: choiceChip));
+    }
+
+    return ListView(
+      // This next line does the trick.
+      scrollDirection: Axis.horizontal,
+      children: chips,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -31,7 +68,6 @@ class _RegistrationState extends State<Registration> {
                       child: Row(children: [
                         Text(
                           "Contunie as :",
-                           
                         ),
                       ]),
                     ),
@@ -39,83 +75,27 @@ class _RegistrationState extends State<Registration> {
                   Divider(
                     height: 30,
                   ),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                        // backgroundColor: MaterialStateProperty.all(
-                        //     Color.fromARGB(255, 224, 46, 201)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(35),
-                    ))),
-                    onPressed: () {
-                      Navigator.of(context).pushNamed("teacher");
-                    },
-                    child: SizedBox(
-                      width: 20.h,
-                      height: 6.h,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          // SizedBox(width: 60),
-                          Center(
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Expanded(
-                                child: Text(
-                                  "Teacher",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 3.h),
-                                ),
-                              ),
-                            ),
-                          ),
-
-                          const SizedBox(width: 30),
-                          const Icon(CommunityMaterialIcons.arrow_right_thick)
-                        ],
-                      ),
+                  Container(
+                    alignment: Alignment.topCenter,
+                    margin: EdgeInsets.only(top: 20),
+                    child: Row(
+                      children: [
+                        ChoiceChip(
+                          label: Text("Teacher"),
+                          selected: false,
+                          onSelected: (bool value) {},
+                        ),
+                        ChoiceChip(
+                          label: Text("Student"),
+                          selected: false,
+                          onSelected: (bool value) {},
+                        ),
+                        
+                      ],
                     ),
-                  ),
-                  SizedBox(height: 2.5.h),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                        // backgroundColor: MaterialStateProperty.all(
-                        //     Color.fromARGB(255, 224, 46, 201)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(35),
-                    ))),
-                    onPressed: () {
-                      Navigator.of(context).pushNamed("Student");
-                    },
-                    child: SizedBox(
-                      width: 20.h,
-                      height: 6.h,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          // SizedBox(width: 60),
-                          Center(
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Expanded(
-                                child: Text(
-                                  "Student",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 3.h),
-                                ),
-                              ),
-                            ),
-                          ),
+                  )
 
-                          const SizedBox(width: 30),
-                          const Icon(CommunityMaterialIcons.arrow_right_thick)
-                        ],
-                      ),
-                    ),
-                  ),
+                  // ),
                 ],
               ),
             ),
@@ -123,3 +103,6 @@ class _RegistrationState extends State<Registration> {
     );
   }
 }
+
+///
+/// Filter entity

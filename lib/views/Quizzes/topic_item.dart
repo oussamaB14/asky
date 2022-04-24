@@ -1,9 +1,9 @@
-import 'package:asky/views/quize/progress_bar.dart';
+import 'package:asky/views/Quizzes/progress_bar.dart';
+
 import 'package:flutter/material.dart';
 
 import 'drawer.dart';
 import 'models.dart';
-
 
 class TopicItem extends StatelessWidget {
   final Topic topic;
@@ -50,7 +50,7 @@ class TopicItem extends StatelessWidget {
                       softWrap: false,
                     )),
               ),
-              Flexible(child: TopicProgress(topic: topic)),
+              // Flexible(child: TopicProgress(topic: topic)),
             ],
           ),
         ),

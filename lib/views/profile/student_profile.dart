@@ -2,6 +2,7 @@ import 'package:asky/views/authentification/signin_view.dart';
 import 'package:asky/styles/colors.dart';
 import 'package:asky/views/profile/widgets/Profiledrawer.dart';
 import 'package:asky/views/registration/student_view.dart';
+import 'package:asky/views/spaces/widgets/addSpaceButton.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,8 @@ class StudentProfile extends StatefulWidget {
 class StudentProfileViewState extends State<StudentProfile> {
   AccessToken? _accessToken;
   bool _checking = true;
+
+  get states => null;
   _checkIfisLoggedIn() async {
     final accessToken = await FacebookAuth.instance.accessToken;
 
@@ -74,6 +77,7 @@ class StudentProfileViewState extends State<StudentProfile> {
             ),
           ),
         ),
+        floatingActionButton: spaceButton(),
         body: Card(
           child: Container(
             padding: const EdgeInsets.all(8),
@@ -84,11 +88,15 @@ class StudentProfileViewState extends State<StudentProfile> {
                 Row(
                   children: [
                     CircleAvatar(
-                        radius: 4.h,
-                        backgroundColor: Colors.brown.shade800,
-                        child: Text('data')
-                        // Image.network(_userData!['picture']['data']['url']),
-                        ),
+                      radius: 4.h,
+                      backgroundColor: Colors.grey,
+                      child: Center(
+                          child: Icon(
+                        Icons.person,
+                        size: 50,
+                      )),
+                      // Image.network(_userData!['picture']['data']['url']),
+                    ),
                     SizedBox(width: 2.h),
                     Column(
                       children: [
@@ -173,97 +181,146 @@ class StudentProfileViewState extends State<StudentProfile> {
                 SizedBox(
                   width: 1.h,
                 ),
-                // TextButton(
-                //     onPressed: () {
-                //       setState(() {
-                //         index = 0;
-                //       });
-                //     },
-                //     child: SizedBox(width: 20.h, child: Text("questions"))),
-                // TextButton(
-                //     onPressed: () {
-                //       setState(() {
-                //         index = 1;
-                //       });
-                //     },
-                //     child: SizedBox(width: 20.h, child: Text("anwsers"))),
-                ToggleSwitch(
-                  minWidth: 25.h,
-                  cornerRadius: 20.0,
-                  activeFgColor: Colors.white,
-                  inactiveBgColor: Color(0XFFEDEDED),
-                  activeBgColor: [Color.fromARGB(255, 153, 215, 243)],
-                  totalSwitches: 2,
-                  initialLabelIndex: index,
-                  borderWidth: 1.0,
-                  borderColor: [Colors.lightBlue],
-                  labels: const [
-                    'Questions',
-                    'Anwsers',
-                  ],
-                  customTextStyles: [
-                    TextStyle(
-                      // color: Colors.brown,
-                      fontSize: 2.h,
-                      // fontWeight: FontWeight.normal),
+                Row(
+                  children: [
+                    // TextButton(
+                    //     style: ButtonStyle(
+                    //         shape: MaterialStateProperty.all<
+                    //                 RoundedRectangleBorder>(
+                    //             RoundedRectangleBorder(
+                    //                 borderRadius: BorderRadius.circular(18.0),
+                    //                 side: BorderSide(color: Colors.red)))),
+                    //     onPressed: () {
+                    //       setState(() {
+                    //         index = 0;
+                    //       });
+                    //     },
+                    //     child: SizedBox(
+                    //         width: 20.h,
+                    //         child: Center(child: Text("Questions")))),
+                    OutlinedButton(
+                      onPressed: () {
+                        setState(() {
+                          index = 0;
+                        });
+                      },
+                      child: SizedBox(
+                          width: 19.h, child: Center(child: Text('Questions'))),
+                      style: OutlinedButton.styleFrom(
+                          side: BorderSide(),
+                          shape: StadiumBorder(),
+                          textStyle: TextStyle(
+                            fontSize: 2.5.h,
+                            // fontStyle: FontStyle.italic,
+                          )),
                     ),
-                    TextStyle(
-                      // color: Colors.brown,
-                      fontSize: 2.h,
-                      // fontWeight: FontWeight.normal
+                    OutlinedButton(
+                      onPressed: () {
+                        setState(() {
+                          index = 1;
+                        });
+                      },
+                      child: SizedBox(
+                          width: 19.h, child: Center(child: Text('Anwsers'))),
+                      style: OutlinedButton.styleFrom(
+                        textStyle: TextStyle(
+                          fontSize: 2.5.h,
+                          // fontStyle: FontStyle.italic,
+                        ),
+                        shape: StadiumBorder(),
+                      ),
                     ),
+                    // TextButton(
+                    //     style: ButtonStyle(
+                    //         shape: MaterialStateProperty.all<
+                    //                 RoundedRectangleBorder>(
+                    //             RoundedRectangleBorder(
+                    //                 borderRadius: BorderRadius.circular(18.0),
+                    //                 side: BorderSide(color: Colors.red)))),
+                    //     onPressed: () {
+                    //       setState(() {
+                    //         index = 1;
+                    //       });
+                    //     },
+                    //     child: SizedBox(
+                    //         width: 20.h,
+                    //         child: Center(child: Text("Anwsers")))),
                   ],
-                  onToggle: (index) {
-                    setState(() => this.index = index!);
-                  },
                 ),
+
+                // ToggleSwitch(
+                //   minWidth: 25.h,
+                //   cornerRadius: 20.0,
+                //   activeFgColor: Colors.white,
+                //   inactiveBgColor: Color(0XFFEDEDED),
+                //   activeBgColor: [Color.fromARGB(255, 153, 215, 243)],
+                //   totalSwitches: 2,
+                //   initialLabelIndex: index,
+                //   borderWidth: 1.0,
+                //   borderColor: [Colors.lightBlue],
+                //   labels: const [
+                //     'Questions',
+                //     'Anwsers',
+                //   ],
+                //   customTextStyles: [
+                //     TextStyle(
+                //       // color: Colors.brown,
+                //       fontSize: 2.h,
+                //       // fontWeight: FontWeight.normal),
+                //     ),
+                //     TextStyle(
+                //       // color: Colors.brown,
+                //       fontSize: 2.h,
+                //       // fontWeight: FontWeight.normal
+                //     ),
+                //   ],
+                //   onToggle: (index) {
+                //     setState(() => this.index = index!);
+                //   },
+                // ),
                 SizedBox(
                   height: 2.h,
                 ),
 
-                SingleChildScrollView(
-                  child: Container(
-                    child: IndexedStack(
-                      index: index,
-                      children: [
-                        Container(
-                          child: Column(
-                            children: [
-                              CircleAvatar(),
-                              CircleAvatar(),
-                              CircleAvatar(),
-                              CircleAvatar(),
-                              CircleAvatar(),
-                              CircleAvatar(),
-                              CircleAvatar(),
-                              CircleAvatar(),
-                              CircleAvatar(),
-                              CircleAvatar(),
-                              CircleAvatar(),
-                              CircleAvatar(),
-                              CircleAvatar(),
-                              CircleAvatar(),
-                              CircleAvatar(),
-                              CircleAvatar(),
-                              CircleAvatar(),
-                              CircleAvatar()
-                            ],
-                          ),
-                          color: Colors.black,
-                          width: 15.h,
-                        ),
-                        Container(
-                          child: Column(
-                            children: [Text("Anwsers")],
-                          ),
-                        )
-                      ],
+                IndexedStack(
+                  index: index,
+                  children: [
+                    Container(
+                      child: Column(
+                        children: [
+                          CircleAvatar(),
+                          CircleAvatar(),
+                          CircleAvatar(),
+                          CircleAvatar(),
+                          CircleAvatar(),
+                        ],
+                      ),
+                      color: Colors.black,
+                      width: 15.h,
                     ),
-                  ),
+                    Container(
+                      child: Column(
+                        children: [Text("Anwsers")],
+                      ),
+                    )
+                  ],
                 ),
+                // throw Text('data')
               ],
             ),
           ),
         ));
+  }
+
+  MaterialStateProperty<BorderSide> getBorder(Color color, Color colorPressed) {
+    final getBorder = (Set<MaterialState> state) {
+      if (states.contains(MaterialState.pressed)) {
+        return BorderSide(color: colorPressed, width: 2);
+      } else {
+        return BorderSide(color: color, width: 2);
+      }
+    };
+
+    return MaterialStateProperty.resolveWith((getBorder));
   }
 }

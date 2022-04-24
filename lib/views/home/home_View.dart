@@ -1,6 +1,7 @@
 import 'package:asky/models/Question.dart';
 import 'package:asky/services/QuestionsService.dart';
 import 'package:asky/styles/colors.dart';
+import 'package:asky/widgets/loading.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 
@@ -33,13 +34,7 @@ class _HomePageViewState extends State<HomePage> {
                 switch (snapshot.connectionState) {
                   case ConnectionState.waiting:
                     return Center(
-                      child: SizedBox(
-                        width: 175,
-                        height: 175,
-                        child: CircularProgressIndicator(
-                          color: Colors.pink,
-                        ),
-                      ),
+                      child: MainLoadingScreen(),
                     );
                   case ConnectionState.done:
                     return Column(

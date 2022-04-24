@@ -14,7 +14,7 @@ class AnwserService {
 
   Future<List<Anwser>> getAllawnsers() async {
     List<Anwser> awnsers = [];
-    await _db.collection('questions').get().then((value) {
+    await _db.collection('awnsers').get().then((value) {
       value.docs.forEach((element) {
         awnsers.add(Anwser.fromDocument(element));
       });

@@ -1,35 +1,50 @@
 import 'dart:convert';
 
-class TagModel {
-  String id;
-  String title;
+import 'package:cloud_firestore/cloud_firestore.dart';
 
+class TagModel {
+  String tag;
   TagModel({
-    required this.id,
-    required this.title,
+    required this.tag,
   });
 
   TagModel copyWith({
-    String? id,
-    String? title,
+    String? tag,
   }) {
     return TagModel(
-      id: id ?? this.id,
-      title: title ?? this.title,
+      tag: tag ?? this.tag,
     );
   }
 
-  final List<TagModel> tagList = [
-    TagModel(id: '1', title: 'JavaScript'),
-    TagModel(id: '2', title: 'Python'),
-    TagModel(id: '3', title: 'Java'),
-    TagModel(id: '4', title: 'PHP'),
-    TagModel(id: '5', title: 'C#'),
-    TagModel(id: '6', title: 'C++'),
-    TagModel(id: '7', title: 'Dart'),
-    TagModel(id: '8', title: 'DataFlex'),
-    TagModel(id: '9', title: 'Flutter'),
-    TagModel(id: '10', title: 'Flutter Selectable Tags'),
-    TagModel(id: '11', title: 'Android Studio developer'),
-  ];
+  Map<String, dynamic> toDocument() {
+    final result = <String, dynamic>{};
+
+    result.addAll({'tag': tag});
+
+    return result;
+  }
+
+  factory TagModel.fromDocument(DocumentSnapshot doc) {
+    return TagModel(
+      tag: doc['tag'] ?? '',
+    );
+  }
+
+  String toJson() => json.encode(toDocument());
+
+  factory TagModel.fromJson(String source) =>
+      TagModel.fromDocument(json.decode(source));
+
+  @override
+  String toString() => 'TagModel(tag: $tag)';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is TagModel && other.tag == tag;
+  }
+
+  @override
+  int get hashCode => tag.hashCode;
 }

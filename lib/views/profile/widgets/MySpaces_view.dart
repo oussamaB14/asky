@@ -19,7 +19,7 @@ class _MySpacesState extends State<MySpaces> {
       body: SingleChildScrollView(
           child: Column(
         children: [
-         SpaceCard()
+          //  SpaceCard(space: 'math',)
         ],
       )),
     );

@@ -1,3 +1,4 @@
+import 'package:filter_list/filter_list.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:asky/styles/colors.dart';
@@ -40,6 +41,7 @@ class MyThemes {
     //---------------------------------------------------- WIGGETS ------------------------------------------------------------------------//
     //---------------------------------------------------- WIGGETS ------------------------------------------------------------------------//
     scaffoldBackgroundColor: const Color(0XFFEDEDED),
+
     appBarTheme: AppBarTheme(
         backgroundColor: Colors.white,
         titleTextStyle: TextStyle(
@@ -99,7 +101,7 @@ class MyThemes {
       backgroundColor: Colors.grey.shade300,
       showCheckmark: false,
       disabledColor: Colors.grey,
-      selectedColor: Colors.white,
+      selectedColor: Colors.blue,
       padding: const EdgeInsets.all(12),
       labelStyle: TextStyle(
           fontFamily: "Montserrat",

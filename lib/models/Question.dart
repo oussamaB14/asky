@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:asky/models/tags.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Question {
@@ -8,12 +9,15 @@ class Question {
   String title;
   String content;
   String authorId;
-  Question(
-      {required this.username,
-      required this.title,
-      required this.content,
-      required this.authorId,
-      this.id});
+  List<TagModel> tags; 
+  Question({
+    required this.username,
+    required this.title,
+    required this.content,
+    required this.authorId,
+    this.id,
+    this.tags = const [],
+  });
 
   Question copyWith({
     String? username,
@@ -21,6 +25,7 @@ class Question {
     String? content,
     String? authorId,
     String? id,
+    List? tags,
   }) {
     return Question(
       username: username ?? this.username,
@@ -37,14 +42,15 @@ class Question {
     result.addAll({'title': title});
     result.addAll({'content': content});
     result.addAll({'authorId': authorId});
+    result.addAll({'tags': tags});
 
     return result;
   }
 
-  factory Question.fromDocument(DocumentSnapshot doc) {
-    dynamic data = doc.data();
+  factory Question.fromDocument(DocumentSnapshot map) {
+    dynamic data = map.data();
     return Question(
-      id: doc.id,
+      id: map.id,
       username: data['username'] ?? '',
       title: data['title'] ?? '',
       content: data['content'] ?? '',

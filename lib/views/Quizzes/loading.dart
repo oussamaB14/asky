@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class MainLoadingScreen extends StatelessWidget {
-  const MainLoadingScreen({Key? key}) : super(key: key);
+class LoadingScreen extends StatelessWidget {
+  const LoadingScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +18,12 @@ class Loader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: CircularProgressIndicator(),
+    return const SizedBox(
+      width: 175,
+      height: 175,
+      child: CircularProgressIndicator(
+        color: Colors.red,
+      ),
     );
   }
 }

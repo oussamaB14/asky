@@ -1,6 +1,7 @@
-import 'package:asky/views/quize/firestore.dart';
-import 'package:asky/views/quize/progress_bar.dart';
-import 'package:asky/views/quize/quiz_state.dart';
+import 'package:asky/views/Quizzes/firestore.dart';
+import 'package:asky/views/Quizzes/progress_bar.dart';
+
+import 'package:asky/views/Quizzes/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +23,7 @@ class QuizScreen extends StatelessWidget {
           var state = Provider.of<QuizState>(context);
 
           if (!snapshot.hasData || snapshot.hasError) {
-            return const LoadingScreen();
+            return const MainLoadingScreen();
           } else {
             var quiz = snapshot.data;
 

@@ -1,7 +1,6 @@
-import 'package:asky/views/quize/models.dart';
+import 'package:asky/views/Quizzes/models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 
 class AnimatedProgressbar extends StatelessWidget {
   final double value;
@@ -60,44 +59,44 @@ class AnimatedProgressbar extends StatelessWidget {
   }
 }
 
-class TopicProgress extends StatelessWidget {
-  final Topic topic;
+// class TopicProgress extends StatelessWidget {
+//   final Topic topic;
 
-  const TopicProgress({Key? key, required this.topic}) : super(key: key);
+//   const TopicProgress({Key? key, required this.topic}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    Report report = Provider.of<Report>(context);
-    return Row(
-      children: [
-        _progressCount(report, topic),
-        Expanded(
-          child: AnimatedProgressbar(
-            value: _calculateProgress(topic, report),
-            height: 8,
-          ),
-        ),
-      ],
-    );
-  }
+  // @override
+  // Widget build(BuildContext context) {
+  //   Report report = Provider.of<Report>(context);
+  //   return Row(
+  //     children: [
+  //       _progressCount(report, topic),
+  //       Expanded(
+  //         child: AnimatedProgressbar(
+  //           value: _calculateProgress(topic, report),
+  //           height: 8,
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
-  Widget _progressCount(Report report, Topic topic) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 8),
-      child: Text(
-        '${report.topics[topic.id]?.length ?? 0} / ${topic.quizzes.length}',
-        style: const TextStyle(fontSize: 10, color: Colors.grey),
-      ),
-    );
-  }
+  // Widget _progressCount(Report report, Topic topic) {
+  //   return Padding(
+  //     padding: const EdgeInsets.only(left: 8),
+  //     child: Text(
+  //       '${report.topics[topic.id]?.length ?? 0} / ${topic.quizzes.length}',
+  //       style: const TextStyle(fontSize: 10, color: Colors.grey),
+  //     ),
+  //   );
+  // }
 
-  double _calculateProgress(Topic topic, Report report) {
-    try {
-      int totalQuizzes = topic.quizzes.length;
-      int completedQuizzes = report.topics[topic.id].length;
-      return completedQuizzes / totalQuizzes;
-    } catch (e) {
-      return 0;
-    }
-  }
-}
+  // double _calculateProgress(Topic topic, Report report) {
+  //   try {
+  //     int totalQuizzes = topic.quizzes.length;
+  //     int completedQuizzes = report.topics[topic.id].length;
+  //     return completedQuizzes / totalQuizzes;
+  //   } catch (e) {
+  //     return 0;
+  //   }
+  // }
+

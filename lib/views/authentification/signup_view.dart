@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -20,6 +22,7 @@ class SignupViewState extends State<SignupView> {
   TextEditingController username = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+  var loading = false;
   bool _obscureText = true;
   @override
   Widget build(BuildContext context) {
@@ -182,74 +185,44 @@ class SignupViewState extends State<SignupView> {
 
                               return null;
                             }),
-                        FormBuilderRadioGroup(
-                          validator: _requiredValidator,
-                          name: "role",
-                          decoration: InputDecoration(
-                              labelText: "Role",
-                              labelStyle: TextStyle(
-                                  // color: MyColors.yellow,
-                                  fontSize: 2.h,
-                                  fontWeight: FontWeight.bold)),
-                          options: const [
-                            FormBuilderFieldOption(value: "Student"),
-                            FormBuilderFieldOption(value: "Teacher"),
-                          ],
-                          //  initialValue: _person.role,
-                        ),
-                        FormBuilderDropdown(
-                          name: 'education filed',
-                          decoration: InputDecoration(
-                              labelText: 'education filed',
-                              labelStyle: TextStyle(
-                                  // color: MyColors.yellow,
-                                  fontSize: 2.h,
-                                  fontWeight: FontWeight.bold)),
-                          allowClear: true,
-                          hint: Text('Select education filed'),
-                          validator: _requiredValidator,
-                          items: [
-                            "LSIM",
-                            "LISI",
-                            "LTIC",
-                            "PREPA",
-                          ]
-                              .map((education) => DropdownMenuItem(
-                                    value: education,
-                                    child: Text('$education'),
-                                  ))
-                              .toList(),
-                        ),
                         SizedBox(
                           height: 3.5.h,
                         ),
-                        ElevatedButton(
-                          style: ButtonStyle(
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(35),
-                          ))),
-                          onPressed: () {
-                            if (_formKry.currentState != null &&
-                                _formKry.currentState!.validate()) {
-                              AuthService().signUpWithEmail(
-                                  usernameController.text,
-                                  passwordController.text,
-                                  context);
-                            }
-                          },
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: 6.h,
-                            child: Center(
-                              child: Text(
-                                "Sign Up",
-                                style: TextStyle(fontSize: 3.h),
+                        if (loading) ...[
+                          const Center(child: CircularProgressIndicator())
+                        ],
+                        if (!loading) ...[
+                          ElevatedButton(
+                            style: ButtonStyle(
+                                shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(35),
+                            ))),
+                            onPressed: () {
+                              if (_formKry.currentState != null &&
+                                  _formKry.currentState!.validate()) {
+                                AuthService().signUpWithEmail(
+                                    usernameController.text,
+                                    passwordController.text,
+                                    context);
+                                setState(() {
+                                  loading = true;
+                                });
+                              }
+                            },
+                            child: SizedBox(
+                              width: double.infinity,
+                              height: 6.h,
+                              child: Center(
+                                child: Text(
+                                  "Sign Up",
+                                  style: TextStyle(fontSize: 3.h),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
+                          )
+                        ],
                         Divider(
                           height: 30,
                         ),
@@ -289,6 +262,34 @@ class SignupViewState extends State<SignupView> {
     );
   }
 }
+
+//   Future _signUp() async {
+//     setState(() {
+//       loading = true;
+//     });
+//     try{
+//       await FirebaseAuth.instance.createUserWithEmailAndPassword(email: usernameController.text, password: passwordController.text);
+//       await FirebaseFirestore.instance.collection('user').add({
+//         'email': usernameController.text,
+//         'name': username.text,
+//       });
+//       await showDialog(
+//           context: context,
+//           builder: (context) => AlertDialog(
+//                 title: Text('Sign up Succeeded'),
+//                 content: Text('your account was created , you can log in now'),
+//                 actions: [
+//                   TextButton(
+//                       onPressed: () {
+//                         Navigator.of(context).pop();
+//                       },
+//                       child: Text('ok'))
+//                 ],
+//               ));
+//               Navigator.of(context).pop();
+//     }
+//   }
+// }
 
 String? _requiredValidator(String? text) {
   if (text == null || text.trim().isEmpty) {

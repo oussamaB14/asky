@@ -1,17 +1,22 @@
-import 'package:path/path.dart';
+import 'package:path/path.dart' as Path;
 
 import 'package:asky/views/Wrapper.dart';
 import 'package:asky/views/home/home_View.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService with ChangeNotifier {
+  TextEditingController username = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   User? user;
+  // User? getCurrentUser() {
+  //   User? user = _auth.currentUser;
+  //   return user;
+  // }
+
   // google sign in logic
   Future signInwithGoogle() async {
     try {
@@ -23,6 +28,28 @@ class AuthService with ChangeNotifier {
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
       );
+      // User? firebaseUser =
+      //     (await _auth.signInWithCredential(credential)).user;
+      // if (firebaseUser != null) {
+      //   // Check is already sign up
+      //   final QuerySnapshot result = await FirebaseFirestore.instance
+      //       .collection('user')
+      //       .where('id', isEqualTo: firebaseUser.uid)
+      //       // .getDocuments();
+      //       .add(user.toDocument())
+      //   final List<DocumentSnapshot> documents = result.documents;
+      //   if (documents.length == 0) {
+      //     // Update data to server if new user
+      //     FirebaseFirestore.instance
+      //         .collection('user')
+      //         .document(firebaseUser.uid)
+      //         .setData({
+      //       'name': firebaseUser.displayName,
+      //       'photoUrl': firebaseUser.photoURL,
+      //       'id': firebaseUser.uid
+      //     });
+      //   }
+      // }
 
       await _auth.signInWithCredential(credential);
       user = _auth.currentUser;
@@ -39,8 +66,15 @@ class AuthService with ChangeNotifier {
         (User? user) => user!.uid,
       );
 
+  // Future getCurrentUser() async {
+  //   return (_auth.currentUser)?.uid;
+  // }
+  Future<String> getCurrentUID() async {
+    return (_auth.currentUser!).uid;
+  }
+
   Future getCurrentUser() async {
-    return (_auth.currentUser)?.uid;
+    return (_auth.currentUser!);
   }
 
   getProfileImage() {
@@ -69,24 +103,35 @@ class AuthService with ChangeNotifier {
     }
   }
 
-  void signUpWithEmail(String email, String password, context) async {
+  Future signUpWithEmail(String email, String password, context) async {
     try {
-      await FirebaseAuth.instance
+      var res = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
-      await FirebaseFirestore.instance.collection('user').add({'email': email});
+      await FirebaseFirestore.instance.collection('user').add({
+        'email': email,
+        'name': username.text,
+        'id': user?.uid,
+        'photoURL': user?.photoURL ?? '',
+        'bio': "",
+        'educationFiled': "",
+        'role': "",
+      });
+
       await showDialog(
           context: context,
           builder: (context) => AlertDialog(
                 title: Text('Sign up Succeeded'),
-                content: Text('your account was created , you can log in now'),
+                content:
+                    Text('Now add your informations complete your account !'),
                 actions: [
                   TextButton(
                       onPressed: () {
-                        Navigator.of(context).pop();
+                        Navigator.of(context).pushReplacementNamed('test');
                       },
                       child: Text('ok'))
                 ],
               ));
+      Navigator.of(context).pushReplacementNamed('test');
     } on FirebaseAuthException catch (e) {
       _handleSignUpError(e);
     }
@@ -114,19 +159,20 @@ class AuthService with ChangeNotifier {
         messageToDisplay = 'An unknown error occurred';
         break;
     }
-    // showDialog(
-    //     context: context,
-    //     builder: (BuildContext context) => AlertDialog(
-    //           title: Text('Sign up Failed'),
-    //           content: Text(messageToDisplay),
-    //           actions: [
-    //             TextButton(
-    //                 onPressed: () {
-    //                   Navigator.of(context).pop();
-    //                 },
-    //                 child: Text('Ok'))
-    //           ],
-    //         ));
+    //   showDialog(
+    //       context: context,
+    //       builder: (BuildContext context) => AlertDialog(
+    //             title: Text('Sign up Failed'),
+    //             content: Text(messageToDisplay),
+    //             actions: [
+    //               TextButton(
+    //                   onPressed: () {
+    //                     Navigator.of(context).pop();
+    //                   },
+    //                   child: Text('Ok'))
+    //             ],
+    //           ));
+    // }
   }
 
   void signOut(context) {
@@ -135,5 +181,9 @@ class AuthService with ChangeNotifier {
       context,
       'Welcomepage',
     );
+  }
+
+  forgotPassword(String email) async {
+    await _auth.sendPasswordResetEmail(email: email);
   }
 }

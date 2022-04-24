@@ -2,14 +2,14 @@ import 'package:asky/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
-class AddTag extends StatefulWidget {
-  const AddTag({Key? key}) : super(key: key);
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
 
   @override
-  State<AddTag> createState() => _AddTagState();
+  State<Home> createState() => _HomeState();
 }
 
-class _AddTagState extends State<AddTag> {
+class _HomeState extends State<Home> {
   late double _distanceToField;
   late TextfieldTagsController _controller;
 
@@ -105,7 +105,13 @@ class _AddTagState extends State<AddTag> {
           textEditingController: ttec,
           focusNode: tfn,
           textfieldTagsController: _controller,
-          initialTags: const ['programming', 'web development'],
+          initialTags: const [
+            'pick',
+            'your',
+            'favorite',
+            'programming',
+            'language',
+          ],
           textSeparators: const [' ', ','],
           letterCase: LetterCase.normal,
           validator: (String tag) {
@@ -141,11 +147,14 @@ class _AddTagState extends State<AddTag> {
                     focusedBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.blue, width: 3.0),
                     ),
-                    helperText: "you can add tags to your Question",
+                    helperText:
+                        "you can add all the subject you are currently teaching or a filed of \neducation you're intrested in.",
                     helperStyle: const TextStyle(
                       color: Colors.blue,
                     ),
-                    hintText: _controller.hasTags ? '' : "Tag..",
+                    hintText: _controller.hasTags
+                        ? ''
+                        : "Enter your filed of education..",
                     errorText: error,
                     prefixIconConstraints:
                         BoxConstraints(maxWidth: _distanceToField * 1),
@@ -171,7 +180,7 @@ class _AddTagState extends State<AddTag> {
                                   children: [
                                     InkWell(
                                       child: Text(
-                                        '#$tag',
+                                        '$tag',
                                         style: const TextStyle(
                                             color: Colors.white),
                                       ),

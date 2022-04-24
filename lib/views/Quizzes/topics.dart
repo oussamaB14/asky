@@ -1,4 +1,5 @@
-import 'package:asky/views/quize/topic_item.dart';
+import 'package:asky/views/Quizzes/loading.dart';
+import 'package:asky/views/Quizzes/topic_item.dart';
 import 'package:flutter/material.dart';
 
 import 'drawer.dart';
@@ -16,7 +17,7 @@ class TopicsScreen extends StatelessWidget {
       future: FirestoreService().getTopics(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const LoadingScreen();
+          return const MainLoadingScreen();
         } else if (snapshot.hasError) {
           return ErrorMessage(message: snapshot.error.toString());
         } else if (snapshot.hasData) {
