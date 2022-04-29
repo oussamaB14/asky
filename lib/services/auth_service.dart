@@ -1,5 +1,6 @@
 import 'package:asky/models/user.dart';
 import 'package:asky/widgets/view_image.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:path/path.dart' as Path;
 
@@ -24,7 +25,7 @@ class AuthService with ChangeNotifier {
   }
 
   // google sign in logic
-  Future signInwithGoogle() async {
+  Future signInwithGoogle(context) async {
     try {
       final GoogleSignInAccount? googleSignInAccount =
           await _googleSignIn.signIn();
@@ -43,6 +44,9 @@ class AuthService with ChangeNotifier {
     }
     user = _auth.currentUser;
     await assignUsers();
+    if (FirebaseAuth.instance.currentUser != null)
+      Navigator.pushReplacementNamed(context, '/homepage');
+
     notifyListeners();
   }
 
@@ -112,20 +116,25 @@ class AuthService with ChangeNotifier {
   }
 
 //////////////////// Signup with email ////////////////////////////////////
-  Future signUpWithEmail(String email, String password, context) async {
+  Future signUpWithEmail(
+      String name, String email, String password, context) async {
     try {
       await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
-      await FirebaseFirestore.instance.collection('user').add({
-        'email': email,
-        'name': user?.displayName,
-        'id': user?.uid,
-        'photoURL': user?.photoURL ?? '',
-        'bio': "",
-        'educationFiled': "",
-        'role': "",
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) async {
+        await FirebaseFirestore.instance
+            .collection('user')
+            .doc(value.user?.uid)
+            .set({
+          'email': email,
+          'name': name,
+          'id': user?.uid,
+          'photoURL': user?.photoURL ?? '',
+          'bio': "",
+          'educationFiled': "",
+          'role': "",
+        });
       });
-      
 
       await showDialog(
           context: context,
@@ -149,6 +158,13 @@ class AuthService with ChangeNotifier {
     //     .showSnackBar(SnackBar(content: Text(e.message.toString())));
   }
 
+  void updateUserInfo(String role, String educationfiled, String bio) async {
+    await FirebaseFirestore.instance
+        .collection('user')
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .update({"bio": bio, "role": role, "educationFiled": educationfiled});
+  }
+
   void _handleSignUpError(FirebaseAuthException e) {
     String messageToDisplay;
     switch (e.code) {
@@ -169,20 +185,6 @@ class AuthService with ChangeNotifier {
         messageToDisplay = 'An unknown error occurred';
         break;
     }
-    //   showDialog(
-    //       context: context,
-    //       builder: (BuildContext context) => AlertDialog(
-    //             title: Text('Sign up Failed'),
-    //             content: Text(messageToDisplay),
-    //             actions: [
-    //               TextButton(
-    //                   onPressed: () {
-    //                     Navigator.of(context).pop();
-    //                   },
-    //                   child: Text('Ok'))
-    //             ],
-    //           ));
-    // }
   }
 
 ///////////////////////////////sign out //////////////////////////////////////
@@ -269,7 +271,26 @@ class AuthService with ChangeNotifier {
   ////////// assign user to firestore //////////
   assignUsers() async {
     if (user != null) {
-      CollectionReference usersCollection = _db.collection('user');
+      await FirebaseFirestore.instance
+          .collection('user')
+          .doc(FirebaseAuth.instance.currentUser?.uid)
+          .get()
+          .then((value) async {
+        if (!value.exists) {
+          await FirebaseFirestore.instance
+              .collection('user')
+              .doc(FirebaseAuth.instance.currentUser?.uid)
+              .set({
+            'name': user?.displayName ?? 'User Name',
+            'id': user?.uid ?? 'userId',
+            'email': user?.email ?? 'User Email',
+            'imageUrl': user?.photoURL ??
+                'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+          });
+        }
+      });
+
+      /*CollectionReference usersCollection = _db.collection('user');
       DocumentSnapshot? userDoc = await usersCollection.doc(user!.uid).get();
       if (!userDoc.exists) {
         usersCollection.doc(user!.uid).set({
@@ -283,7 +304,7 @@ class AuthService with ChangeNotifier {
         });
       } else {
         userModel = UserModel.fromDocument(userDoc as Map<String, dynamic>);
-      }
-    } else {}
+      }*/
+    }
   }
 }

@@ -242,12 +242,7 @@ class SigninViewState extends State<SigninView> {
                             setState(() {
                               loading1 = true;
                             });
-                            AuthService().signInwithGoogle().then((value) {
-                              if (value != null) {
-                                Navigator.pushReplacementNamed(
-                                    context, '/homepage');
-                              }
-                            });
+                            AuthService().signInwithGoogle(context);
                           },
                           child: SizedBox(
                             width: double.infinity,

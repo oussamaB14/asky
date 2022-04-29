@@ -12,7 +12,6 @@ class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      
       elevation: 500,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -54,6 +53,13 @@ class _AppDrawerState extends State<AppDrawer> {
                 title: Text("Settings"),
                 onTap: () {
                   Navigator.of(context).pushNamed("Settings");
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.settings),
+                title: Text("Chat"),
+                onTap: () {
+                  Navigator.of(context).pushNamed("chatPage");
                 },
               ),
               // ListTile(

@@ -219,6 +219,7 @@ class SignupViewState extends State<SignupView> {
                               if (_formKry.currentState != null &&
                                   _formKry.currentState!.validate()) {
                                 AuthService().signUpWithEmail(
+                                    nameController.text,
                                     emailController.text,
                                     passwordController.text,
                                     context);

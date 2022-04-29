@@ -1,3 +1,4 @@
+import 'package:asky/services/auth_service.dart';
 import 'package:asky/styles/colors.dart';
 import 'package:asky/views/authentification/registration/test.dart';
 import 'package:community_material_icon/community_material_icon.dart';
@@ -78,11 +79,6 @@ class _TestRegState extends State<TestReg> {
                                 backgroundColor: Color(0xFFE1E4F3),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(45),
-                                  // side: BorderSide(
-                                  //   color: selected.contains(options[idx])
-                                  //       ? Colors.blue
-                                  //       : Colors.grey,
-                                  // ),
                                 ),
                                 // checkmarkColor: Colors.white,
                                 label: Text(options[idx]),
@@ -98,6 +94,7 @@ class _TestRegState extends State<TestReg> {
                                   print(idx);
                                   print(_value);
                                   print(isTeacher);
+                                  print(options[idx]);
                                 }),
                           ),
                         ]);
@@ -169,8 +166,10 @@ class _TestRegState extends State<TestReg> {
                           borderRadius: BorderRadius.circular(35),
                         ))),
                     onPressed: () async {
-                      // if (_formkry.currentState != null &&
-                      //     _formkry.currentState!.validate()) {
+                      AuthService().updateUserInfo(
+                          isTeacher ? 'Teacher' : 'Student',
+                          options2[_value2],
+                          bioController.text);
                       await showDialog(
                           context: context,
                           builder: (context) => AlertDialog(

@@ -1,6 +1,7 @@
 import 'package:asky/views/profile/widgets/Profiledrawer.dart';
 import 'package:asky/views/spaces/widgets/addSpaceButton.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -55,13 +56,16 @@ class StudentProfileViewState extends State<StudentProfile> {
         floatingActionButton: spaceButton(),
         body: SingleChildScrollView(
             child: FutureBuilder<DocumentSnapshot>(
-                future: UserService().getUser(),
+                future: FirebaseFirestore.instance
+                    .collection('user')
+                    .doc(FirebaseAuth.instance.currentUser?.uid)
+                    .get(),
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting)
-                    return Center(child: const LinearProgressIndicator());
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: LinearProgressIndicator());
+                  }
 
                   if (snapshot.hasError) return const Text('Error');
-
                   var data = snapshot.data;
 
                   return Card(

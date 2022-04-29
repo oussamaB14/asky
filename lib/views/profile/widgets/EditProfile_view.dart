@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -31,7 +32,10 @@ class _EditProfileState extends State<EditProfile> {
         ),
       ),
       body: FutureBuilder<DocumentSnapshot>(
-        future: UserService().getUser(),
+        future: FirebaseFirestore.instance
+            .collection('user')
+            .doc(FirebaseAuth.instance.currentUser?.uid)
+            .get(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting)
             return const Center(child: CircularProgressIndicator());
