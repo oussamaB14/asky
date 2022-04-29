@@ -3,8 +3,9 @@ import 'package:asky/styles/colors.dart';
 import 'package:asky/styles/theme.dart';
 import 'package:asky/views/explore/explore_view.dart';
 import 'package:asky/views/home/home_View.dart';
-import 'package:asky/views/profile/student_profile.dart';
-import 'package:asky/views/spaces/spaces_view.dart';
+import 'package:asky/views/profile/profile.dart';
+import 'package:asky/views/spaces/spaces.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -22,7 +23,7 @@ class _WrapperState extends State<Wrapper> {
   final screens = [
     HomePage(),
     Explore(),
-    SpacesView(),
+    SpacesScreen(),
     StudentProfile(),
   ];
   Widget build(BuildContext context) {

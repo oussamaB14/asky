@@ -24,7 +24,7 @@ class TopicsScreen extends StatelessWidget {
           var topics = snapshot.data!;
           return Scaffold(
             appBar: AppBar(
-              backgroundColor: Colors.deepPurple,
+              // backgroundColor: Colors.deepPurple,
               title: const Text('Topics'),
             ),
             drawer: TopicDrawer(topics: topics),

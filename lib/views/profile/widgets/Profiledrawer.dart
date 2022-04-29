@@ -1,4 +1,4 @@
-import 'package:asky/views/profile/student_profile.dart';
+import 'package:asky/views/profile/profile.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 
@@ -18,30 +18,30 @@ class PofileDrawer extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Expanded(
-            flex: 1,
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.85,
-              child: DrawerHeader(
-                decoration: BoxDecoration(),
-                child: Column(
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: Colors.brown.shade800,
-                      child: const Text('AH'),
-                    ),
-                    Text('username.value.text',
-                        style: TextStyle(color: Colors.black)),
-                  ],
-                ),
-              ),
-            ),
-          ),
+          // Expanded(
+          //   flex: 1,
+          //   child: Container(
+          //     width: MediaQuery.of(context).size.width * 0.85,
+          //     child: DrawerHeader(
+          //       decoration: BoxDecoration(),
+          //       child: Column(
+          //         children: [
+          //           CircleAvatar(
+          //             backgroundColor: Colors.brown.shade800,
+          //             child: const Text('AH'),
+          //           ),
+          //           Text('username.value.text',
+          //               style: TextStyle(color: Colors.black)),
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
           Expanded(
             flex: 2,
             child: ListView(children: [
               ListTile(
-                leading: const Icon(CommunityMaterialIcons.bookmark),
+                leading: const Icon(CommunityMaterialIcons.bookmark_outline),
                 title: Text("Bookmarks"),
                 selectedTileColor: Colors.blue,
                 onTap: () {
@@ -57,7 +57,7 @@ class PofileDrawer extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: const Icon(CommunityMaterialIcons.forum),
+                leading: const Icon(CommunityMaterialIcons.forum_outline),
                 selectedTileColor: Colors.blue,
                 title: Text("Quize"),
                 onTap: () {

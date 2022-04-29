@@ -1,25 +1,69 @@
 import 'package:asky/models/Anwser.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import '../models/user.dart';
 
 class AnwserService {
+  late UserModel user;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  currentUserId() {
+    return _auth.currentUser?.uid;
+  }
+
   FirebaseFirestore _db = FirebaseFirestore.instance;
 
   // ADD NEW QUESTION TO DB
-  Future addQuestion(Anwser anwser) async {
-    await _db
-        .collection('awnsers')
-        .add(anwser.toDocument())
-        .then((value) => print(value));
+
+  // Future addAnwser(
+  //     Anwser anwser, Anwser userId, String currentUserId, String postId) async {
+  //   DocumentSnapshot doc =
+  //       await _db.collection('user').doc(currentUserId).get();
+  //   user = UserModel.fromDocument(doc.data());
+  //   await _db
+  //       .doc(postId)
+  //       .collection('awnsers')
+  //       .add(anwser.toDocument())
+  //       .then((value) => print(value));
+  // }
+
+  // CollectionReference commentRef = _db.collection('anwsers');
+  //  uploadComment(String currentUserId, String awnser, String postId,
+  //     String ownerId, String mediaUrl) async {
+  //   DocumentSnapshot doc = await usersRef.doc(currentUserId).get();
+  //   user = UserModel.fromJson(doc.data());
+  //   await commentRef.doc(postId).collection("comments").add({
+  //     "username": user.username,
+  //     "awnser": awnser,
+  //     "userImg": user.photoUrl,
+  //     "userId": user.id,
+  //   });
+  uploadComment(String currentUserId, String comment, String postId,
+      String ownerId, String mediaUrl) async {
+    DocumentSnapshot doc =
+        await _db.collection('user').doc(currentUserId).get();
+    user = UserModel.fromDocument(doc.data() as Map<String, dynamic>);
+    await _db.collection('awnsers').doc(postId).collection("awnsers").add({
+      "username": user.name,
+      "comment": comment,
+      "userDp": user.photoUrl,
+      "userId": user.id,
+    });
+    // bool isNotMe = ownerId != currentUserId;
+    // if (isNotMe) {
+    //   addCommentToNotification("comment", comment, user.username, user.id,
+    //       postId, mediaUrl, ownerId, user.photoUrl);
+    // }
   }
 
-  Future<List<Anwser>> getAllawnsers() async {
-    List<Anwser> awnsers = [];
-    await _db.collection('awnsers').get().then((value) {
-      value.docs.forEach((element) {
-        awnsers.add(Anwser.fromDocument(element));
-      });
-    });
-    print(awnsers);
-    return awnsers;
-  }
+  // Future<List<Anwser>> getAllawnsers() async {
+  //   List<Anwser> awnsers = [];
+  //   await _db.collection('awnsers').get().then((value) {
+  //     value.docs.forEach((element) {
+  //       awnsers.add(Anwser.fromDocument(element));
+  //     });
+  //   });
+  //   print(awnsers);
+  //   return awnsers;
+  // }
 }

@@ -16,7 +16,7 @@ class _SplashViewState extends State<SplashView> {
     return AnimatedSplashScreen(
         nextScreen: WelcomePage(),
         duration: 3000,
-        splash: Image.asset('assets/images/LOGO.png', height: 50.h),
+        splash: Image.asset('assets/gifs/asky1.gif', height: 50.h),
         splashTransition: SplashTransition.fadeTransition,
         backgroundColor: Colors.blue
         // pageTransitionType: PageTransitionType.scale,

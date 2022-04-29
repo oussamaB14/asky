@@ -19,7 +19,7 @@ class WelcomePage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height:20.5.h),
+                SizedBox(height: 20.5.h),
                 CarouselSlider(
                     items: [
                       Image.asset('assets/images/plan.png', height: 50.h),
@@ -95,8 +95,8 @@ class WelcomePage extends StatelessWidget {
                 SizedBox(height: 2.5.h),
                 ElevatedButton(
                   style: ButtonStyle(
-                      // backgroundColor: MaterialStateProperty.all(
-                      //     Color.fromARGB(255, 224, 46, 201)),
+                      backgroundColor: MaterialStateProperty.all(
+                          Color.fromARGB(255, 151, 143, 150)),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(35),

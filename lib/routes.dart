@@ -8,36 +8,34 @@ import 'package:asky/views/authentification/welcome_view.dart';
 import 'package:asky/views/chat/chat_view.dart';
 import 'package:asky/views/explore/explore_view.dart';
 import 'package:asky/views/home/home_View.dart';
-import 'package:asky/views/profile/Settings_view.dart';
+import 'package:asky/views/profile/widgets/Settings_view.dart';
 import 'package:asky/views/profile/widgets/Bookmarks_view.dart';
 import 'package:asky/views/profile/widgets/EditProfile_view.dart';
 import 'package:asky/views/profile/widgets/MySpaces_view.dart';
 
-import 'package:asky/views/profile/student_profile.dart';
-import 'package:asky/views/registration/registrationtest.dart';
-
-import 'package:asky/views/registration/student_view.dart';
+import 'package:asky/views/profile/profile.dart';
 import 'package:asky/views/spaces/widgets/AddSpace.dart';
 import 'package:flutter/widgets.dart';
 
+import 'views/authentification/registration/registrationtest.dart';
+
 final Map<String, WidgetBuilder> routes = {
-  // "/welcomePage": (context) => Wrapper(),
+  // // "/welcomePage": (context) => Wrapper(),
   // "/StudentProfile": (context) => StudentProfile(),
-  // "/spaces": (context) => Explore(),
-  // "/explore": (context) => Explore(),
-  "/signin": (context) => SigninView(),
-  "/signup": (context) => SignupView(),
+  // "/spaces": (context) => const Explore(),
+  // "/explore": (context) => const Explore(),
+  "/signin": (context) => const SigninView(),
+  "/signup": (context) => const SignupView(),
   "/homepage": ((context) => Wrapper()),
-  'Welcomepage': (context) => WelcomePage(),
-  "addPost": (context) => AddQuestionView(),
-  'Student': (context) => Student(),
-  "Settings": (context) => Settings(),
-  "MySpaces": (context) => MySpaces(),
-  "Bookmarks": (context) => Bookmarks(),
-  "EditProfile": (context) => EditProfile(),
-  '/topics': (context) => TopicsScreen(),
-  "addanwser": (context) => AddAnwser(),
-  "chatPage": (context) => ChatPage(),
-  'addspace': (context) => AddSpace(),
-  "test":(context) => TestReg(),
+  'Welcomepage': (context) => const WelcomePage(),
+  "addPost": (context) => const AddQuestionView(),
+  "Settings": (context) => const SettingsScreen(),
+  "MySpaces": (context) => const MySpaces(),
+  "Bookmarks": (context) => const Bookmarks(),
+  "EditProfile": (context) => const EditProfile(),
+  '/topics': (context) => const TopicsScreen(),
+  // "addanwser": (context) => AddAnwser(),
+  "chatPage": (context) => const ChatPage(),
+  // 'addspace': (context) => AddSpace(),
+  "test": (context) => const TestReg(),
 };

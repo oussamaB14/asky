@@ -1,3 +1,6 @@
+import 'package:asky/models/user.dart';
+import 'package:asky/widgets/view_image.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:path/path.dart' as Path;
 
 import 'package:asky/views/Wrapper.dart';
@@ -6,16 +9,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 
 class AuthService with ChangeNotifier {
-  TextEditingController username = TextEditingController();
+  UserModel? userModel;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  FirebaseFirestore _db = FirebaseFirestore.instance;
   User? user;
-  // User? getCurrentUser() {
-  //   User? user = _auth.currentUser;
-  //   return user;
-  // }
+  // final user = FirebaseAuth.instance.currentUser;
+  User? getCurrentUser() {
+    User? user = _auth.currentUser;
+    return user;
+  }
 
   // google sign in logic
   Future signInwithGoogle() async {
@@ -28,37 +34,15 @@ class AuthService with ChangeNotifier {
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
       );
-      // User? firebaseUser =
-      //     (await _auth.signInWithCredential(credential)).user;
-      // if (firebaseUser != null) {
-      //   // Check is already sign up
-      //   final QuerySnapshot result = await FirebaseFirestore.instance
-      //       .collection('user')
-      //       .where('id', isEqualTo: firebaseUser.uid)
-      //       // .getDocuments();
-      //       .add(user.toDocument())
-      //   final List<DocumentSnapshot> documents = result.documents;
-      //   if (documents.length == 0) {
-      //     // Update data to server if new user
-      //     FirebaseFirestore.instance
-      //         .collection('user')
-      //         .document(firebaseUser.uid)
-      //         .setData({
-      //       'name': firebaseUser.displayName,
-      //       'photoUrl': firebaseUser.photoURL,
-      //       'id': firebaseUser.uid
-      //     });
-      //   }
-      // }
-
       await _auth.signInWithCredential(credential);
       user = _auth.currentUser;
+      notifyListeners();
     } on FirebaseAuthException catch (e) {
       print(e.message);
       rethrow;
     }
-
-    return user;
+    user = _auth.currentUser;
+    await assignUsers();
     notifyListeners();
   }
 
@@ -73,9 +57,9 @@ class AuthService with ChangeNotifier {
     return (_auth.currentUser!).uid;
   }
 
-  Future getCurrentUser() async {
-    return (_auth.currentUser!);
-  }
+  // Future getCurrentUser() async {
+  //   return (_auth.currentUser!);
+  // }
 
   getProfileImage() {
     if (_auth.currentUser?.photoURL != null) {
@@ -86,6 +70,30 @@ class AuthService with ChangeNotifier {
     }
   }
 
+  Future assignUser() async {
+    if (_auth.currentUser != null) {
+      _db.collection('user').doc(_auth.currentUser!.uid).get().then((value) {
+        if (!value.exists) {
+          _db.collection('user').doc(_auth.currentUser!.uid).set({
+            'name': user?.displayName ?? 'User Name',
+            'id': user?.uid ?? 'userId',
+            'email': user?.email ?? 'User Email',
+            'imageUrl': user?.photoURL ??
+                'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+            'saved': [],
+          });
+        } else {
+          userModel =
+              UserModel.fromDocument(value.data() as Map<String, dynamic>);
+        }
+      });
+    } else {}
+  }
+
+  final authNotifier = ChangeNotifierProvider<AuthService>(create: ((ref) {
+    return AuthService();
+  }));
+////////////////// Sign in with email /////////////////
   void signInWithEmail(String email, String password, context) async {
     try {
       await FirebaseAuth.instance
@@ -103,19 +111,21 @@ class AuthService with ChangeNotifier {
     }
   }
 
+//////////////////// Signup with email ////////////////////////////////////
   Future signUpWithEmail(String email, String password, context) async {
     try {
-      var res = await FirebaseAuth.instance
+      await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
       await FirebaseFirestore.instance.collection('user').add({
         'email': email,
-        'name': username.text,
+        'name': user?.displayName,
         'id': user?.uid,
         'photoURL': user?.photoURL ?? '',
         'bio': "",
         'educationFiled': "",
         'role': "",
       });
+      
 
       await showDialog(
           context: context,
@@ -175,6 +185,7 @@ class AuthService with ChangeNotifier {
     // }
   }
 
+///////////////////////////////sign out //////////////////////////////////////
   void signOut(context) {
     FirebaseAuth.instance.signOut();
     Navigator.popAndPushNamed(
@@ -183,7 +194,96 @@ class AuthService with ChangeNotifier {
     );
   }
 
+/////////////////////////Forget password/////////////////////////////////////
   forgotPassword(String email) async {
     await _auth.sendPasswordResetEmail(email: email);
+  }
+
+///////// LOGIN WITH FACEBOOK /////////////
+  Future loginWithFacebook(context) async {
+    try {
+      final facebookloginResult = await FacebookAuth.instance.login();
+      final userData = await FacebookAuth.instance.getUserData();
+      final facebookAuthCredential = FacebookAuthProvider.credential(
+          facebookloginResult.accessToken!.token);
+      //  if (!value.exists){}
+      await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+
+      await FirebaseFirestore.instance
+          .collection('user')
+          .doc((FirebaseAuth.instance.currentUser?.uid))
+          .get()
+          .then((value) async {
+        if (!value.exists) {
+          await FirebaseFirestore.instance
+              .collection('user')
+              .doc(FirebaseAuth.instance.currentUser?.uid)
+              .set({
+            'email': userData['email'],
+            'imgUrl': userData['picture']['data']['url'],
+            'name': userData['name'],
+            'role': '',
+            'educationFiled': '',
+            'bio': '',
+          });
+        }
+      });
+
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => Wrapper()), (route) => false);
+    } on FirebaseAuthException catch (e) {
+      var title = '';
+      switch (e.code) {
+        case 'account-exists-with-different-credential':
+          title = 'this account exists with a different sign in provider';
+          break;
+        case 'invalid-cridential':
+          title = 'unknown error has occurred';
+          break;
+        case 'operation-not-allowed':
+          title = 'this operation is not allowed ';
+          break;
+        case 'user-disabled':
+          title = 'the user you tried to login into is disabled';
+          break;
+        case 'user-not-found':
+          title = 'the user you tried to login into was not found';
+          break;
+      }
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: const Text('Login with Facebook Failed'),
+                content: Text(title),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Ok'))
+                ],
+              ));
+    }
+  }
+
+  ////////// assign user to firestore //////////
+  assignUsers() async {
+    if (user != null) {
+      CollectionReference usersCollection = _db.collection('user');
+      DocumentSnapshot? userDoc = await usersCollection.doc(user!.uid).get();
+      if (!userDoc.exists) {
+        usersCollection.doc(user!.uid).set({
+          'name': user?.displayName ?? 'User Name',
+          'id': user?.uid ?? 'userId',
+          'email': user?.email ?? 'User Email',
+          'imageUrl': user?.photoURL ??
+              'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+          'role': '',
+          'educationfiled': ''
+        });
+      } else {
+        userModel = UserModel.fromDocument(userDoc as Map<String, dynamic>);
+      }
+    } else {}
   }
 }

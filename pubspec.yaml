@@ -76,6 +76,9 @@ dependencies:
   uuid: ^3.0.6
   filter_list: ^1.0.1
   textfield_tags: ^2.0.0
+  flutter_spinkit: ^5.1.0
+  cached_network_image: ^3.2.0
+  timeago: ^3.2.2
   
   
   
@@ -126,6 +129,7 @@ flutter:
     - assets/images/
     - assets/svgs/
     - assets/covers/
+    - assets/gifs/
     
       
 

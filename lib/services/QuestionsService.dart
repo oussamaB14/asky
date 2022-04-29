@@ -1,8 +1,10 @@
 import 'package:asky/models/Question.dart';
 import 'package:asky/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uuid/uuid.dart';
 
 class QuestionsServices {
+  String postId = Uuid().v4();
   FirebaseFirestore _db = FirebaseFirestore.instance;
 
   // ADD NEW QUESTION TO DB
@@ -25,9 +27,11 @@ class QuestionsServices {
   }
 
   Future editQuestion(Question question) async {
-    await _db
+    await _db 
         .collection('questions')
         .add(question.toDocument())
         .then((value) => print(value));
   }
+
+  uploadComment(currentUserId, String text, postId, ownerId, String mediaUrl) {}
 }

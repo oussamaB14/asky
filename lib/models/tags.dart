@@ -1,50 +1,29 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+@JsonSerializable()
 class TagModel {
-  String tag;
+  final String id;
+  final String tag;
+
   TagModel({
-    required this.tag,
+    this.id = '',
+    this.tag = '',
   });
 
-  TagModel copyWith({
-    String? tag,
-  }) {
-    return TagModel(
-      tag: tag ?? this.tag,
-    );
-  }
-
-  Map<String, dynamic> toDocument() {
-    final result = <String, dynamic>{};
-
-    result.addAll({'tag': tag});
-
-    return result;
-  }
-
-  factory TagModel.fromDocument(DocumentSnapshot doc) {
-    return TagModel(
-      tag: doc['tag'] ?? '',
-    );
-  }
-
-  String toJson() => json.encode(toDocument());
-
-  factory TagModel.fromJson(String source) =>
-      TagModel.fromDocument(json.decode(source));
-
-  @override
-  String toString() => 'TagModel(tag: $tag)';
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is TagModel && other.tag == tag;
-  }
-
-  @override
-  int get hashCode => tag.hashCode;
+  factory TagModel.fromJson(Map<String, dynamic> json) =>
+      _$TagModelFromJson(json);
+  Map<String, dynamic> toJson() => _$TagModelToJson(this);
 }
+
+TagModel _$TagModelFromJson(Map<String, dynamic> json) => TagModel(
+      id: json['id'] as String? ?? '',
+      tag: json['tag'] as String? ?? '',
+    );
+
+Map<String, dynamic> _$TagModelToJson(TagModel instance) => <String, dynamic>{
+      'id': instance.id,
+      'tag': instance.tag,
+    };

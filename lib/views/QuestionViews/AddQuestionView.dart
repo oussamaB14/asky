@@ -2,8 +2,7 @@ import 'package:asky/models/Question.dart';
 import 'package:asky/services/QuestionsService.dart';
 import 'package:asky/services/auth_service.dart';
 import 'package:asky/views/QuestionViews/widgets/QuestionCard.dart';
-import 'package:asky/views/profile/student_profile.dart';
-import 'package:asky/views/registration/test.dart';
+import 'package:asky/views/profile/profile.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -40,7 +39,9 @@ class _AddQuestionViewState extends State<AddQuestionView> {
                   username: 'username.value.text,',
                   title: titleController.value.text,
                   content: contentController.value.text,
-                  authorId: AuthService().user?.uid ?? 'ididididi'))
+                  authorId: AuthService().user?.uid ?? 'ididididi',
+                  id: '',
+                  mediaUrl: ''))
               .whenComplete(() {
             Navigator.of(context).pushNamed("/homepage");
           });

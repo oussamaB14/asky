@@ -59,7 +59,7 @@ class MyThemes {
         backgroundColor: Colors.white,
         elevation: 1.0),
     bottomAppBarTheme:
-        BottomAppBarTheme(color: MyColors.yellow, elevation: 1.0),
+        BottomAppBarTheme(color: MyColors.green, elevation: 1.0),
 
     buttonTheme: const ButtonThemeData(
         shape: CircleBorder(), padding: EdgeInsets.all(8)),
@@ -109,7 +109,7 @@ class MyThemes {
           fontSize: 12.sp,
           color: Colors.black),
       brightness: Brightness.light,
-      secondarySelectedColor: MyColors.yellow,
+      secondarySelectedColor: MyColors.green,
       secondaryLabelStyle: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w600,
@@ -188,7 +188,7 @@ class MyThemes {
         backgroundColor: Colors.black,
         elevation: 1.0),
     bottomAppBarTheme:
-        BottomAppBarTheme(color: MyColors.yellow, elevation: 1.0),
+        BottomAppBarTheme(color: MyColors.green, elevation: 1.0),
 
     buttonTheme: const ButtonThemeData(
         shape: CircleBorder(), padding: EdgeInsets.all(8)),
@@ -230,7 +230,7 @@ class MyThemes {
       backgroundColor: Colors.grey.shade800,
       showCheckmark: false,
       disabledColor: Colors.grey,
-      selectedColor: MyColors.yellow,
+      selectedColor: MyColors.green,
       padding: const EdgeInsets.all(12),
       labelStyle: TextStyle(
           fontFamily: "Montserrat",
@@ -238,7 +238,7 @@ class MyThemes {
           fontSize: 12.sp,
           color: Colors.white),
       brightness: Brightness.dark,
-      secondarySelectedColor: MyColors.yellow,
+      secondarySelectedColor: MyColors.green,
       secondaryLabelStyle: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w600,

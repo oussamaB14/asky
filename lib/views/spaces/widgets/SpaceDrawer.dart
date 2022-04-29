@@ -1,4 +1,4 @@
-import 'package:asky/views/profile/student_profile.dart';
+import 'package:asky/views/profile/profile.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 
@@ -22,31 +22,31 @@ class SpaceDrawer extends StatelessWidget {
             flex: 2,
             child: ListView(children: [
               ListTile(
-                leading: const Icon(CommunityMaterialIcons.forum),
+                leading: const Icon(CommunityMaterialIcons.forum_outline),
                 selectedTileColor: Colors.blue,
-                title: Text("My spaces"),
+                title: const Text("My spaces"),
                 onTap: () {
                   Navigator.of(context).pushNamed("MySpaces");
                 },
               ),
               ListTile(
-                leading: const Icon(CommunityMaterialIcons.forum),
+                leading: const Icon(CommunityMaterialIcons.comment_multiple_outline),
                 selectedTileColor: Colors.blue,
-                title: Text("Quize"),
+                title: const Text("Quiz"),
                 onTap: () {
                   Navigator.of(context).pushNamed("/topics");
                 },
               ),
               ListTile(
-                leading: const Icon(CommunityMaterialIcons.chart_bubble),
-                title: Text("Chat"),
+                leading: const Icon(CommunityMaterialIcons.chat_outline),
+                title: const Text("Chat"),
                 onTap: () {
                   Navigator.of(context).pushNamed("chatPage");
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.settings),
-                title: Text("Leave"),
+                leading: const Icon(Icons.logout_outlined),
+                title: const Text("Leave"),
                 onTap: () {
                   Navigator.of(context).pushNamed("Settings");
                 },

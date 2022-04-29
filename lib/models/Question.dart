@@ -1,22 +1,27 @@
 import 'dart:convert';
 
+import 'package:asky/models/Anwser.dart';
 import 'package:asky/models/tags.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Question {
   String username;
-  String? id;
+  String id;
   String title;
   String content;
   String authorId;
-  List<TagModel> tags; 
+  String mediaUrl;
+  List<TagModel> tags;
+  List<Anwser> anwsers;
   Question({
     required this.username,
     required this.title,
     required this.content,
     required this.authorId,
-    this.id,
+    required this.id,
     this.tags = const [],
+    this.anwsers = const [],
+    required this.mediaUrl,
   });
 
   Question copyWith({
@@ -25,7 +30,9 @@ class Question {
     String? content,
     String? authorId,
     String? id,
+    String? mediaUrl,
     List? tags,
+    List? anwsers,
   }) {
     return Question(
       username: username ?? this.username,
@@ -33,6 +40,7 @@ class Question {
       content: content ?? this.content,
       authorId: authorId ?? this.authorId,
       id: id ?? this.id,
+      mediaUrl: mediaUrl ?? this.mediaUrl,
     );
   }
 
@@ -43,6 +51,8 @@ class Question {
     result.addAll({'content': content});
     result.addAll({'authorId': authorId});
     result.addAll({'tags': tags});
+    result.addAll({'mediaUrl': mediaUrl});
+    result.addAll({'anwsers': anwsers});
 
     return result;
   }
@@ -55,6 +65,7 @@ class Question {
       title: data['title'] ?? '',
       content: data['content'] ?? '',
       authorId: data['authorId'] ?? '',
+      mediaUrl: data['mediaUrl'] ?? '',
     );
   }
 
@@ -65,7 +76,7 @@ class Question {
 
   @override
   String toString() =>
-      'Question(username:$username, title: $title, content: $content, authorId: $authorId)';
+      'Question(username:$username, title: $title, content: $content, authorId: $authorId, mediaUrl: $mediaUrl)';
 
   @override
   bool operator ==(Object other) {
@@ -80,5 +91,9 @@ class Question {
 
   @override
   int get hashCode =>
-      username.hashCode ^ title.hashCode ^ content.hashCode ^ authorId.hashCode;
+      username.hashCode ^
+      title.hashCode ^
+      content.hashCode ^
+      authorId.hashCode ^
+      mediaUrl.hashCode;
 }

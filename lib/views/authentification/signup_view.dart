@@ -1,11 +1,13 @@
+import 'package:asky/views/Wrapper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
 
+// import '../../services/auth_service.dart';
 import '../../services/auth_service.dart';
 import '../../styles/colors.dart';
 
@@ -16,12 +18,21 @@ class SignupView extends StatefulWidget {
 }
 
 class SignupViewState extends State<SignupView> {
+  User? user;
+  List selected = [];
+  bool isTeacher = false;
+  bool isVisible = false;
+  bool isCircleVisible = true;
   String imageUrl = '';
   final _formKry = GlobalKey<FormState>();
-  TextEditingController usernameController = TextEditingController();
-  TextEditingController username = TextEditingController();
+  // final _secondKey = GlobalKey<FormState>();
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController bioController = TextEditingController();
+  // TextEditingController _educationFiled = TextEditingController();
   var loading = false;
   bool _obscureText = true;
   @override
@@ -69,13 +80,13 @@ class SignupViewState extends State<SignupView> {
                           height: 3.5.h,
                         ),
                         TextFormField(
-                            controller: username,
+                            controller: nameController,
                             decoration: InputDecoration(
                               filled: true,
                               labelText: 'full name',
                               hintText: 'Enter your name',
                               floatingLabelBehavior: FloatingLabelBehavior.auto,
-                              contentPadding: EdgeInsets.symmetric(
+                              contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 42, vertical: 20),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(28),
@@ -84,24 +95,26 @@ class SignupViewState extends State<SignupView> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(28),
-                                borderSide: BorderSide(color: Colors.blue),
+                                borderSide:
+                                    const BorderSide(color: Colors.blue),
                                 gapPadding: 10,
                               ),
-                              suffixIcon: Icon(CommunityMaterialIcons.account),
+                              suffixIcon:
+                                  const Icon(CommunityMaterialIcons.account),
                             ),
                             validator: _requiredValidator),
                         SizedBox(
                           height: 3.5.h,
                         ),
                         TextFormField(
-                            controller: usernameController,
+                            controller: emailController,
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                               filled: true,
                               labelText: 'Email',
                               hintText: 'Enter your email',
                               floatingLabelBehavior: FloatingLabelBehavior.auto,
-                              contentPadding: EdgeInsets.symmetric(
+                              contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 42, vertical: 20),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(28),
@@ -110,11 +123,12 @@ class SignupViewState extends State<SignupView> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(28),
-                                borderSide: BorderSide(color: Colors.blue),
+                                borderSide:
+                                    const BorderSide(color: Colors.blue),
                                 gapPadding: 10,
                               ),
-                              suffixIcon:
-                                  Icon(CommunityMaterialIcons.email_outline),
+                              suffixIcon: const Icon(
+                                  CommunityMaterialIcons.email_outline),
                             ),
                             validator: _requiredValidator),
                         SizedBox(height: 2.5.h),
@@ -125,7 +139,7 @@ class SignupViewState extends State<SignupView> {
                               labelText: 'Password',
                               hintText: 'Enter your password',
                               floatingLabelBehavior: FloatingLabelBehavior.auto,
-                              contentPadding: EdgeInsets.symmetric(
+                              contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 42, vertical: 20),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(28),
@@ -134,7 +148,8 @@ class SignupViewState extends State<SignupView> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(28),
-                                borderSide: BorderSide(color: Colors.blue),
+                                borderSide:
+                                    const BorderSide(color: Colors.blue),
                                 gapPadding: 10,
                               ),
                               filled: true,
@@ -160,7 +175,7 @@ class SignupViewState extends State<SignupView> {
                               labelText: 'Password',
                               hintText: 'confirme your password',
                               floatingLabelBehavior: FloatingLabelBehavior.auto,
-                              contentPadding: EdgeInsets.symmetric(
+                              contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 42, vertical: 20),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(28),
@@ -169,7 +184,8 @@ class SignupViewState extends State<SignupView> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(28),
-                                borderSide: BorderSide(color: Colors.blue),
+                                borderSide:
+                                    const BorderSide(color: Colors.blue),
                                 gapPadding: 10,
                               ),
                               filled: true,
@@ -203,27 +219,28 @@ class SignupViewState extends State<SignupView> {
                               if (_formKry.currentState != null &&
                                   _formKry.currentState!.validate()) {
                                 AuthService().signUpWithEmail(
-                                    usernameController.text,
+                                    emailController.text,
                                     passwordController.text,
                                     context);
                                 setState(() {
                                   loading = true;
                                 });
                               }
+                              // _signUp();
                             },
                             child: SizedBox(
                               width: double.infinity,
                               height: 6.h,
                               child: Center(
                                 child: Text(
-                                  "Sign Up",
+                                  "Sign up",
                                   style: TextStyle(fontSize: 3.h),
                                 ),
                               ),
                             ),
                           )
                         ],
-                        Divider(
+                        const Divider(
                           height: 30,
                         ),
                         Text(
@@ -234,7 +251,7 @@ class SignupViewState extends State<SignupView> {
                         ElevatedButton(
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(
-                                  Color.fromARGB(255, 58, 63, 70)),
+                                  const Color.fromARGB(255, 58, 63, 70)),
                               shape: MaterialStateProperty.all<
                                       RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
@@ -261,35 +278,117 @@ class SignupViewState extends State<SignupView> {
               ))),
     );
   }
-}
 
-//   Future _signUp() async {
-//     setState(() {
-//       loading = true;
-//     });
-//     try{
-//       await FirebaseAuth.instance.createUserWithEmailAndPassword(email: usernameController.text, password: passwordController.text);
-//       await FirebaseFirestore.instance.collection('user').add({
-//         'email': usernameController.text,
-//         'name': username.text,
-//       });
-//       await showDialog(
-//           context: context,
-//           builder: (context) => AlertDialog(
-//                 title: Text('Sign up Succeeded'),
-//                 content: Text('your account was created , you can log in now'),
-//                 actions: [
-//                   TextButton(
-//                       onPressed: () {
-//                         Navigator.of(context).pop();
-//                       },
-//                       child: Text('ok'))
-//                 ],
-//               ));
-//               Navigator.of(context).pop();
-//     }
-//   }
-// }
+  // Future signUpWithEmail(String email, String password, String username,
+  //     String role, String educationfiled) async {
+  //   try {
+  //     var res = await FirebaseAuth.instance
+  //         .createUserWithEmailAndPassword(email: email, password: password);
+  //     await FirebaseFirestore.instance.collection('user').add({
+  //       'email': email,
+  //       'name': nameController.text,
+  //       'id': user?.uid,
+  //       // 'photoURL': user?.photoURL ?? '',
+  //       // 'bio': bioController.text,
+  //       // 'educationFiled': educationfiled.,
+  //       // 'role': role,
+  //     });
+
+  //     await showDialog(
+  //         context: context,
+  //         builder: (context) => AlertDialog(
+  //               title: const Text('Sign up Succeeded'),
+  //               content: const Text(
+  //                   'Now add your informations complete your account !'),
+  //               actions: [
+  //                 TextButton(
+  //                     onPressed: () {
+  //                       Navigator.of(context).pushReplacementNamed('test');
+  //                     },
+  //                     child: const Text('ok'))
+  //               ],
+  //             ));
+  //     Navigator.of(context).pushReplacementNamed('test');
+  //   } on FirebaseAuthException catch (e) {
+  //     _handleSignUpError(e);
+  //   }
+  //   // ScaffoldMessenger.of(context)
+  //   //     .showSnackBar(SnackBar(content: Text(e.message.toString())));
+  // }
+
+  // void _handleSignUpError(FirebaseAuthException e) {
+  //   String messageToDisplay;
+  //   switch (e.code) {
+  //     case 'email-already-in-use':
+  //       messageToDisplay = 'This email is already in use';
+  //       break;
+  //     case 'invalid-email':
+  //       messageToDisplay = 'This email is invalid';
+  //       break;
+  //     case 'Operation-not-allowed':
+  //       messageToDisplay = 'this operation is not allowed';
+  //       break;
+  //     case 'weak-password':
+  //       messageToDisplay =
+  //           'This password is too weak! , try with another password.';
+  //       break;
+  //     default:
+  //       messageToDisplay = 'An unknown error occurred';
+  //       break;
+  //   }
+  //   // showDialog(
+  //   //     context: context,
+  //   //     builder: (BuildContext context) => AlertDialog(
+  //   //           title: Text('Sign up Failed'),
+  //   //           content: Text(messageToDisplay),
+  //   //           actions: [
+  //   //             TextButton(
+  //   //                 onPressed: () {
+  //   //                   Navigator.of(context).pop();
+  //   //                 },
+  //   //                 child: Text('Ok'))
+  //   //           ],
+  //   //         ));
+  //   // }
+  // }
+
+  // Future _signUp() async {
+  //   setState(() {
+  //     loading = true;
+  //   });
+  //   try {
+  //     await FirebaseAuth.instance.createUserWithEmailAndPassword(
+  //         email: emailController.text, password: passwordController.text);
+  //     await FirebaseFirestore.instance.collection('user').add({
+  //       'email': emailController.text,
+  //       'name': nameController.text,
+  //       'id': user?.uid,
+  //       'photoURL': user?.photoURL ?? '',
+  //       'bio': bioController,
+  //       'educationFiled': educationfiled,
+  //       'role': role,
+  //     });
+  //     await showDialog(
+  //         context: context,
+  //         builder: (context) => AlertDialog(
+  //               title: const Text('Sign up Succeeded'),
+  //               content:
+  //                   const Text('your account was created , you can log in now'),
+  //               actions: [
+  //                 TextButton(
+  //                     onPressed: () {
+  //                       Navigator.of(context).pop();
+  //                     },
+  //                     child: const Text('ok'))
+  //               ],
+  //             ));
+  //     Navigator.of(context).pop();
+  //   } on FirebaseAuthException catch (e) {
+  //     _handleSignUpError(e);
+  //   }
+  // }
+
+}
 
 String? _requiredValidator(String? text) {
   if (text == null || text.trim().isEmpty) {
@@ -297,14 +396,3 @@ String? _requiredValidator(String? text) {
   }
   return null;
 }
-
-// String? _confirmPassworddValidator(String? passwordText) {
-//   if (passwordText == null || passwordText.trim().isEmpty) {
-//     return 'this filed is required';
-//   }
-//   if (passwordController.text != passwordText) {
-//     return "Password don't match";
-//   }
-
-//   return null;
-// }

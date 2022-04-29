@@ -1,5 +1,5 @@
 import 'package:asky/styles/colors.dart';
-import 'package:asky/views/registration/test.dart';
+import 'package:asky/views/authentification/registration/test.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -108,7 +108,7 @@ class _TestRegState extends State<TestReg> {
                   Divider(),
                   SizedBox(height: 2.h),
                   if (isTeacher) ...[
-                    Home(),
+                    const Home(),
                   ],
                   if (!isTeacher) ...[
                     Wrap(

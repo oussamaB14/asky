@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:sizer/sizer.dart';
 
 import '../../services/auth_service.dart';
 import '../../styles/colors.dart';
+import '../Wrapper.dart';
 
 class SigninView extends StatefulWidget {
   const SigninView({Key? key}) : super(key: key);
@@ -21,65 +23,67 @@ class SigninViewState extends State<SigninView> {
   AccessToken? _accessToken;
   bool _checking = true;
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _checkIfisLoggedIn();
-  }
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   _checkIfisLoggedIn();
+  // }
 
-  _checkIfisLoggedIn() async {
-    final accessToken = await FacebookAuth.instance.accessToken;
+  // _checkIfisLoggedIn() async {
+  //   final accessToken = await FacebookAuth.instance.accessToken;
 
-    setState(() {
-      _checking = false;
-    });
+  //   setState(() {
+  //     _checking = false;
+  //   });
 
-    if (accessToken != null) {
-      print(accessToken.toJson());
-      final userData = await FacebookAuth.instance.getUserData();
-      _accessToken = accessToken;
-      setState(() {
-        _userData = userData;
-      });
-    } else {
-      _login();
-    }
-  }
+  //   if (accessToken != null) {
+  //     print(accessToken.toJson());
+  //     final userData = await FacebookAuth.instance.getUserData();
+  //     _accessToken = accessToken;
+  //     setState(() {
+  //       _userData = userData;
+  //     });
+  //   } else {
+  //     _login();
+  //   }
+  // }
 
-  _login() async {
-    final LoginResult result = await FacebookAuth.instance.login();
+  // _login() async {
+  //   final LoginResult result = await FacebookAuth.instance.login();
 
-    if (result.status == LoginStatus.success) {
-      _accessToken = result.accessToken;
+  //   if (result.status == LoginStatus.success) {
+  //     _accessToken = result.accessToken;
 
-      final userData = await FacebookAuth.instance.getUserData();
-      _userData = userData;
-    } else {
-      print(result.status);
-      print(result.message);
-    }
-    setState(() {
-      _checking = false;
-    });
-  }
+  //     final userData = await FacebookAuth.instance.getUserData();
+  //     _userData = userData;
+  //   } else {
+  //     print(result.status);
+  //     print(result.message);
+  //   }
+  //   setState(() {
+  //     _checking = false;
+  //   });
+  // }
 
-  _logout() async {
-    await FacebookAuth.instance.logOut();
-    _accessToken = null;
-    _userData = null;
-    setState(() {});
-  }
+  // _logout() async {
+  //   await FacebookAuth.instance.logOut();
+  //   _accessToken = null;
+  //   _userData = null;
+  //   setState(() {});
+  // }
 
-  forgotPassword(String email) async {
-    await _auth.sendPasswordResetEmail(email: email);
-  }
+  // forgotPassword(String email) async {
+  //   await _auth.sendPasswordResetEmail(email: email);
+  // }
 
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   bool _obscureText = true;
   var loading = false;
+  var loading1 = false;
+  var loading2 = false;
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
@@ -87,7 +91,7 @@ class SigninViewState extends State<SigninView> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           elevation: 0,
-          title: Text(
+          title: const Text(
             'Sign in',
             textAlign: TextAlign.center,
           ),
@@ -107,7 +111,7 @@ class SigninViewState extends State<SigninView> {
                   textAlign: TextAlign.center,
                   style: textTheme.bodyText2,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Form(
@@ -125,7 +129,7 @@ class SigninViewState extends State<SigninView> {
                             labelText: 'Email',
                             hintText: 'Enter your email',
                             floatingLabelBehavior: FloatingLabelBehavior.auto,
-                            contentPadding: EdgeInsets.symmetric(
+                            contentPadding: const EdgeInsets.symmetric(
                                 horizontal: 42, vertical: 20),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(28),
@@ -134,11 +138,11 @@ class SigninViewState extends State<SigninView> {
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(28),
-                              borderSide: BorderSide(color: Colors.blue),
+                              borderSide: const BorderSide(color: Colors.blue),
                               gapPadding: 10,
                             ),
-                            suffixIcon:
-                                Icon(CommunityMaterialIcons.email_outline),
+                            suffixIcon: const Icon(
+                                CommunityMaterialIcons.email_outline),
                           ),
                           validator: _requiredValidator),
                       SizedBox(height: 2.5.h),
@@ -149,7 +153,7 @@ class SigninViewState extends State<SigninView> {
                           labelText: 'Password',
                           hintText: 'Enter your password',
                           floatingLabelBehavior: FloatingLabelBehavior.auto,
-                          contentPadding: EdgeInsets.symmetric(
+                          contentPadding: const EdgeInsets.symmetric(
                               horizontal: 42, vertical: 20),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(28),
@@ -158,7 +162,7 @@ class SigninViewState extends State<SigninView> {
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(28),
-                            borderSide: BorderSide(color: Colors.blue),
+                            borderSide: const BorderSide(color: Colors.blue),
                             gapPadding: 10,
                           ),
                           // suffixIcon:
@@ -180,55 +184,68 @@ class SigninViewState extends State<SigninView> {
                       SizedBox(
                         height: 2.5.h,
                       ),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(35),
-                        ))),
-                        onPressed: () {
-                          if (_formKry.currentState != null &&
-                              _formKry.currentState!.validate())
-                            AuthService().signInWithEmail(
-                                usernameController.text,
-                                passwordController.text,
-                                context);
-                        },
-                        child: SizedBox(
-                          width: double.infinity,
-                          height: 6.h,
-                          child: Center(
-                            child: Text(
-                              "Sign in",
-                              style: TextStyle(fontSize: 2.5.h),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Divider(
-                        height: 30,
-                      ),
                       if (loading) ...[
-                        // const Center(
-                        //     child: AlertDialog(
-                        //         title: Text('please wait'),
-                        //         content: CircularProgressIndicator()))
                         const Center(child: CircularProgressIndicator())
                       ],
                       if (!loading) ...[
                         ElevatedButton(
                           style: ButtonStyle(
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(35),
+                          ))),
+                          onPressed: () {
+                            if (_formKry.currentState != null &&
+                                _formKry.currentState!.validate()) {
+                              setState(() {
+                                loading = true;
+                              });
+                              AuthService().signInWithEmail(
+                                  usernameController.text,
+                                  passwordController.text,
+                                  context);
+                            }
+                          },
+                          child: SizedBox(
+                            width: double.infinity,
+                            height: 6.h,
+                            child: Center(
+                              child: Text(
+                                "Sign in",
+                                style: TextStyle(fontSize: 2.5.h),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                      const Divider(
+                        height: 30,
+                      ),
+                      if (loading1) ...[
+                        const Center(
+                            child: CircularProgressIndicator(
+                          color: Colors.red,
+                        ))
+                      ],
+                      if (!loading1) ...[
+                        ElevatedButton(
+                          style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(
-                                  Color.fromARGB(255, 241, 28, 21)),
+                                  const Color.fromARGB(255, 241, 28, 21)),
                               shape: MaterialStateProperty.all<
                                       RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(35),
                               ))),
                           onPressed: () {
+                            setState(() {
+                              loading1 = true;
+                            });
                             AuthService().signInwithGoogle().then((value) {
                               if (value != null) {
-                                Navigator.pushNamed(context, '/homepage');
+                                Navigator.pushReplacementNamed(
+                                    context, '/homepage');
                               }
                             });
                           },
@@ -258,43 +275,55 @@ class SigninViewState extends State<SigninView> {
                         ),
                       ],
                       SizedBox(height: 2.5.h),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Color(0xFF4285F4)),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(35),
-                            ))),
-                        onPressed: () {
-                          _userData != null ? _logout : _login;
-                          Navigator.pushReplacementNamed(context, '/homepage');
-                        },
-                        child: SizedBox(
-                          width: double.infinity,
-                          height: 6.h,
-                          child: Row(
-                            children: [
-                              Image.asset(
-                                'assets/images/icons8-facebook-48.png',
-                                height: 3.5.h,
-                              ),
-                              const SizedBox(width: 45),
-                              Center(
-                                child: Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Text(
-                                    "Sign in with Facebook",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(fontSize: 2.5.h),
+                      if (loading2) ...[
+                        const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.blue,
+                          ),
+                        )
+                      ],
+                      if (!loading2) ...[
+                        ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  const Color(0xFF4285F4)),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(35),
+                              ))),
+                          onPressed: () {
+                            setState(() {
+                              loading2 = true;
+                            });
+                            AuthService().loginWithFacebook(context);
+                          },
+                          child: SizedBox(
+                            width: double.infinity,
+                            height: 6.h,
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  'assets/images/icons8-facebook-48.png',
+                                  height: 3.5.h,
+                                ),
+                                const SizedBox(width: 45),
+                                Center(
+                                  child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      "Sign in with Facebook",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(fontSize: 2.5.h),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      ),
-                      Divider(
+                        )
+                      ],
+                      const Divider(
                         height: 30,
                       ),
                       Text(
@@ -305,7 +334,7 @@ class SigninViewState extends State<SigninView> {
                       ElevatedButton(
                         style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(
-                                Color.fromARGB(255, 58, 63, 70)),
+                                const Color.fromARGB(255, 58, 63, 70)),
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(35),
