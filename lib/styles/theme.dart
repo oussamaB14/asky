@@ -33,7 +33,7 @@ class MyThemes {
 
     indicatorColor: MyColors.red,
     brightness: Brightness.light,
-
+    shadowColor: MyColors.black,
     dividerColor: Colors.grey.withOpacity(0.8),
     colorScheme:
         const ColorScheme.light().copyWith(secondary: Colors.grey[850]),
@@ -58,8 +58,7 @@ class MyThemes {
         selectedItemColor: MyColors.black,
         backgroundColor: Colors.white,
         elevation: 1.0),
-    bottomAppBarTheme:
-        BottomAppBarTheme(color: MyColors.green, elevation: 1.0),
+    bottomAppBarTheme: BottomAppBarTheme(color: MyColors.green, elevation: 1.0),
 
     buttonTheme: const ButtonThemeData(
         shape: CircleBorder(), padding: EdgeInsets.all(8)),
@@ -162,6 +161,7 @@ class MyThemes {
     primaryColor: Colors.black,
     dividerColor: Colors.grey.withOpacity(0.8),
     brightness: Brightness.dark,
+    //  shadowColor: Colors.white,
     primaryIconTheme: const IconThemeData(color: Colors.white),
 
     primaryColorLight: MyColors.red,
@@ -187,8 +187,7 @@ class MyThemes {
         selectedItemColor: Colors.white,
         backgroundColor: Colors.black,
         elevation: 1.0),
-    bottomAppBarTheme:
-        BottomAppBarTheme(color: MyColors.green, elevation: 1.0),
+    bottomAppBarTheme: BottomAppBarTheme(color: MyColors.green, elevation: 1.0),
 
     buttonTheme: const ButtonThemeData(
         shape: CircleBorder(), padding: EdgeInsets.all(8)),

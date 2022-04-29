@@ -14,6 +14,7 @@ import 'package:asky/views/profile/widgets/EditProfile_view.dart';
 import 'package:asky/views/profile/widgets/MySpaces_view.dart';
 
 import 'package:asky/views/profile/profile.dart';
+import 'package:asky/views/spaces/spaces.dart';
 import 'package:asky/views/spaces/widgets/AddSpace.dart';
 import 'package:flutter/widgets.dart';
 
@@ -22,7 +23,7 @@ import 'views/authentification/registration/registrationtest.dart';
 final Map<String, WidgetBuilder> routes = {
   // // "/welcomePage": (context) => Wrapper(),
   // "/StudentProfile": (context) => StudentProfile(),
-  // "/spaces": (context) => const Explore(),
+  "/spaces": (context) => const SpacesScreen(),
   // "/explore": (context) => const Explore(),
   "/signin": (context) => const SigninView(),
   "/signup": (context) => const SignupView(),
@@ -34,6 +35,7 @@ final Map<String, WidgetBuilder> routes = {
   "Bookmarks": (context) => const Bookmarks(),
   "EditProfile": (context) => const EditProfile(),
   '/topics': (context) => const TopicsScreen(),
+
   // "addanwser": (context) => AddAnwser(),
   "chatPage": (context) => const ChatPage(),
   // 'addspace': (context) => AddSpace(),

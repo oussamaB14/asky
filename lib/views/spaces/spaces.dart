@@ -3,6 +3,7 @@ import 'package:asky/views/Quizzes/loading.dart';
 import 'package:asky/views/Quizzes/topic_item.dart';
 import 'package:asky/views/spaces/space_item.dart';
 import 'package:asky/views/spaces/widgets/space_card.dart';
+import 'package:asky/widgets/in_app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -26,10 +27,9 @@ class SpacesScreen extends StatelessWidget {
           var spaces = snapshot.data!;
           return Scaffold(
             appBar: AppBar(
-                // backgroundColor: Colors.deepPurple,
-                // title: const Text('Spaces'),
-                ),
-            // drawer: TopicDrawer(topics: spaces),
+              title: const Text('Spaces'),
+            ),
+            endDrawer: const AppDrawer(),
             body: Container(
               color: Theme.of(context).cardColor,
               child: GridView.count(

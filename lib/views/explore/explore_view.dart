@@ -2,6 +2,7 @@ import 'package:asky/models/tags.dart';
 
 import 'package:asky/views/explore/explore_button.dart';
 import 'package:asky/views/tags/tags_view.dart';
+import 'package:asky/widgets/in_app_drawer.dart';
 import 'package:asky/widgets/loading.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:filter_list/filter_list.dart';
@@ -11,6 +12,9 @@ import 'package:sizer/sizer.dart';
 
 import '../../services/tagsService.dart';
 import '../QuestionViews/widgets/QuestionButton.dart';
+import '../spaces/widgets/ask_card.dart';
+import '../spaces/widgets/join_space_card.dart';
+import '../spaces/widgets/quize_card.dart';
 
 class Explore extends StatefulWidget {
   const Explore({Key? key}) : super(key: key);
@@ -18,21 +22,8 @@ class Explore extends StatefulWidget {
   @override
   State<Explore> createState() => _ExploreState();
 }
-// TagsService _tagsService = new TagsService;
 
 class _ExploreState extends State<Explore> {
-  // FirebaseFirestore _db = FirebaseFirestore.instance;
-  // Future<List<TagModel>> getTags() async {
-  //   List<TagModel> tagList = <TagModel>[];
-  //   await _db.collection('tags').get().then((value) {
-  //     value.docs.forEach((element) {
-  //       tagList.add(TagModel.fromDocument(element));
-  //     });
-  //   });
-  //   print(tagList);
-  //   return tagList;
-  // }
-
   TextEditingController _searchController = TextEditingController();
   // final TagsView tag = new TagsView();
   List<TagModel>? selectedtagList = [];
@@ -40,19 +31,38 @@ class _ExploreState extends State<Explore> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            // title: Text("explore"),
+        appBar: AppBar(),
+        endDrawer: SafeArea(
+          child: Align(
+            alignment: Alignment.topRight,
+            child: Container(
+              padding: const EdgeInsets.all(15),
+              height: 28.h,
+              child: const AppDrawer(),
             ),
+          ),
+        ),
         floatingActionButton: exploreButton(),
         body: Padding(
             padding: const EdgeInsets.all(8.0),
             child: SingleChildScrollView(
                 // scrollDirection: Axis.horizontal,
-                child: Column(children: [
+                child: Wrap(children: [
               Text('Explore',
-                  style: GoogleFonts.lato(
-                      textStyle: Theme.of(context).textTheme.headline1)),
-              //
+                  style: GoogleFonts.josefinSans(
+                      textStyle: Theme.of(context).textTheme.headline2,
+                      fontSize: 4.5.h)),
+              SizedBox(
+                height: 2.h,
+              ),
+              Row(
+                children: const [MyQuizCard(), MySpaceCard(), MyAskcard()],
+              ),
+              SizedBox(height: 2.h,),
+              Text('Spaces',
+                  style: GoogleFonts.josefinSans(
+                      textStyle: Theme.of(context).textTheme.headline3,
+                      fontSize: 2.5.h)),
             ]))));
   }
 }

@@ -3,6 +3,7 @@ import 'package:asky/models/user.dart';
 import 'package:asky/services/QuestionsService.dart';
 import 'package:asky/services/user_service.dart';
 import 'package:asky/styles/colors.dart';
+import 'package:asky/views/spaces/widgets/quize_card.dart';
 import 'package:asky/widgets/in_app_drawer.dart';
 import 'package:asky/widgets/loading.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -45,10 +46,10 @@ class _HomePageViewState extends State<HomePage> {
           ),
         ),
       ),
-      floatingActionButton: questionButton(),
+      floatingActionButton: const questionButton(),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -70,7 +71,7 @@ class _HomePageViewState extends State<HomePage> {
                                 (index) => QuestionCard(
                                     question: snapshot.data![index])));
                       default:
-                        return Text("Error");
+                        return const Text("Error");
                     }
                   }),
             ],

@@ -47,42 +47,46 @@ class _EditProfileState extends State<EditProfile> {
             child: Column(
               children: [
                 Center(
-                  child: Stack(children: [
-                    CircleAvatar(
-                      radius: 4.h,
-                      backgroundImage: NetworkImage(data!['imgUrl']),
-                    ),
-                    Positioned(
-                      bottom: 1,
-                      right: 1,
-                      child: Container(
-                        child: const Padding(
-                          padding: EdgeInsets.all(2.0),
-                          child: Icon(Icons.add_a_photo, color: Colors.black),
-                        ),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                              width: 3,
-                              color: Colors.white,
-                            ),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(
-                                50,
-                              ),
-                            ),
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                offset: const Offset(2, 4),
-                                color: Colors.black.withOpacity(
-                                  0.3,
-                                ),
-                                blurRadius: 3,
-                              ),
-                            ]),
+                  child: Expanded(
+                    child: Stack(fit: StackFit.passthrough, children: [
+                      CircleAvatar(
+                        radius: 4.h,
+                        backgroundImage: NetworkImage(data!['imgUrl']),
                       ),
-                    ),
-                  ]),
+                      Positioned(
+                        bottom: 0.0,
+                        right: 0.0,
+                        width: 44.0,
+                        height: 44.0,
+                        child: Container(
+                          child: const Padding(
+                            padding: EdgeInsets.all(2.0),
+                            child: Icon(Icons.add_a_photo, color: Colors.black),
+                          ),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                width: 3,
+                                color: Colors.white,
+                              ),
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(
+                                  50,
+                                ),
+                              ),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: const Offset(2, 4),
+                                  color: Colors.black.withOpacity(
+                                    0.3,
+                                  ),
+                                  blurRadius: 3,
+                                ),
+                              ]),
+                        ),
+                      ),
+                    ]),
+                  ),
                 ),
                 ListTile(
                     title: Row(
