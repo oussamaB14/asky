@@ -11,15 +11,16 @@ class spaceButton extends StatefulWidget {
 class _spaceButtonState extends State<spaceButton> {
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return FloatingActionButton(
-      onPressed: () {
-        Navigator.pushNamed(context, 'addspace');
-      },
-      child: const Icon(
-        CommunityMaterialIcons.plus,
-        color: Colors.white,
-      ),
-      backgroundColor: Colors.blue,
-    );
+        onPressed: () {
+          Navigator.pushNamed(context, 'addspace');
+        },
+        child: const Icon(
+          CommunityMaterialIcons.plus,
+          color: Colors.white,
+        ),
+        backgroundColor: isDarkTheme ? Color(0xFF2cb67d) : Color(0xFF7f5af0));
   }
 }

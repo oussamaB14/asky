@@ -27,7 +27,7 @@ Space _$SpaceFromJson(Map<String, dynamic> json) => Space(
       description: json['description'] as String? ?? '',
       spacePhoto: json['spacePhoto'] as String? ?? 'default.png',
       tags: (json['quizzes'] as List<dynamic>?)
-              ?.map((e) => TagModel.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => TagModel.fromMap(e as Map<String, dynamic>))
               .toList() ??
           const [],
     );

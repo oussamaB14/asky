@@ -29,22 +29,64 @@ class _WrapperState extends State<Wrapper> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: screens[index],
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
-        currentIndex: index,
-        unselectedItemColor: Theme.of(context).dividerColor,
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(CommunityMaterialIcons.home), label: 'home'),
-          BottomNavigationBarItem(
-              icon: Icon(CommunityMaterialIcons.compass), label: 'explore'),
-          BottomNavigationBarItem(
-              icon: Icon(CommunityMaterialIcons.forum), label: 'spaces'),
-          BottomNavigationBarItem(
-              icon: Icon(CommunityMaterialIcons.account), label: 'profile'),
+      bottomNavigationBar: NavigationBar(
+        // type: BottomNavigationBarType.fixed,
+        // selectedItemColor: Color(0xFF7f5af0),
+        // selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+        // currentIndex: index,
+        height: 60,
+        selectedIndex: index,
+        onDestinationSelected: (index) => setState(() {
+          this.index = index;
+        }),
+        // showSelectedLabels: false,
+        // showUnselectedLabels: false,
+        // unselectedItemColor: Theme.of(context).dividerColor,
+        destinations: [
+          NavigationDestination(
+              icon: Icon(
+                CommunityMaterialIcons.home_outline,
+                size: 2.5.h,
+              ),
+              selectedIcon: Icon(
+                CommunityMaterialIcons.home,
+                size: 2.5.h,
+              ),
+              label: ''),
+          NavigationDestination(
+              icon: Icon(
+                CommunityMaterialIcons.compass_outline,
+                size: 2.5.h,
+              ),
+              selectedIcon: Icon(
+                CommunityMaterialIcons.compass,
+                size: 2.5.h,
+              ),
+              label: ''),
+          NavigationDestination(
+              icon: Icon(
+                CommunityMaterialIcons.forum_outline,
+                size: 2.5.h,
+              ),
+              selectedIcon: Icon(
+                CommunityMaterialIcons.forum,
+                size: 2.5.h,
+              ),
+              label: ''),
+          NavigationDestination(
+              icon: Icon(
+                CommunityMaterialIcons.account_outline,
+                size: 2.5.h,
+              ),
+              selectedIcon: Icon(
+                CommunityMaterialIcons.account,
+                size: 2.5.h,
+              ),
+              label: ''),
         ],
-        onTap: (index) => setState(() => this.index = index),
+        // onTap: (index) => setState(() {
+        //   this.index = index;
+        // }),
       ),
     );
   }

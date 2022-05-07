@@ -84,7 +84,8 @@ class AuthService with ChangeNotifier {
             'email': user?.email ?? 'User Email',
             'imageUrl': user?.photoURL ??
                 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-            'saved': [],
+            'educationFiled': '',
+            'bio': '',
           });
         } else {
           userModel =
@@ -122,6 +123,7 @@ class AuthService with ChangeNotifier {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) async {
+        await FirebaseAuth.instance.currentUser?.updateDisplayName(name);
         await FirebaseFirestore.instance
             .collection('user')
             .doc(value.user?.uid)
@@ -129,7 +131,8 @@ class AuthService with ChangeNotifier {
           'email': email,
           'name': name,
           'id': user?.uid,
-          'photoURL': user?.photoURL ?? '',
+          'imgUrl': user?.photoURL ??
+              'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
           'bio': "",
           'educationFiled': "",
           'role': "",
@@ -284,27 +287,13 @@ class AuthService with ChangeNotifier {
             'name': user?.displayName ?? 'User Name',
             'id': user?.uid ?? 'userId',
             'email': user?.email ?? 'User Email',
-            'imageUrl': user?.photoURL ??
+            'imgUrl': user?.photoURL ??
                 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+            'educationFiled': '',
+            'bio': '',
           });
         }
       });
-
-      /*CollectionReference usersCollection = _db.collection('user');
-      DocumentSnapshot? userDoc = await usersCollection.doc(user!.uid).get();
-      if (!userDoc.exists) {
-        usersCollection.doc(user!.uid).set({
-          'name': user?.displayName ?? 'User Name',
-          'id': user?.uid ?? 'userId',
-          'email': user?.email ?? 'User Email',
-          'imageUrl': user?.photoURL ??
-              'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-          'role': '',
-          'educationfiled': ''
-        });
-      } else {
-        userModel = UserModel.fromDocument(userDoc as Map<String, dynamic>);
-      }*/
     }
   }
 }

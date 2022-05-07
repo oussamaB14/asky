@@ -1,11 +1,12 @@
 import 'package:asky/models/Anwser.dart';
+import 'package:asky/views/AnwserView/widgets/Anwser_menu.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 class AnwserCard extends StatelessWidget {
+  final Map<String, dynamic> anwser; // ['']
   const AnwserCard({Key? key, required this.anwser}) : super(key: key);
-  final Anwser anwser;
 
 //   @override
 //   State<AnwserCard> createState() => _AnwserCardState();
@@ -24,16 +25,17 @@ class AnwserCard extends StatelessWidget {
             Row(
               children: [
                 CircleAvatar(
-                  backgroundColor: Colors.brown.shade800,
-                  child: const Text('AH'),
+                  backgroundImage: NetworkImage(anwser['imgUrl']),
                 ),
                 SizedBox(width: 2.h),
-                Text("username"),
+                Text(anwser['username']),
+                const Spacer(),
+                const AnwserPopMenu(),
               ],
             ),
             SizedBox(height: 1.5.h),
             Text(
-              anwser.awnser,
+              anwser['answer'],
               style: Theme.of(context).textTheme.bodyText1,
             ),
             Row(

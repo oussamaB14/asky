@@ -1,8 +1,11 @@
 import 'dart:async';
 
 import 'package:asky/views/authentification/welcome_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
+import '../views/Wrapper.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
@@ -16,9 +19,13 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
     Timer(
-        Duration(seconds: 10),
+        const Duration(seconds: 5),
         () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => WelcomePage())));
+            context,
+            MaterialPageRoute(
+                builder: (context) => FirebaseAuth.instance.currentUser == null
+                    ? const WelcomePage()
+                    : Wrapper())));
   }
 
   @override
@@ -26,16 +33,18 @@ class _SplashState extends State<Splash> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          color: Colors.white10,
+          color: Colors.white,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset('assets/images/LOGO.png', height: 35.h),
-                  SizedBox(height: 4.h,),
-                  CircularProgressIndicator(),
+                  Image.asset('assets/gifs/asky1.gif', height: 35.h),
+                  SizedBox(
+                    height: 4.h,
+                  ),
+                  const CircularProgressIndicator(),
                 ],
               ),
             ),

@@ -1,4 +1,3 @@
-// import 'package:asky/views/profile/student_profile.dart';
 // import 'package:community_material_icon/community_material_icon.dart';
 // import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';
@@ -27,7 +26,9 @@
 //               .addQuestion(Anwser(
 //                   username: 'username.value.text',
 //                   awnser: contentController.value.text,
-//                   userId: AuthService().user?.uid ?? 'ididididi'))
+//                   userId: AuthService().user?.uid ?? 'ididididi',
+//                   id: '',
+//                   userImg: ''))
 //               .whenComplete(() {
 //             Navigator.of(context).pushNamed("/homepage");
 //           });

@@ -21,10 +21,11 @@ class _SpaceCardState extends State<SpaceCard> {
     return Hero(
       tag: widget.space.spacePhoto,
       child: Card(
+        elevation: 1,
         clipBehavior: Clip.antiAlias,
-        margin: EdgeInsets.all(10),
+        margin: const EdgeInsets.all(10),
         shape: RoundedRectangleBorder(
-          side: BorderSide(color: Theme.of(context).shadowColor, width: 0.2.h),
+          // side: BorderSide(color: Theme.of(context).shadowColor, width: 0.2.h),
           borderRadius: BorderRadius.circular(40),
         ),
         child: InkWell(
@@ -37,38 +38,45 @@ class _SpaceCardState extends State<SpaceCard> {
             );
           }),
           child: Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             // height: 16.5.h,
             child: Column(
-              mainAxisAlignment:  MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(widget.space.spaceName,
                     style: GoogleFonts.montserrat(
                         textStyle: Theme.of(context).textTheme.headline2,
                         fontSize: 2.h)),
-                Image.asset('assets/images/${widget.space.spacePhoto}'),
+                Image.asset(
+                  'assets/images/${widget.space.spacePhoto}',
+                  width: 7.5.h,
+                ),
                 // SizedBox(height: 1.h),
                 // Text(widget.space.spaceName,
                 //     style: TextStyle(
                 //       fontSize: 1.5.h,
                 //       fontWeight: FontWeight.bold,
                 //     )),
-                SizedBox(height: 1.h),
-                // ClipRRect(
-                //   borderRadius: BorderRadius.circular(30),
-                //   child: RawChip(
-                //     deleteIcon: Icon(Icons.plus_one),
-                //     label: Text('Join'),
-                //     selected: isSelected,
-                //     padding: const EdgeInsets.symmetric(horizontal: 2),
-                //     // labelPadding: const EdgeInsets.symmetric(vertical :2.0),
-                //     onSelected: (newBoolValue) {
-                //       setState(() {
-                //         isSelected = newBoolValue;
-                //       });
-                //     },
-                //   ),
-                // ),
+                // SizedBox(height: 1.h),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: RawChip(
+                    checkmarkColor: Colors.white,
+                    selectedColor: const Color(0xFF7f5af0),
+                    disabledColor: const Color.fromARGB(255, 119, 118, 118),
+                    deleteIcon: const Icon(Icons.plus_one),
+                    label: const Text('Join'),
+                    labelStyle: const TextStyle(color: Colors.white),
+                    selected: isSelected,
+                    padding: const EdgeInsets.symmetric(horizontal: 2),
+                    // labelPadding: const EdgeInsets.symmetric(vertical :2.0),
+                    onSelected: (newBoolValue) {
+                      setState(() {
+                        isSelected = newBoolValue;
+                      });
+                    },
+                  ),
+                ),
               ],
             ),
           ),

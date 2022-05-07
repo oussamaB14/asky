@@ -11,6 +11,8 @@ class questionButton extends StatefulWidget {
 class _questionButtonState extends State<questionButton> {
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return FloatingActionButton(
       onPressed: () {
         Navigator.pushNamed(context, 'addPost');
@@ -19,7 +21,7 @@ class _questionButtonState extends State<questionButton> {
         CommunityMaterialIcons.plus,
         color: Colors.white,
       ),
-      backgroundColor: Colors.blue,
+      backgroundColor: isDarkTheme ? Color(0xFF2cb67d) : Color(0xFF7f5af0),
     );
   }
 }

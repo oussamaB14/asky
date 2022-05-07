@@ -5,25 +5,48 @@ import 'package:json_annotation/json_annotation.dart';
 
 @JsonSerializable()
 class TagModel {
-  final String id;
   final String tag;
-
   TagModel({
-    this.id = '',
-    this.tag = '',
+    required this.tag,
   });
 
-  factory TagModel.fromJson(Map<String, dynamic> json) =>
-      _$TagModelFromJson(json);
-  Map<String, dynamic> toJson() => _$TagModelToJson(this);
-}
-
-TagModel _$TagModelFromJson(Map<String, dynamic> json) => TagModel(
-      id: json['id'] as String? ?? '',
-      tag: json['tag'] as String? ?? '',
+  TagModel copyWith({
+    String? tag,
+  }) {
+    return TagModel(
+      tag: tag ?? this.tag,
     );
+  }
 
-Map<String, dynamic> _$TagModelToJson(TagModel instance) => <String, dynamic>{
-      'id': instance.id,
-      'tag': instance.tag,
-    };
+  Map<String, dynamic> toMap() {
+    final result = <String, dynamic>{};
+  
+    result.addAll({'tag': tag});
+  
+    return result;
+  }
+
+  factory TagModel.fromMap(Map<String, dynamic> map) {
+    return TagModel(
+      tag: map['tag'] ?? '',
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory TagModel.fromJson(String source) => TagModel.fromMap(json.decode(source));
+
+  @override
+  String toString() => 'TagModel(tag: $tag)';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+  
+    return other is TagModel &&
+      other.tag == tag;
+  }
+
+  @override
+  int get hashCode => tag.hashCode;
+}

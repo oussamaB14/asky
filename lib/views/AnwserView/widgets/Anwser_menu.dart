@@ -1,14 +1,15 @@
+import 'package:asky/views/AnwserView/widgets/Edit_anwser.dart';
 import 'package:asky/views/QuestionViews/EditQuestion.dart';
 import 'package:flutter/material.dart';
 
-class QuestionPopMenu extends StatefulWidget {
-  const QuestionPopMenu({Key? key}) : super(key: key);
+class AnwserPopMenu extends StatefulWidget {
+  const AnwserPopMenu({Key? key}) : super(key: key);
 
   @override
-  State<QuestionPopMenu> createState() => _QuestionPopMenuState();
+  State<AnwserPopMenu> createState() => _AnwserPopMenuState();
 }
 
-class _QuestionPopMenuState extends State<QuestionPopMenu> {
+class _AnwserPopMenuState extends State<AnwserPopMenu> {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
@@ -43,8 +44,8 @@ class _QuestionPopMenuState extends State<QuestionPopMenu> {
 void onSelected(BuildContext context, int item) {
   switch (item) {
     case 0:
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: ((context) => const EditQuestion())));
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: ((context) => const EditAnwser())));
       break;
   }
 }

@@ -34,7 +34,6 @@ class QuestionCard extends StatelessWidget {
       }),
       child: Card(
         shape: RoundedRectangleBorder(
-          side: BorderSide(color: Colors.blue, width: 20.h),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Container(
@@ -46,11 +45,10 @@ class QuestionCard extends StatelessWidget {
               Row(
                 children: [
                   CircleAvatar(
-                    backgroundColor: Colors.brown.shade800,
-                    child: const Text('AH'),
+                    backgroundImage: NetworkImage(question.userPhoto),
                   ),
                   SizedBox(width: 2.h),
-                  const Text("username"),
+                  Text(question.username),
                   const Spacer(),
                   const QuestionPopMenu(),
                 ],
@@ -69,10 +67,12 @@ class QuestionCard extends StatelessWidget {
               ),
               SizedBox(height: 1.5.h),
               Row(
-                children: const [
-                  AnwserButton(),
-                  Spacer(),
-                  AddToBookMark(),
+                children: [
+                  AnswerButton(
+                    id: question.id,
+                  ),
+                  const Spacer(),
+                  const AddToBookMark(),
                 ],
               ),
             ],

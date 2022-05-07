@@ -2,10 +2,12 @@ import 'package:asky/models/SpaceM.dart';
 import 'package:asky/views/Quizzes/loading.dart';
 import 'package:asky/views/Quizzes/topic_item.dart';
 import 'package:asky/views/spaces/space_item.dart';
+import 'package:asky/views/spaces/widgets/addSpaceButton.dart';
 import 'package:asky/views/spaces/widgets/space_card.dart';
 import 'package:asky/widgets/in_app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../services/SpaceService.dart';
 import '../../widgets/loading.dart';
@@ -29,7 +31,17 @@ class SpacesScreen extends StatelessWidget {
             appBar: AppBar(
               title: const Text('Spaces'),
             ),
-            endDrawer: const AppDrawer(),
+            endDrawer: SafeArea(
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  padding: const EdgeInsets.all(15),
+                  height: 27.h,
+                  child: const AppDrawer(),
+                ),
+              ),
+            ),
+            floatingActionButton: spaceButton(),
             body: Container(
               color: Theme.of(context).cardColor,
               child: GridView.count(

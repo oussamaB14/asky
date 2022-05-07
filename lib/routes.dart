@@ -18,11 +18,11 @@ import 'package:asky/views/spaces/spaces.dart';
 import 'package:asky/views/spaces/widgets/AddSpace.dart';
 import 'package:flutter/widgets.dart';
 
-import 'views/authentification/registration/registrationtest.dart';
+import 'views/authentification/registration/registration.dart';
 
 final Map<String, WidgetBuilder> routes = {
   // // "/welcomePage": (context) => Wrapper(),
-  // "/StudentProfile": (context) => StudentProfile(),
+  "/StudentProfile": (context) => StudentProfile(),
   "/spaces": (context) => const SpacesScreen(),
   // "/explore": (context) => const Explore(),
   "/signin": (context) => const SigninView(),
@@ -39,5 +39,5 @@ final Map<String, WidgetBuilder> routes = {
   // "addanwser": (context) => AddAnwser(),
   "chatPage": (context) => const ChatPage(),
   // 'addspace': (context) => AddSpace(),
-  "test": (context) => const TestReg(),
+  "test": (context) => const RegestrationView(),
 };

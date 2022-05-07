@@ -1,3 +1,4 @@
+import 'package:asky/models/tags.dart';
 import 'package:asky/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:textfield_tags/textfield_tags.dart';
@@ -12,6 +13,7 @@ class AddTag extends StatefulWidget {
 class _AddTagState extends State<AddTag> {
   late double _distanceToField;
   late TextfieldTagsController _controller;
+  List<TagModel> questionTags = [];
 
   @override
   void didChangeDependencies() {
@@ -126,18 +128,9 @@ class _AddTagState extends State<AddTag> {
                   controller: tec,
                   focusNode: fn,
                   decoration: InputDecoration(
-                    // label: const Text(
-                    //   'Education Filed',
-                    //   style: TextStyle(color: Colors.blue),
-                    // ),
                     border: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.blue, width: 3.0),
                     ),
-                    // enabledBorder: OutlineInputBorder(
-                    //   borderRadius: BorderRadius.circular(28),
-                    //   borderSide: BorderSide(color: MyColors.black),
-                    //   gapPadding: 10,
-                    // ),
                     focusedBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.blue, width: 3.0),
                     ),

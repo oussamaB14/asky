@@ -1,15 +1,15 @@
+import 'package:asky/services/user_service.dart';
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-class AnwserButton extends StatefulWidget {
-  const AnwserButton({Key? key}) : super(key: key);
+import '../../../services/AnwserService.dart';
 
-  @override
-  State<AnwserButton> createState() => _AnwserButtonState();
-}
+class AnswerButton extends StatelessWidget {
+  final String id;
+  AnswerButton({Key? key, required this.id}) : super(key: key);
 
-class _AnwserButtonState extends State<AnwserButton> {
   TextEditingController _anwserController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -18,8 +18,9 @@ class _AnwserButtonState extends State<AnwserButton> {
         showModalBottomSheet<void>(
             builder: (BuildContext context) {
               return Container(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                height: 40.h,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                height: 50.h,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.vertical(
                     top: Radius.circular(4.h),
@@ -33,11 +34,23 @@ class _AnwserButtonState extends State<AnwserButton> {
                             Navigator.of(context).pop();
                           },
                           child: const Icon(Icons.close)),
-                      Spacer(),
+                      const Spacer(),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(20),
                         child: TextButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              String x =
+                                  await UserService().getUserProfileUrl();
+                              //String y = await UserService().getUserName();
+                              AnwserService().addAnswer({
+                                'username': FirebaseAuth
+                                        .instance.currentUser?.displayName ??
+                                    '',
+                                'imgUrl': x,
+                                'answer': _anwserController.text
+                              }, id);
+                              Navigator.of(context).pop();
+                            },
                             child: Text(
                               'Anwser',
                               style: TextStyle(fontSize: 1.5.h),
@@ -62,7 +75,10 @@ class _AnwserButtonState extends State<AnwserButton> {
             },
             context: context);
       },
-      child: Icon(CommunityMaterialIcons.card_text_outline),
+      child: const Icon(
+        CommunityMaterialIcons.card_text_outline,
+        color: Color(0xFF7f5af0),
+      ),
     );
   }
 }

@@ -12,12 +12,18 @@ class MySpaceCard extends StatefulWidget {
 class _MySpaceCardState extends State<MySpaceCard> {
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return ClipRRect(
       borderRadius: BorderRadius.circular(25),
       child: SizedBox(
         width: 15.h,
         height: 18.h,
         child: Card(
+          color: isDarkTheme ? Color(0xFF2cb67d) : Theme.of(context).cardColor,
+          elevation: 2,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(

@@ -13,6 +13,6 @@ class TagsService {
   Future<TagModel> getTag(String tagId) async {
     var ref = _db.collection('tags').doc(tagId);
     var snapshot = await ref.get();
-    return TagModel.fromJson(snapshot.data() ?? {});
+    return TagModel.fromMap(snapshot.data() ?? {});
   }
 }

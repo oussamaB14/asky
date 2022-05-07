@@ -1,6 +1,8 @@
 import 'package:asky/routes.dart';
 import 'package:asky/services/auth_service.dart';
-
+import 'package:asky/views/authentification/registration/registration.dart';
+import 'package:asky/views/profile/test_Profile.dart';
+import 'package:asky/views/profile/widgets/EditProfile_view.dart';
 
 import 'package:asky/widgets/SplashScreen.dart';
 import 'package:asky/widgets/Splash_view.dart';
@@ -30,10 +32,12 @@ class _RunnerState extends State<Runner> {
           providers: [
             ChangeNotifierProvider<AuthService>(
                 create: (context) => AuthService()),
+            ChangeNotifierProvider<UserProfileInfoProvider>(
+                create: (context) => UserProfileInfoProvider()),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: WelcomePage(),
+            home: Splash(),
             theme: MyThemes().lightTheme,
             darkTheme: MyThemes().darkTheme,
             routes: routes,

@@ -21,7 +21,7 @@ class StudentProfile extends StatefulWidget {
 class StudentProfileViewState extends State<StudentProfile> {
   AccessToken? _accessToken;
   bool _checking = true;
-
+  List<bool> isSelected = [true, false];
   get states => null;
 
   Map<String, dynamic>? _userData;
@@ -41,19 +41,18 @@ class StudentProfileViewState extends State<StudentProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('profile'),
+          title: const Text('profile'),
         ),
         endDrawer: SafeArea(
           child: Align(
             alignment: Alignment.topRight,
             child: Container(
-              padding: EdgeInsets.all(15),
+              padding: const EdgeInsets.all(15),
               height: 38.h,
-              child: PofileDrawer(),
+              child: const PofileDrawer(),
             ),
           ),
         ),
-        floatingActionButton: spaceButton(),
         body: SingleChildScrollView(
             child: FutureBuilder<DocumentSnapshot>(
                 future: FirebaseFirestore.instance
@@ -68,252 +67,183 @@ class StudentProfileViewState extends State<StudentProfile> {
                   if (snapshot.hasError) return const Text('Error');
                   var data = snapshot.data;
 
-                  return Card(
-                    child: Container(
+                  return Container(
+                    color: Theme.of(context).cardColor,
+                    // elevation: 1,
+                    // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    child: Padding(
                       padding: const EdgeInsets.all(8),
-                      width: double.infinity,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Wrap(
                         children: [
                           Row(
                             children: [
+                              SizedBox(width: 1.5.h),
                               CircleAvatar(
-                                radius: 4.h,
-                                backgroundColor: Colors.grey,
                                 backgroundImage: NetworkImage(data!['imgUrl']),
+                                radius: 4.h,
                               ),
-                              SizedBox(width: 2.h),
+                              SizedBox(width: 1.h),
+                              SizedBox(
+                                width: 2.h,
+                              ),
                               Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  data != null
-                                      ? Text(
-                                          data['name'],
-                                          // user?.username,
-                                          style: GoogleFonts.lato(
-                                              textStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium),
-                                        )
-                                      : Text('error'),
-                                  Text(data['role'],
-                                      style: GoogleFonts.lato(
-                                          textStyle: Theme.of(context)
-                                              .textTheme
-                                              .headline6,
-                                          color: Colors.blue)),
+                                  Text(data['name']),
+                                  Text(
+                                    data['role'],
+                                    style: const TextStyle(color: Colors.blue),
+                                  ),
                                 ],
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          Column(
-                            children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    width: 5.h,
+                          SizedBox(height: 10.h),
+                          // Divider(),
+                          // SizedBox(height: 2.h),
+                          Wrap(children: [
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 5.h,
+                                ),
+                                Text(
+                                  "10",
+                                  style: TextStyle(
+                                    fontSize: 2.5.h,
                                   ),
-                                  Text(
-                                    "10",
-                                    style: TextStyle(
-                                      fontSize: 2.5.h,
-                                    ),
+                                ),
+                                SizedBox(
+                                  width: 1.h,
+                                ),
+                                Text(
+                                  "Questions",
+                                  style: GoogleFonts.lato(
+                                    textStyle:
+                                        Theme.of(context).textTheme.headline6,
+                                    fontSize: 2.5.h,
                                   ),
-                                  SizedBox(
-                                    width: 1.h,
+                                ),
+                                SizedBox(
+                                  width: 6.h,
+                                ),
+                                Text(
+                                  "10",
+                                  style: TextStyle(
+                                    fontSize: 2.5.h,
                                   ),
-                                  Text(
-                                    "Questions",
+                                ),
+                                SizedBox(
+                                  width: 1.h,
+                                ),
+                                Text("Anwsers",
                                     style: GoogleFonts.lato(
                                       textStyle:
                                           Theme.of(context).textTheme.headline6,
                                       fontSize: 2.5.h,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 6.h,
-                                  ),
-                                  Text(
-                                    "10",
-                                    style: TextStyle(
-                                      fontSize: 2.5.h,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 1.h,
-                                  ),
-                                  Text("Anwsers",
-                                      style: GoogleFonts.lato(
-                                        textStyle: Theme.of(context)
-                                            .textTheme
-                                            .headline6,
-                                        fontSize: 2.5.h,
-                                      )),
-                                ],
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          Text(
-                            'educationFiled',
-                            style: TextStyle(color: Colors.blue),
-                          ),
-                          Text('bio'),
-                          SizedBox(
-                            height: 15.h,
-                          ),
-                          Divider(),
-                          SizedBox(
-                            width: 1.h,
-                          ),
-                          Row(
-                            children: [
-                              // TextButton(
-                              //     style: ButtonStyle(
-                              //         shape: MaterialStateProperty.all<
-                              //                 RoundedRectangleBorder>(
-                              //             RoundedRectangleBorder(
-                              //                 borderRadius: BorderRadius.circular(18.0),
-                              //                 side: BorderSide(color: Colors.red)))),
-                              //     onPressed: () {
-                              //       setState(() {
-                              //         index = 0;
-                              //       });
-                              //     },
-                              //     child: SizedBox(
-                              //         width: 20.h,
-                              //         child: Center(child: Text("Questions")))),
-                              OutlinedButton(
-                                onPressed: () {
-                                  setState(() {
-                                    index = 0;
-                                  });
-                                },
-                                child: SizedBox(
-                                    width: 19.h,
-                                    child: Center(child: Text('Questions'))),
-                                style: OutlinedButton.styleFrom(
-                                    side: BorderSide(),
-                                    shape: StadiumBorder(),
-                                    textStyle: TextStyle(
-                                      fontSize: 2.5.h,
-                                      // fontStyle: FontStyle.italic,
                                     )),
-                              ),
-                              OutlinedButton(
-                                onPressed: () {
-                                  setState(() {
-                                    index = 1;
-                                  });
-                                },
-                                child: SizedBox(
-                                    width: 19.h,
-                                    child: Center(child: Text('Anwsers'))),
-                                style: OutlinedButton.styleFrom(
-                                  textStyle: TextStyle(
-                                    fontSize: 2.5.h,
-                                    // fontStyle: FontStyle.italic,
-                                  ),
-                                  shape: StadiumBorder(),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 5.h,
+                            ),
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 1.h,
                                 ),
-                              ),
-                              // TextButton(
-                              //     style: ButtonStyle(
-                              //         shape: MaterialStateProperty.all<
-                              //                 RoundedRectangleBorder>(
-                              //             RoundedRectangleBorder(
-                              //                 borderRadius: BorderRadius.circular(18.0),
-                              //                 side: BorderSide(color: Colors.red)))),
-                              //     onPressed: () {
-                              //       setState(() {
-                              //         index = 1;
-                              //       });
-                              //     },
-                              //     child: SizedBox(
-                              //         width: 20.h,
-                              //         child: Center(child: Text("Anwsers")))),
-                            ],
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      height: 2.h,
+                                    ),
+                                    Text(
+                                      data['educationFiled'],
+                                      style:
+                                          const TextStyle(color: Colors.blue),
+                                    ),
+                                    Text(data['bio']),
+                                    SizedBox(
+                                      height: 15.h,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )
+                          ]),
+                          Center(
+                            child: ToggleButtons(
+                                selectedColor: const Color(0xFF7f5af0),
+                                disabledColor: Colors.grey,
+                                color: Colors.grey,
+                                fillColor: Colors.transparent,
+                                selectedBorderColor: const Color(0xFF7f5af0),
+                                borderRadius: BorderRadius.circular(40),
+                                borderWidth: 0.2.h,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 45),
+                                    child: Text(
+                                      'Questions',
+                                      style: TextStyle(fontSize: 3.h),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 45),
+                                    child: Text('Anwsers',
+                                        style: TextStyle(fontSize: 3.h)),
+                                  )
+                                ],
+                                isSelected: isSelected,
+                                onPressed: (int newIdx) {
+                                  setState(() {
+                                    for (int idx = 0;
+                                        idx < isSelected.length;
+                                        idx++) {
+                                      if (idx == newIdx) {
+                                        isSelected[idx] = true;
+                                      } else {
+                                        isSelected[idx] = false;
+                                      }
+                                    }
+                                    this.index = newIdx;
+                                  });
+                                }),
                           ),
-
-                          // ToggleSwitch(
-                          //   minWidth: 25.h,
-                          //   cornerRadius: 20.0,
-                          //   activeFgColor: Colors.white,
-                          //   inactiveBgColor: Color(0XFFEDEDED),
-                          //   activeBgColor: [Color.fromARGB(255, 153, 215, 243)],
-                          //   totalSwitches: 2,
-                          //   initialLabelIndex: index,
-                          //   borderWidth: 1.0,
-                          //   borderColor: [Colors.lightBlue],
-                          //   labels: const [
-                          //     'Questions',
-                          //     'Anwsers',
-                          //   ],
-                          //   customTextStyles: [
-                          //     TextStyle(
-                          //       // color: Colors.brown,
-                          //       fontSize: 2.h,
-                          //       // fontWeight: FontWeight.normal),
-                          //     ),
-                          //     TextStyle(
-                          //       // color: Colors.brown,
-                          //       fontSize: 2.h,
-                          //       // fontWeight: FontWeight.normal
-                          //     ),
-                          //   ],
-                          //   onToggle: (index) {
-                          //     setState(() => this.index = index!);
-                          //   },
-                          // ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-
                           IndexedStack(
                             index: index,
                             children: [
                               Container(
-                                child: Column(
-                                  children: [
-                                    CircleAvatar(),
-                                    CircleAvatar(),
-                                    CircleAvatar(),
-                                    CircleAvatar(),
-                                    CircleAvatar(),
-                                  ],
+                                color: Theme.of(context).cardColor,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      Text('Questions'),
+                                    ],
+                                  ),
                                 ),
-                                color: Colors.black,
-                                width: 15.h,
                               ),
                               Container(
-                                child: Column(
-                                  children: [Text("Anwsers")],
+                                color: Theme.of(context).cardColor,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [Text('Anwsers')],
+                                  ),
                                 ),
                               )
                             ],
-                          ),
-                          // throw Text('data')
+                          )
                         ],
                       ),
                     ),
                   );
                 })));
-  }
-
-  MaterialStateProperty<BorderSide> getBorder(Color color, Color colorPressed) {
-    final getBorder = (Set<MaterialState> state) {
-      if (states.contains(MaterialState.pressed)) {
-        return BorderSide(color: colorPressed, width: 2);
-      } else {
-        return BorderSide(color: color, width: 2);
-      }
-    };
-
-    return MaterialStateProperty.resolveWith((getBorder));
   }
 }

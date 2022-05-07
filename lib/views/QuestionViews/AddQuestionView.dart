@@ -1,9 +1,12 @@
 import 'package:asky/models/Question.dart';
 import 'package:asky/services/QuestionsService.dart';
 import 'package:asky/services/auth_service.dart';
+import 'package:asky/services/user_service.dart';
 import 'package:asky/views/QuestionViews/widgets/QuestionCard.dart';
 import 'package:asky/views/profile/profile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -30,18 +33,23 @@ class _AddQuestionViewState extends State<AddQuestionView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add question"),
+        title: const Text("Add question"),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
           _questionsServices
-              .addQuestion(Question(
-                  username: 'username.value.text,',
-                  title: titleController.value.text,
-                  content: contentController.value.text,
-                  authorId: AuthService().user?.uid ?? 'ididididi',
-                  id: '',
-                  mediaUrl: ''))
+              .addQuestion(
+            Question(
+                username:
+                    FirebaseAuth.instance.currentUser?.displayName ?? 'Error',
+                title: titleController.value.text,
+                content: contentController.value.text,
+                authorId: AuthService().user?.uid ?? 'ididididi',
+                id: FirebaseFirestore.instance.collection('questions').doc().id,
+                mediaUrl: '',
+                userPhoto: ''),
+            // tags :
+          )
               .whenComplete(() {
             Navigator.of(context).pushNamed("/homepage");
           });
@@ -50,7 +58,7 @@ class _AddQuestionViewState extends State<AddQuestionView> {
           CommunityMaterialIcons.arrow_right,
           color: Colors.white,
         ),
-        backgroundColor: Colors.blue,
+        backgroundColor: const Color(0xFF7f5af0),
       ),
       body: SingleChildScrollView(
           child: Card(
@@ -72,9 +80,9 @@ class _AddQuestionViewState extends State<AddQuestionView> {
                         hintText: 'Enter title here',
                         floatingLabelBehavior: FloatingLabelBehavior.auto,
                         border: InputBorder.none),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your title';
+                    validator: (String? text) {
+                      if (text == null || text.trim().isEmpty) {
+                        return 'this filed is required';
                       }
                       return null;
                     },
@@ -94,16 +102,16 @@ class _AddQuestionViewState extends State<AddQuestionView> {
                         hintMaxLines: 5,
                         contentPadding: EdgeInsets.all(15),
                         border: InputBorder.none),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your Question';
+                    validator: (String? text) {
+                      if (text == null || text.trim().isEmpty) {
+                        return 'this filed is required';
                       }
                       return null;
                     },
                   ),
-                  Divider(),
+                  const Divider(),
                   SizedBox(height: 2.h),
-                  AddTag()
+                  const AddTag()
                 ],
               )),
               // AddTag(),

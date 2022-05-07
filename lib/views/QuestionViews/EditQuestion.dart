@@ -15,18 +15,20 @@ class _EditQuestionState extends State<EditQuestion> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Edit Question')),
+      appBar: AppBar(title: const Text('Edit Question')),
       floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: const Icon(
-            CommunityMaterialIcons.content_save,
-            color: Colors.white,
-          ),backgroundColor: Colors.blue,),
-      
+        onPressed: () {},
+        child: const Icon(
+          CommunityMaterialIcons.content_save,
+          color: Colors.white,
+        ),
+        backgroundColor: Colors.blue,
+      ),
       body: SingleChildScrollView(
           child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Card(

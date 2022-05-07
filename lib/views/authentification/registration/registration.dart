@@ -7,14 +7,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
-class TestReg extends StatefulWidget {
-  const TestReg({Key? key}) : super(key: key);
+class RegestrationView extends StatefulWidget {
+  const RegestrationView({Key? key}) : super(key: key);
 
   @override
-  State<TestReg> createState() => _TestRegState();
+  State<RegestrationView> createState() => _RegestrationViewState();
 }
 
-class _TestRegState extends State<TestReg> {
+class _RegestrationViewState extends State<RegestrationView> {
   final _formkry = GlobalKey<FormState>();
   List options = ["Teacher", "Student"];
   List options2 = ["LSIM", "LISI", "PREPA", "LTIC", "MRSIM", "MPSE", "MPSSI"];
@@ -30,7 +30,7 @@ class _TestRegState extends State<TestReg> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Registration'),
+        title: const Text('Registration'),
       ),
       body: SingleChildScrollView(
         child: Card(
@@ -41,8 +41,8 @@ class _TestRegState extends State<TestReg> {
               // height: double.infinity,
               child: Column(
                 children: [
-                  Text('pick a photo'),
-                  Divider(),
+                  const Text('pick a photo'),
+                  const Divider(),
                   CircleAvatar(
                     radius: 5.h,
                     child: TextButton(
@@ -61,7 +61,7 @@ class _TestRegState extends State<TestReg> {
                     ),
                   ),
                   SizedBox(height: 2.h),
-                  Text(
+                  const Text(
                     'you are a ..?',
                   ),
                   Wrap(
@@ -70,13 +70,13 @@ class _TestRegState extends State<TestReg> {
                       (int idx) {
                         return Wrap(children: <Widget>[
                           Container(
-                            margin: EdgeInsets.symmetric(
+                            margin: const EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 10),
                             padding: const EdgeInsets.symmetric(
                                 vertical: 15, horizontal: 5),
                             child: RawChip(
                                 selectedColor: Colors.blue,
-                                backgroundColor: Color(0xFFE1E4F3),
+                                backgroundColor: const Color(0xFFE1E4F3),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(45),
                                 ),
@@ -101,11 +101,31 @@ class _TestRegState extends State<TestReg> {
                       },
                     ).toList(),
                   ),
-                  Text('Education Filed'),
-                  Divider(),
+                  const Text('Education Filed'),
+                  const Divider(),
                   SizedBox(height: 2.h),
                   if (isTeacher) ...[
-                    const Home(),
+                    // const Home(),
+                    TextFormField(
+                      controller: _educationFiled,
+                      decoration: const InputDecoration(
+                        label: Text('Education Filed',
+                            style: TextStyle(color: Colors.blue)),
+                        hintText: 'enter your Education Filed',
+                        helperText:
+                            'you can add all the subjects you teach here ',
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.blue, width: 3.0),
+                        ),
+                      ),
+                      validator: (String? text) {
+                        if (text == null || text.trim().isEmpty) {
+                          return 'this filed is required';
+                        }
+                        return null;
+                      },
+                    ),
                   ],
                   if (!isTeacher) ...[
                     Wrap(
@@ -121,7 +141,7 @@ class _TestRegState extends State<TestReg> {
                                   //     ? Icon(Icons.check, color: Colors.blue)
                                   //     : null,
                                   selectedColor: Colors.blue,
-                                  backgroundColor: Color(0xFFE1E4F3),
+                                  backgroundColor: const Color(0xFFE1E4F3),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(45)),
                                   label: Text(options2[idx]),
@@ -138,10 +158,9 @@ class _TestRegState extends State<TestReg> {
                     ),
                   ],
                   SizedBox(height: 2.h),
-                  Text('About you '),
+                  const Text('About you '),
                   TextFormField(
                     controller: bioController,
-                    key: _formkry,
                     decoration: const InputDecoration(
                       label: Text('bio', style: TextStyle(color: Colors.blue)),
                       hintText: 'enter a bio about yourself',
@@ -168,13 +187,13 @@ class _TestRegState extends State<TestReg> {
                     onPressed: () async {
                       AuthService().updateUserInfo(
                           isTeacher ? 'Teacher' : 'Student',
-                          options2[_value2],
+                          isTeacher ? _educationFiled.text : options2[_value2],
                           bioController.text);
                       await showDialog(
                           context: context,
                           builder: (context) => AlertDialog(
-                                title: Text('Informations confirmed'),
-                                content: Text(
+                                title: const Text('Informations confirmed'),
+                                content: const Text(
                                     'your account was created , you can log in now'),
                                 actions: [
                                   TextButton(
@@ -182,7 +201,7 @@ class _TestRegState extends State<TestReg> {
                                         Navigator.of(context)
                                             .pushReplacementNamed('/signin');
                                       },
-                                      child: Text('ok'))
+                                      child: const Text('ok'))
                                 ],
                               ));
                     },

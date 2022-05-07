@@ -11,7 +11,10 @@ class AppDrawer extends StatefulWidget {
 class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Drawer(
+      backgroundColor: isDarkTheme ? Color(0xFF2cb67d) : Colors.white,
       elevation: 500,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -55,13 +58,13 @@ class _AppDrawerState extends State<AppDrawer> {
                   Navigator.of(context).pushNamed("Settings");
                 },
               ),
-              ListTile(
-                leading: const Icon(Icons.settings),
-                title: Text("Chat"),
-                onTap: () {
-                  Navigator.of(context).pushNamed("chatPage");
-                },
-              ),
+              // ListTile(
+              //   leading: const Icon(Icons.settings),
+              //   title: Text("Chat"),
+              //   onTap: () {
+              //     Navigator.of(context).pushNamed("chatPage");
+              //   },
+              // ),
               // ListTile(
               //   leading: const Icon(CommunityMaterialIcons.logout),
               //   selectedTileColor: Colors.blue,

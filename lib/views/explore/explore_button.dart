@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:community_material_icon/community_material_icon.dart';
 import 'package:filter_list/filter_list.dart';
 import 'package:flutter/material.dart';
 
@@ -14,51 +12,15 @@ class exploreButton extends StatefulWidget {
 
 class _exploreButtonState extends State<exploreButton> {
   List<TagModel>? selectedtagList = [];
-
-  // List<TagModel> tagList = <TagModel>[];
-
-  // getdata() async {
-  //   await FirebaseFirestore.instance
-  //       .collection("tags")
-  //       .doc('rbG0zyI8gEXsW4B4Xnvi')
-  //       .get()
-  //       .then((value) {
-  //     setState(() {
-  //       // first add the data to the Offset object
-  //       List.from(value.data['tag').forEach((element) {
-  //         TagModel data = new TagModel(element);
-
-  //         //then add the data to the List<Offset>, now we have a type Offset
-  //         tagList.add(data);
-  //       });
-  //     });
-  //   });
-  // }
-
-  // FirebaseFirestore _db = FirebaseFirestore.instance;
-  // Future<List<TagModel>> getTags() async {
-  //   List<TagModel> tagList = <TagModel>[];
-  //   await _db.collection('tags').get().then((value) {
-  //     value.docs.forEach((element) {
-  //       tagList.add(TagModel.fromDocument(element));
-  //     });
-  //   });
-  //   print(tagList);
-  //   return tagList;
-  // }
-
-  // List<TagModel> tagList = <TagModel>[];
-
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      onPressed: _openFilterDialog,
-      child: const Icon(
-        Icons.search,
-        color: Colors.white,
-      ),
-      backgroundColor: Colors.blue,
-    );
+        onPressed: _openFilterDialog,
+        child: const Icon(
+          Icons.search,
+          color: Colors.white,
+        ),
+        backgroundColor: const Color(0xFF7f5af0));
   }
 
   void _openFilterDialog() async {
@@ -86,20 +48,18 @@ class _exploreButtonState extends State<exploreButton> {
         Navigator.pop(context);
       },
       choiceChipBuilder: (context, item, isSelected) {
-        return Expanded(
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            decoration: BoxDecoration(
-                borderRadius: new BorderRadius.circular(20),
-                border: Border.all(
-                  color: isSelected! ? Colors.blue[300]! : Colors.grey[300]!,
-                )),
-            child: Text(
-              item.tag,
-              style: TextStyle(
-                  color: isSelected ? Colors.blue[300] : Colors.grey[300]),
-            ),
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(
+                color: isSelected! ? Color(0xFF7f5af0) : Colors.grey[300]!,
+              )),
+          child: Text(
+            item.tag,
+            style: TextStyle(
+                color: isSelected ? Color(0xFF7f5af0) : Colors.grey[300]),
           ),
         );
       },

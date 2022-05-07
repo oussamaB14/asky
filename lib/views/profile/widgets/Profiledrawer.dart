@@ -1,6 +1,8 @@
 import 'package:asky/views/profile/profile.dart';
+import 'package:asky/views/profile/widgets/EditProfile_view.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../services/auth_service.dart';
 
@@ -68,6 +70,8 @@ class PofileDrawer extends StatelessWidget {
                 leading: const Icon(CommunityMaterialIcons.account_edit),
                 title: Text("Edit profile"),
                 onTap: () {
+                  Provider.of<UserProfileInfoProvider>(context, listen: false)
+                      .resetValues();
                   Navigator.of(context).pushNamed("EditProfile");
                 },
               ),

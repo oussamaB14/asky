@@ -13,6 +13,20 @@ class AnwserService {
 
   FirebaseFirestore _db = FirebaseFirestore.instance;
 
+  void addAnswer(Map<String, dynamic> answer, String id) async {
+    await FirebaseFirestore.instance
+        .collection('questions')
+        .doc(id)
+        .get()
+        .then((value) async {
+      List<dynamic> answers = value['anwsers'];
+      answers.add(answer);
+      await FirebaseFirestore.instance
+          .collection('questions')
+          .doc(id)
+          .update({'anwsers': answers});
+    });
+  }
   // ADD NEW QUESTION TO DB
 
   // Future addAnwser(

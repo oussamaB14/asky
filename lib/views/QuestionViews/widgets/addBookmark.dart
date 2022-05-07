@@ -18,7 +18,10 @@ class _AddToBookMarkState extends State<AddToBookMark> {
           saved = !saved;
         });
       },
-      child: Icon(saved ? Icons.bookmark : Icons.bookmark_outline),
+      child: Icon(
+        saved ? Icons.bookmark : Icons.bookmark_outline,
+        color: const Color(0xFF7f5af0),
+      ),
     );
   }
 }

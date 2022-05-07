@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Question {
   String username;
+  String userPhoto;
   String id;
   String title;
   String content;
@@ -15,6 +16,7 @@ class Question {
   List<Anwser> anwsers;
   Question({
     required this.username,
+    required this.userPhoto,
     required this.title,
     required this.content,
     required this.authorId,
@@ -26,6 +28,7 @@ class Question {
 
   Question copyWith({
     String? username,
+    String? userPhoto,
     String? title,
     String? content,
     String? authorId,
@@ -36,6 +39,7 @@ class Question {
   }) {
     return Question(
       username: username ?? this.username,
+      userPhoto: userPhoto ?? this.userPhoto,
       title: title ?? this.title,
       content: content ?? this.content,
       authorId: authorId ?? this.authorId,
@@ -47,6 +51,7 @@ class Question {
   Map<String, dynamic> toDocument() {
     final result = <String, dynamic>{};
     result.addAll({'username': username});
+    result.addAll({'userPhoto': userPhoto});
     result.addAll({'title': title});
     result.addAll({'content': content});
     result.addAll({'authorId': authorId});
@@ -62,6 +67,7 @@ class Question {
     return Question(
       id: map.id,
       username: data['username'] ?? '',
+      userPhoto: data['userPhoto'] ?? '',
       title: data['title'] ?? '',
       content: data['content'] ?? '',
       authorId: data['authorId'] ?? '',
@@ -76,7 +82,7 @@ class Question {
 
   @override
   String toString() =>
-      'Question(username:$username, title: $title, content: $content, authorId: $authorId, mediaUrl: $mediaUrl)';
+      'Question(username:$username, userPhoto:$userPhoto, title: $title, content: $content, authorId: $authorId, mediaUrl: $mediaUrl)';
 
   @override
   bool operator ==(Object other) {
@@ -84,6 +90,7 @@ class Question {
 
     return other is Question &&
         other.username == username &&
+        other.userPhoto == userPhoto &&
         other.title == title &&
         other.content == content &&
         other.authorId == authorId;
@@ -92,6 +99,7 @@ class Question {
   @override
   int get hashCode =>
       username.hashCode ^
+      userPhoto.hashCode ^
       title.hashCode ^
       content.hashCode ^
       authorId.hashCode ^

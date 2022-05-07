@@ -76,7 +76,6 @@ class _SpaceScreenState extends State<SpaceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [BackButton()],
         title: Text(widget.space.spaceName),
       ),
       endDrawer: SafeArea(

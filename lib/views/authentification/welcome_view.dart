@@ -23,7 +23,7 @@ class WelcomePage extends StatelessWidget {
                 CarouselSlider(
                     items: [
                       Image.asset('assets/images/plan.png', height: 50.h),
-                      Image.asset('assets/images/plan2.png', height: 50.h),
+                      // Image.asset('assets/images/plan2.png', height: 50.h),
                       Image.asset('assets/images/plan1.png', height: 50.h),
                       Image.asset('assets/images/LOGO.png', height: 50.h),
                     ],
@@ -50,15 +50,13 @@ class WelcomePage extends StatelessWidget {
                     style: textTheme.headline1,
                   ),
                 ),
-                Text(
+                const Text(
                   'Join Asky right now and live the best expirence getting knowdlege  ',
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 2.5.h),
                 ElevatedButton(
                   style: ButtonStyle(
-                      // backgroundColor: MaterialStateProperty.all(
-                      //     Color.fromARGB(255, 224, 46, 201)),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(35),
@@ -96,11 +94,11 @@ class WelcomePage extends StatelessWidget {
                 ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
-                          Color.fromARGB(255, 151, 143, 150)),
+                          const Color.fromARGB(255, 151, 143, 150)),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(35),
-                  ))),
+                        borderRadius: BorderRadius.circular(35),
+                      ))),
                   onPressed: () {
                     Navigator.of(context).pushNamed("/signup");
                   },

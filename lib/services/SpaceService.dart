@@ -22,4 +22,13 @@ class SpaceService {
     var spaces = data.map((d) => Space.fromJson(d));
     return spaces.toList();
   }
+   Future<List<Space>> getSingleSpace() async {
+    var ref = _db.collection('space').limit(1);
+    var snapshot = await ref.get();
+    var data = snapshot.docs.map((s) => s.data());
+    var spaces = data.map((d) => Space.fromJson(d));
+    return spaces.toList();
+  }
 }
+
+

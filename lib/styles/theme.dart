@@ -58,6 +58,9 @@ class MyThemes {
         selectedItemColor: MyColors.black,
         backgroundColor: Colors.white,
         elevation: 1.0),
+    navigationBarTheme: NavigationBarThemeData(
+        indicatorColor: Color(0xFF7f5af0).withOpacity(0.3),
+        backgroundColor: Colors.white),
     bottomAppBarTheme: BottomAppBarTheme(color: MyColors.green, elevation: 1.0),
 
     buttonTheme: const ButtonThemeData(
@@ -187,6 +190,8 @@ class MyThemes {
         selectedItemColor: Colors.white,
         backgroundColor: Colors.black,
         elevation: 1.0),
+    navigationBarTheme: NavigationBarThemeData(
+        indicatorColor: MyColors.green.withOpacity(0.4), backgroundColor: Colors.black),
     bottomAppBarTheme: BottomAppBarTheme(color: MyColors.green, elevation: 1.0),
 
     buttonTheme: const ButtonThemeData(

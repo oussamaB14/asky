@@ -3,7 +3,8 @@ import 'package:asky/models/user.dart';
 import 'package:asky/services/QuestionsService.dart';
 import 'package:asky/services/user_service.dart';
 import 'package:asky/styles/colors.dart';
-import 'package:asky/views/spaces/widgets/quize_card.dart';
+import 'package:asky/views/AnwserView/widgets/anwserCard.dart';
+import 'package:asky/widgets/quize_card.dart';
 import 'package:asky/widgets/in_app_drawer.dart';
 import 'package:asky/widgets/loading.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -24,16 +25,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageViewState extends State<HomePage> {
-  FirebaseFirestore _db = FirebaseFirestore.instance;
   late final profileId;
-  QuestionsServices _questionsServices = QuestionsServices();
+  final QuestionsServices _questionsServices = QuestionsServices();
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     AppBarTheme appBarTheme = Theme.of(context).appBarTheme;
     return Scaffold(
       appBar: AppBar(
-        // title: Text('home'),
-
+        iconTheme: IconThemeData(
+            color: isDarkTheme ? Color(0xFF2cb67d) : Color(0xFF7f5af0)),
         automaticallyImplyLeading: false,
       ),
       endDrawer: SafeArea(
@@ -41,7 +43,7 @@ class _HomePageViewState extends State<HomePage> {
           alignment: Alignment.topRight,
           child: Container(
             padding: const EdgeInsets.all(15),
-            height: 28.h,
+            height: 27.h,
             child: const AppDrawer(),
           ),
         ),
@@ -49,13 +51,13 @@ class _HomePageViewState extends State<HomePage> {
       floatingActionButton: const questionButton(),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(10),
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Text('Home',
-              //     style: GoogleFonts.lato(
-              //         textStyle: Theme.of(context).textTheme.headline1)),
+              Text('Questions',
+                  style: GoogleFonts.lato(
+                      textStyle: Theme.of(context).textTheme.headline1)),
               FutureBuilder<List<Question>>(
                   future: _questionsServices.getAllQuestions(),
                   builder: (context, snapshot) {
