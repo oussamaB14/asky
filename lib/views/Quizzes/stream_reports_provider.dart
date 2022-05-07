@@ -1,47 +1,48 @@
-// import 'package:asky/views/Quizzes/firestore.dart';
-// import 'package:firebase_core/firebase_core.dart';
-// import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
+import 'package:asky/views/Quizzes/firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-// class ReportsProvider extends StatefulWidget {
-//   const ReportsProvider({ Key? key }) : super(key: key);
+import 'models.dart';
 
-//   @override
-//   State<ReportsProvider> createState() => _ReportsProviderState();
-// }
+class ReportsProvider extends StatefulWidget {
+  const ReportsProvider({Key? key}) : super(key: key);
 
-// class _ReportsProviderState extends State<ReportsProvider> {
-//    final Future<FirebaseApp> _initialization = Firebase.initializeApp();
-//   @override
-//   Widget build(BuildContext context) {
-//     return FutureBuilder(
-//       // Initialize FlutterFire:
-//       future: _initialization,
-//       builder: (context, snapshot) {
-//         // Check for errors
-//         if (snapshot.hasError) {
-//           return const Center(
-//             child: Text(
-//               'Error',
-//               textDirection: TextDirection.ltr,
-//             ),
-//           );
-//         }
+  @override
+  State<ReportsProvider> createState() => _ReportsProviderState();
+}
 
-//         // Once complete, show your application
-//         if (snapshot.connectionState == ConnectionState.done) {
-//           return StreamProvider(
-//             create: (_) => FirestoreService().streamReport(),
-//             initialData: Report(),
-//             ),
-//           );
-//         }
+class _ReportsProviderState extends State<ReportsProvider> {
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      // Initialize FlutterFire:
+      future: _initialization,
+      builder: (context, snapshot) {
+        // Check for errors
+        if (snapshot.hasError) {
+          return const Center(
+            child: Text(
+              'Error',
+              textDirection: TextDirection.ltr,
+            ),
+          );
+        }
 
-//         // Otherwise, show something whilst waiting for initialization to complete
-//         return const Center(
-//           child: CircularProgressIndicator(),
-//         );
-//       },
-//     );
-//   }
-// }
+        // Once complete, show your application
+        if (snapshot.connectionState == ConnectionState.done) {
+          return StreamProvider(
+            create: (_) => FirestoreService().streamReport(),
+            initialData: Report(),
+          );
+        }
+
+        // Otherwise, show something whilst waiting for initialization to complete
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+  }
+}

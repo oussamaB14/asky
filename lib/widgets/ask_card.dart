@@ -7,15 +7,17 @@ class MyAskcard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     final isDarkTheme =
+    final isDarkTheme =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(25),
+    return InkWell(
+      onTap: (() => Navigator.of(context).pushNamed('addPost')),
       child: SizedBox(
         width: 15.h,
         height: 18.h,
         child: Card(
-           color: isDarkTheme ? Color(0xFF2cb67d) : Theme.of(context).cardColor,
+          color: isDarkTheme
+              ? const Color(0xFF2cb67d)
+              : Theme.of(context).cardColor,
           elevation: 2,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
@@ -29,15 +31,10 @@ class MyAskcard extends StatelessWidget {
                         style: GoogleFonts.lato(
                             textStyle: Theme.of(context).textTheme.headline1,
                             fontSize: 2.h)),
-                    Spacer(),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushNamed('addPost');
-                      },
-                      child: Icon(
-                        Icons.arrow_forward,
-                        size: 3.5.h,
-                      ),
+                    const Spacer(),
+                    Icon(
+                      Icons.arrow_forward,
+                      size: 3.5.h,
                     ),
                   ],
                 ),

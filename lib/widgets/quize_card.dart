@@ -9,8 +9,8 @@ class MyQuizCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDarkTheme =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(25),
+    return InkWell(
+      onTap: (() => Navigator.of(context).pushNamed('/topics')),
       child: SizedBox(
         width: 15.h,
         height: 18.h,
@@ -32,15 +32,10 @@ class MyQuizCard extends StatelessWidget {
                             fontSize: 2.h,
                             color: Colors.white)),
                     const Spacer(),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushNamed('/topics');
-                      },
-                      child: Icon(
-                        Icons.arrow_forward,
-                        size: 3.5.h,
-                        color: Colors.white,
-                      ),
+                    Icon(
+                      Icons.arrow_forward,
+                      size: 3.5.h,
+                      color: Colors.white,
                     ),
                   ],
                 ),

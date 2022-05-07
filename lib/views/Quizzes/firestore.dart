@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rxdart/rxdart.dart';
+import '../../services/auth_service.dart';
 import 'models.dart';
 
 class FirestoreService {
@@ -24,16 +25,16 @@ class FirestoreService {
   }
 
   /// Listens to current user's report document in Firestore
-  // Stream<Report> streamReport() {
-  //   return AuthService().userStream.switchMap((user) {
-  //     if (user != null) {
-  //       var ref = _db.collection('reports').doc(user.uid);
-  //       return ref.snapshots().map((doc) => Report.fromJson(doc.data()!));
-  //     } else {
-  //       return Stream.fromIterable([Report()]);
-  //     }
-  //   });
-  // }
+  Stream<Report> streamReport() {
+    return AuthService().userStream.switchMap((user) {
+      if (user != null) {
+        var ref = _db.collection('reports').doc(user.uid);
+        return ref.snapshots().map((doc) => Report.fromJson(doc.data()!));
+      } else {
+        return Stream.fromIterable([Report()]);
+      }
+    });
+  }
 
   /// Updates the current user's report document after completing quiz
   Future<void> updateUserReport(Quiz quiz) {

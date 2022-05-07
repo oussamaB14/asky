@@ -46,17 +46,17 @@ Map<String, dynamic> _$QuizToJson(Quiz instance) => <String, dynamic>{
       'questions': instance.questions,
     };
 
-// Report _$ReportFromJson(Map<String, dynamic> json) => Report(
-//       uid: json['uid'] as String? ?? '',
-//       topics: json['topics'] as Map<String, dynamic>? ?? const {},
-//       total: json['total'] as int? ?? 0,
-//     );
+Report _$ReportFromJson(Map<String, dynamic> json) => Report(
+      uid: json['uid'] as String? ?? '',
+      topics: json['topics'] as Map<String, dynamic>? ?? const {},
+      total: json['total'] as int? ?? 0,
+    );
 
-// Map<String, dynamic> _$ReportToJson(Report instance) => <String, dynamic>{
-//       'uid': instance.uid,
-//       'total': instance.total,
-//       'topics': instance.topics,
-//     };
+Map<String, dynamic> _$ReportToJson(Report instance) => <String, dynamic>{
+      'uid': instance.uid,
+      'total': instance.total,
+      'topics': instance.topics,
+    };
 
 Question _$QuestionFromJson(Map<String, dynamic> json) => Question(
       text: json['text'] as String? ?? '',

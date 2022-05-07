@@ -50,7 +50,7 @@ class TopicItem extends StatelessWidget {
                       softWrap: false,
                     )),
               ),
-              // Flexible(child: TopicProgress(topic: topic)),
+              Flexible(child: TopicProgress(topic: topic)),
             ],
           ),
         ),

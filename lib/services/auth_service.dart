@@ -16,6 +16,7 @@ class AuthService with ChangeNotifier {
   UserModel? userModel;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final userStream = FirebaseAuth.instance.authStateChanges();
   FirebaseFirestore _db = FirebaseFirestore.instance;
   User? user;
   // final user = FirebaseAuth.instance.currentUser;
