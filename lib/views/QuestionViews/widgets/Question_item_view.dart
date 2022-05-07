@@ -61,7 +61,7 @@ class QuestionScreen extends StatelessWidget {
                         children: [
                           AnswerButton(id: question.id),
                           const Spacer(),
-                          const AddToBookMark(),
+                          AddToBookMark(id: [question.id]),
                         ],
                       ),
                     ],

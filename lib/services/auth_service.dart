@@ -87,6 +87,8 @@ class AuthService with ChangeNotifier {
                 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
             'educationFiled': '',
             'bio': '',
+            'Bookmarks': [],
+            'Spaces': []
           });
         } else {
           userModel =
@@ -137,6 +139,8 @@ class AuthService with ChangeNotifier {
           'bio': "",
           'educationFiled': "",
           'role': "",
+          'Bookmarks': [],
+          'Spaces': []
         });
       });
 
@@ -231,6 +235,8 @@ class AuthService with ChangeNotifier {
             'role': '',
             'educationFiled': '',
             'bio': '',
+            'Bookmarks': [],
+            'Spaces': []
           });
         }
       });

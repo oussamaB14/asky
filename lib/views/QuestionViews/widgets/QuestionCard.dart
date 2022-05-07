@@ -72,7 +72,9 @@ class QuestionCard extends StatelessWidget {
                     id: question.id,
                   ),
                   const Spacer(),
-                  const AddToBookMark(),
+                  AddToBookMark(
+                    id: [question.id],
+                  ),
                 ],
               ),
             ],
