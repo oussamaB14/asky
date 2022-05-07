@@ -1,4 +1,6 @@
 import 'package:asky/models/tags.dart';
+import 'package:asky/views/QuestionViews/widgets/QuestionCard.dart';
+import 'package:asky/views/explore/controllers/exploreViewController.dart';
 
 import 'package:asky/views/explore/explore_button.dart';
 import 'package:asky/views/tags/tags_view.dart';
@@ -8,6 +10,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:filter_list/filter_list.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../models/SpaceM.dart';
@@ -35,83 +38,93 @@ class _ExploreState extends State<Explore> {
   List<TagModel> tagList = [];
   @override
   Widget build(BuildContext context) {
-    final isDarkTheme =
-        MediaQuery.of(context).platformBrightness == Brightness.dark;
+    final exploreController =
+        Provider.of<ExploreViewController>(context, listen: false);
     return Scaffold(
-        backgroundColor:
-            isDarkTheme ? Colors.black : Theme.of(context).cardColor,
-        appBar: AppBar(),
-        endDrawer: SafeArea(
-          child: Align(
-            alignment: Alignment.topRight,
-            child: Container(
-              padding: const EdgeInsets.all(15),
-              height: 27.h,
-              child: const AppDrawer(),
-            ),
+      appBar: AppBar(
+        title: Container(
+          padding: const EdgeInsets.all(8),
+          child: TextField(
+            //  style: Theme.of(context).textTheme.bodyText2,
+            controller: _searchController,
+            onChanged: (v) {
+              if (v.length > 1) {
+                exploreController.searchQuestion(v);
+              }
+            },
+            decoration: InputDecoration(
+                isDense: true,
+                contentPadding: EdgeInsets.zero,
+                border: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                label: Text('Search'),
+                prefixIcon: Icon(Icons.search),
+                suffixIcon: IconButton(
+                    onPressed: () {
+                      // TODO DISPOSE TEXT FIELD AND RESET DATA
+                      _searchController.clear();
+                      exploreController.disposeSearch();
+                    },
+                    icon: Icon(Icons.close)),
+                floatingLabelBehavior: FloatingLabelBehavior.never),
           ),
         ),
-        floatingActionButton: const exploreButton(),
-        body: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SingleChildScrollView(
-              // scrollDirection: Axis.horizontal,
-              child: Wrap(children: [
+      ),
+      body: Consumer<ExploreViewController>(builder: (context, app, child) {
+        return SingleChildScrollView(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              children: [
+                // filters chips
+                _tagsFilterComponent(app),
+                // TODO ADD DATA
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Explore',
-                        style: GoogleFonts.josefinSans(
-                            textStyle: Theme.of(context).textTheme.headline2,
-                            fontSize: 4.5.h)),
-                    SizedBox(height: 2.h),
-                    Text('Quick start',
-                        style: GoogleFonts.josefinSans(
-                            textStyle: Theme.of(context).textTheme.headline3,
-                            fontSize: 2.5.h)),
+                    if (_searchController.text.isNotEmpty &&
+                        app.searchedQuestions.isEmpty)
+                      Column(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.all(16),
+                            child: Text('Sorry no resultat found'),
+                          ),
+                          Divider()
+                        ],
+                      ),
+                    Column(
+                      children:
+                          List.generate(app.getRightList().length, (index) {
+                        return QuestionCard(
+                            question: app.getRightList()[index]);
+                      }),
+                    ),
                   ],
-                ),
-                Row(
-                  children: [
-                    MyQuizCard(),
-                    const MySpaceCard(),
-                    const MyAskcard()
-                  ],
-                ),
-                SizedBox(
-                  height: 2.5.h,
-                ),
-                Text('Spaces',
-                    style: GoogleFonts.josefinSans(
-                        textStyle: Theme.of(context).textTheme.headline3,
-                        fontSize: 2.5.h)),
-                Spacer(),
-                // FutureBuilder<List<Space>>(
-                //   future: SpaceService().getSingleSpace(),
-                //   builder: (context, snapshot) {
-                //     if (snapshot.connectionState == ConnectionState.waiting) {
-                //       return const MainLoadingScreen();
-                //     } else if (snapshot.hasError) {
-                //       return ErrorMessage(message: snapshot.error.toString());
-                //     } else if (snapshot.hasData) {
-                //       var spaces = snapshot.data!;
-                //       return Column(
-                //         // primary: false,
-                //         // padding: const EdgeInsets.all(20),
-                //         // crossAxisSpacing: 10,
-                //         // crossAxisCount: 1,
-                //         children: spaces
-                //             .map((space) => ExploreSpaceCaerd(space: space))
-                //             .toList(),
-                //       );
-                //     } else {
-                //       return const Text(
-                //           'No topics found in Firestore. Check database');
-                //     }
-                //   },
-                // )
-                // ignore: prefer_const_constructors
-              ]),
-            )));
+                )
+              ],
+            ));
+      }),
+    );
+  }
+
+  Widget _tagsFilterComponent(app) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: List.generate(app.filters.length, (index) {
+          return Padding(
+            padding: const EdgeInsets.only(left: 5),
+            child: FilterChip(
+                label: Text(app.filters[index]),
+                showCheckmark: true,
+                selected: app.selectedFilters.contains(app.filters[index]),
+                onSelected: (filter) {
+                  app.addFilter(app.filters[index]);
+                  print(app.selectedFilters);
+                }),
+          );
+        }),
+      ),
+    );
   }
 }

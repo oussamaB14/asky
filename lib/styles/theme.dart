@@ -1,3 +1,4 @@
+import 'package:asky/constants/assets.dart';
 import 'package:filter_list/filter_list.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -99,17 +100,20 @@ class MyThemes {
           borderRadius: BorderRadius.circular(10),
         )),
     chipTheme: ChipThemeData(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(45)),
+      
       backgroundColor: Colors.grey.shade300,
       showCheckmark: false,
       disabledColor: Colors.grey,
-      selectedColor: Colors.blue,
-      padding: const EdgeInsets.all(12),
+      selectedColor: appColor,
+      checkmarkColor: Colors.white,
+      padding: const EdgeInsets.symmetric(horizontal: 2),
       labelStyle: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w600,
           fontSize: 12.sp,
-          color: Colors.black),
+          color: Colors.white),
+          
       brightness: Brightness.light,
       secondarySelectedColor: MyColors.green,
       secondaryLabelStyle: TextStyle(
@@ -191,7 +195,8 @@ class MyThemes {
         backgroundColor: Colors.black,
         elevation: 1.0),
     navigationBarTheme: NavigationBarThemeData(
-        indicatorColor: MyColors.green.withOpacity(0.4), backgroundColor: Colors.black),
+        indicatorColor: MyColors.green.withOpacity(0.4),
+        backgroundColor: Colors.black),
     bottomAppBarTheme: BottomAppBarTheme(color: MyColors.green, elevation: 1.0),
 
     buttonTheme: const ButtonThemeData(
@@ -230,11 +235,11 @@ class MyThemes {
           borderRadius: BorderRadius.circular(10),
         )),
     chipTheme: ChipThemeData(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(45)),
       backgroundColor: Colors.grey.shade800,
       showCheckmark: false,
       disabledColor: Colors.grey,
-      selectedColor: MyColors.green,
+      selectedColor: appColor,
       padding: const EdgeInsets.all(12),
       labelStyle: TextStyle(
           fontFamily: "Montserrat",
