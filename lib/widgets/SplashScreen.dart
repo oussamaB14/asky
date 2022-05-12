@@ -40,7 +40,7 @@ class _SplashState extends State<Splash> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset('assets/gifs/asky1.gif', height: 35.h),
+                  Image.asset('assets/gifs/ASKY.gif', height: 35.h),
                   SizedBox(
                     height: 4.h,
                   ),

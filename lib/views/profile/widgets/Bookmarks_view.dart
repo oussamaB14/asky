@@ -25,37 +25,39 @@ class Bookmarks extends StatelessWidget {
           } else {
             List<dynamic> books = snapshot.data!['Bookmarks'];
 
-            return StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance
-                    .collection('questions')
-                    .snapshots(),
-                builder: ((context, snap) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  }
-                  if (!snap.hasData) {
-                    return const Text('no bookmarks saved yet');
-                  }
-                  var data2 = snap.data?.docs;
+            return SingleChildScrollView(
+              child: StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('questions')
+                      .snapshots(),
+                  builder: ((context, snap) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    }
+                    if (!snap.hasData) {
+                      return const Text('no bookmarks saved yet');
+                    }
+                    var data2 = snap.data?.docs;
 
-                  return Column(
-                    children: [
-                      if (data2 != null)
-                        for (int i = 0; i < data2.length; i++)
-                          if (books.contains(data2[i].id))
-                            QuestionCard(
-                              question: Question(
-                                  username: data2[i]['username'],
-                                  userPhoto: data2[i]['userPhoto'],
-                                  title: data2[i]['title'],
-                                  content: data2[i]['content'],
-                                  authorId: data2[i]['authorId'],
-                                  id: data2[i].id,
-                                  mediaUrl: data2[i]['mediaUrl']),
-                            )
-                    ],
-                  );
-                }));
+                    return Column(
+                      children: [
+                        if (data2 != null)
+                          for (int i = 0; i < data2.length; i++)
+                            if (books.contains(data2[i].id))
+                              QuestionCard(
+                                question: Question(
+                                    username: data2[i]['username'],
+                                    userPhoto: data2[i]['userPhoto'],
+                                    title: data2[i]['title'],
+                                    content: data2[i]['content'],
+                                    authorId: data2[i]['authorId'],
+                                    id: data2[i].id,
+                                    mediaUrl: data2[i]['mediaUrl']),
+                              )
+                      ],
+                    );
+                  })),
+            );
           }
         },
       ),

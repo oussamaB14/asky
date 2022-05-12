@@ -33,6 +33,7 @@ class QuestionCard extends StatelessWidget {
         );
       }),
       child: Card(
+        elevation: 2,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),

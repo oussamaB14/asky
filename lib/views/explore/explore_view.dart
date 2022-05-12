@@ -36,11 +36,13 @@ class _ExploreState extends State<Explore> {
   // final TagsView tag = new TagsView();
   List<TagModel>? selectedtagList = [];
   List<TagModel> tagList = [];
+  bool isSelected = false;
   @override
   Widget build(BuildContext context) {
     final exploreController =
         Provider.of<ExploreViewController>(context, listen: false);
     return Scaffold(
+      backgroundColor: Theme.of(context).cardColor,
       appBar: AppBar(
         title: Container(
           padding: const EdgeInsets.all(8),
@@ -87,9 +89,12 @@ class _ExploreState extends State<Explore> {
                         children: [
                           Container(
                             margin: const EdgeInsets.all(16),
-                            child: Text('Sorry no resultat found'),
+                            child: Image.asset(
+                              'assets/images/_Pngtree_no_result_search_icon_6511543-removebg-preview.png',
+                              height: 35.h,
+                            ),
                           ),
-                          Divider()
+                          const Divider()
                         ],
                       ),
                     Column(
@@ -115,12 +120,17 @@ class _ExploreState extends State<Explore> {
           return Padding(
             padding: const EdgeInsets.only(left: 5),
             child: FilterChip(
-                label: Text(app.filters[index]),
+                label: Text(
+                  app.filters[index],
+                  style: TextStyle(
+                      color: app.selectedFilters.contains(app.filters[index])
+                          ? Colors.white
+                          : Colors.black),
+                ),
                 showCheckmark: true,
                 selected: app.selectedFilters.contains(app.filters[index]),
                 onSelected: (filter) {
                   app.addFilter(app.filters[index]);
-                  print(app.selectedFilters);
                 }),
           );
         }),

@@ -424,6 +424,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
+  flutter_speed_dial:
+    dependency: "direct main"
+    description:
+      name: flutter_speed_dial
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "6.0.0"
   flutter_spinkit:
     dependency: "direct main"
     description:
@@ -735,6 +742,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.11.1"
+  percent_indicator:
+    dependency: transitive
+    description:
+      name: percent_indicator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.4.0"
   petitparser:
     dependency: transitive
     description:
@@ -763,6 +777,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
+  polls:
+    dependency: "direct main"
+    description:
+      name: polls
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   process:
     dependency: transitive
     description:

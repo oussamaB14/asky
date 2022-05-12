@@ -124,6 +124,7 @@ class SigninViewState extends State<SigninView> {
                       ),
                       TextFormField(
                           controller: usernameController,
+                          keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
                             filled: true,
                             labelText: 'Email',

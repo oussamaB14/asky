@@ -9,9 +9,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../services/QuestionsService.dart';
-import '../../services/user_service.dart';
 
 class StudentProfile extends StatefulWidget {
+  const StudentProfile({Key? key}) : super(key: key);
+
   // const StudentProfile({});
 
   @override
@@ -19,8 +20,7 @@ class StudentProfile extends StatefulWidget {
 }
 
 class StudentProfileViewState extends State<StudentProfile> {
-  AccessToken? _accessToken;
-  bool _checking = true;
+  // bool _checking = true;
   List<bool> isSelected = [true, false];
   get states => null;
 
@@ -245,8 +245,6 @@ class StudentProfileViewState extends State<StudentProfile> {
                       ),
                     ),
                   );
-                })
-                )
-                );
+                })));
   }
 }

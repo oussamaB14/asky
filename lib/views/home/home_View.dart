@@ -4,6 +4,8 @@ import 'package:asky/services/QuestionsService.dart';
 import 'package:asky/services/user_service.dart';
 import 'package:asky/styles/colors.dart';
 import 'package:asky/views/AnwserView/widgets/anwserCard.dart';
+import 'package:asky/widgets/ask_card.dart';
+import 'package:asky/widgets/join_space_card.dart';
 import 'package:asky/widgets/quize_card.dart';
 import 'package:asky/widgets/in_app_drawer.dart';
 import 'package:asky/widgets/loading.dart';
@@ -18,24 +20,33 @@ import '../QuestionViews/widgets/QuestionButton.dart';
 import '../QuestionViews/widgets/QuestionCard.dart';
 
 class HomePage extends StatefulWidget {
-  final profileId;
-  const HomePage({Key? key, this.profileId}) : super(key: key);
+  const HomePage({
+    Key? key,
+  }) : super(key: key);
   @override
   State<HomePage> createState() => _HomePageViewState();
 }
 
 class _HomePageViewState extends State<HomePage> {
-  late final profileId;
   final QuestionsServices _questionsServices = QuestionsServices();
   @override
   Widget build(BuildContext context) {
     final isDarkTheme =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
-    AppBarTheme appBarTheme = Theme.of(context).appBarTheme;
     return Scaffold(
+      backgroundColor: Theme.of(context).cardColor,
       appBar: AppBar(
+        // leading: CircleAvatar(
+        //     backgroundColor: Colors.transparent,
+        //     radius: 3.h,
+        //     child: Image.asset('assets/images/applogo.png', height: 3.5.h)),
+        title: Text('Asky',
+            style: GoogleFonts.k2d(
+                textStyle: Theme.of(context).textTheme.headline3)),
         iconTheme: IconThemeData(
-            color: isDarkTheme ? Color(0xFF2cb67d) : Color(0xFF7f5af0)),
+            color: isDarkTheme
+                ? const Color(0xFF2cb67d)
+                : const Color(0xFF7f5af0)),
         automaticallyImplyLeading: false,
       ),
       endDrawer: SafeArea(
@@ -55,6 +66,16 @@ class _HomePageViewState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text('Quick start',
+                  style: GoogleFonts.lato(
+                      textStyle: Theme.of(context).textTheme.headline2)),
+              Row(
+                children: [
+                  MyQuizCard(),
+                  const MySpaceCard(),
+                  const MyAskcard()
+                ],
+              ),
               Text('Questions',
                   style: GoogleFonts.lato(
                       textStyle: Theme.of(context).textTheme.headline1)),
@@ -64,7 +85,7 @@ class _HomePageViewState extends State<HomePage> {
                     switch (snapshot.connectionState) {
                       case ConnectionState.waiting:
                         return const Center(
-                          child: MainLoadingScreen(),
+                          child: CircularProgressIndicator(),
                         );
                       case ConnectionState.done:
                         return Column(

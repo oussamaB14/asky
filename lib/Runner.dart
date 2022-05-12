@@ -1,5 +1,6 @@
 import 'package:asky/routes.dart';
 import 'package:asky/services/auth_service.dart';
+import 'package:asky/views/QuestionViews/widgets/polls.dart';
 import 'package:asky/views/Quizzes/firestore.dart';
 import 'package:asky/views/Quizzes/models.dart';
 import 'package:asky/views/authentification/registration/registration.dart';
@@ -46,7 +47,7 @@ class _RunnerState extends State<Runner> {
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: Splash(),
+            home: const Splash(),
             theme: MyThemes().lightTheme,
             darkTheme: MyThemes().darkTheme,
             routes: routes,

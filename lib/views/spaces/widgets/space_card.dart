@@ -1,5 +1,7 @@
 import 'package:asky/models/SpaceM.dart';
 import 'package:asky/views/spaces/space_item.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
@@ -21,6 +23,7 @@ class _SpaceCardState extends State<SpaceCard> {
     return Hero(
       tag: widget.space.spacePhoto,
       child: Card(
+        color: Colors.grey.shade100,
         elevation: 1,
         clipBehavior: Clip.antiAlias,
         margin: const EdgeInsets.all(10),
@@ -51,23 +54,24 @@ class _SpaceCardState extends State<SpaceCard> {
                   'assets/images/${widget.space.spacePhoto}',
                   width: 7.5.h,
                 ),
-                // SizedBox(height: 1.h),
-                // Text(widget.space.spaceName,
-                //     style: TextStyle(
-                //       fontSize: 1.5.h,
-                //       fontWeight: FontWeight.bold,
-                //     )),
-                // SizedBox(height: 1.h),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(30),
                   child: RawChip(
-                    checkmarkColor: Colors.white,
+                    avatar: Icon(isSelected ? Icons.check : Icons.add,
+                        color: isSelected ? Colors.white : Colors.black),
+                    // checkmarkColor: Colors.white,
+                    showCheckmark: false,
                     selectedColor: const Color(0xFF7f5af0),
                     disabledColor: const Color.fromARGB(255, 119, 118, 118),
                     deleteIcon: const Icon(Icons.plus_one),
-                    label: const Text('Join'),
-                    labelStyle: const TextStyle(color: Colors.white),
+                    label: isSelected
+                        ? const Text('Following')
+                        : const Text('Follow'),
+                    labelStyle: TextStyle(
+                        color: isSelected ? Colors.white : Colors.black,
+                        fontSize: 16),
                     selected: isSelected,
+
                     padding: const EdgeInsets.symmetric(horizontal: 2),
                     // labelPadding: const EdgeInsets.symmetric(vertical :2.0),
                     onSelected: (newBoolValue) {

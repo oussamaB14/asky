@@ -60,7 +60,7 @@ class MyThemes {
         backgroundColor: Colors.white,
         elevation: 1.0),
     navigationBarTheme: NavigationBarThemeData(
-        indicatorColor: Color(0xFF7f5af0).withOpacity(0.3),
+        indicatorColor: const Color(0xFF7f5af0).withOpacity(0.3),
         backgroundColor: Colors.white),
     bottomAppBarTheme: BottomAppBarTheme(color: MyColors.green, elevation: 1.0),
 
@@ -83,7 +83,7 @@ class MyThemes {
         style: TextButton.styleFrom(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       primary: Colors.black,
-      backgroundColor: Color(0XFFEDEDED),
+      backgroundColor: const Color(0XFFEDEDED),
       //  padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 8),
       textStyle: TextStyle(
         fontFamily: "Montserrat",
@@ -100,11 +100,12 @@ class MyThemes {
           borderRadius: BorderRadius.circular(10),
         )),
     chipTheme: ChipThemeData(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(45)),
-      
-      backgroundColor: Colors.grey.shade300,
+      shape: RoundedRectangleBorder(
+          side: BorderSide(color: Colors.grey, width: 0.3),
+          borderRadius: BorderRadius.circular(45)),
+      backgroundColor: Colors.transparent,
       showCheckmark: false,
-      disabledColor: Colors.grey,
+      disabledColor: Colors.transparent,
       selectedColor: appColor,
       checkmarkColor: Colors.white,
       padding: const EdgeInsets.symmetric(horizontal: 2),
@@ -112,14 +113,13 @@ class MyThemes {
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w600,
           fontSize: 12.sp,
-          color: Colors.white),
-          
+          color: Colors.black),
       brightness: Brightness.light,
       secondarySelectedColor: MyColors.green,
       secondaryLabelStyle: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w600,
-          fontSize: 14.sp,
+          fontSize: 12.sp,
           color: Colors.white),
     ),
 
@@ -190,7 +190,7 @@ class MyThemes {
         titleSpacing: 16,
         iconTheme: const IconThemeData(color: Colors.white),
         actionsIconTheme: const IconThemeData(color: Colors.white)),
-    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         selectedItemColor: Colors.white,
         backgroundColor: Colors.black,
         elevation: 1.0),
@@ -218,13 +218,13 @@ class MyThemes {
         style: TextButton.styleFrom(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       primary: Colors.black,
-      backgroundColor: Color(0XFFEDEDED),
+      backgroundColor: const Color(0XFFEDEDED),
       // padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 12),
       textStyle: TextStyle(
         fontFamily: "Montserrat",
         fontWeight: FontWeight.w600,
         fontSize: 13.sp,
-        color: Color(0XFFEDEDED),
+        color: const Color(0XFFEDEDED),
       ),
     )),
 
@@ -291,7 +291,7 @@ class MyThemes {
           color: Colors.white.withOpacity(0.8)),
     ),
     colorScheme: const ColorScheme.dark()
-        .copyWith(secondary: Colors.white, background: Color(0xFF212121)),
+        .copyWith(secondary: Colors.white, background: const Color(0xFF212121)),
   );
 }
 

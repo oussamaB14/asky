@@ -44,7 +44,7 @@ class PofileDrawer extends StatelessWidget {
             child: ListView(children: [
               ListTile(
                 leading: const Icon(CommunityMaterialIcons.bookmark_outline),
-                title: Text("Bookmarks"),
+                title: const Text("Bookmarks"),
                 selectedTileColor: Colors.blue,
                 onTap: () {
                   Navigator.of(context).pushNamed("Bookmarks");
@@ -53,7 +53,7 @@ class PofileDrawer extends StatelessWidget {
               ListTile(
                 leading: const Icon(CommunityMaterialIcons.forum),
                 selectedTileColor: Colors.blue,
-                title: Text("My spaces"),
+                title: const Text("My spaces"),
                 onTap: () {
                   Navigator.of(context).pushNamed("MySpaces");
                 },
@@ -61,14 +61,14 @@ class PofileDrawer extends StatelessWidget {
               ListTile(
                 leading: const Icon(CommunityMaterialIcons.forum_outline),
                 selectedTileColor: Colors.blue,
-                title: Text("Quize"),
+                title: const Text("Quize"),
                 onTap: () {
                   Navigator.of(context).pushNamed("/topics");
                 },
               ),
               ListTile(
                 leading: const Icon(CommunityMaterialIcons.account_edit),
-                title: Text("Edit profile"),
+                title: const Text("Edit profile"),
                 onTap: () {
                   Provider.of<UserProfileInfoProvider>(context, listen: false)
                       .resetValues();
@@ -77,7 +77,7 @@ class PofileDrawer extends StatelessWidget {
               ),
               ListTile(
                 leading: const Icon(Icons.settings),
-                title: Text("Settings"),
+                title: const Text("Settings"),
                 onTap: () {
                   Navigator.of(context).pushNamed("Settings");
                 },
@@ -85,7 +85,7 @@ class PofileDrawer extends StatelessWidget {
               ListTile(
                 leading: const Icon(CommunityMaterialIcons.logout),
                 selectedTileColor: Colors.blue,
-                title: Text("Logout"),
+                title: const Text("Log out"),
                 onTap: () async {
                   AuthService().signOut(context);
                 },
