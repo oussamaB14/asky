@@ -92,6 +92,13 @@ class MyThemes {
         color: MyColors.black,
       ),
     )),
+    snackBarTheme: SnackBarThemeData(
+        backgroundColor: appColor,
+        contentTextStyle: TextStyle(
+          fontFamily: "Montserrat",
+          fontWeight: FontWeight.w600,
+          fontSize: 10.sp,
+        )),
     iconTheme: IconThemeData(color: Colors.grey[850]),
     cardTheme: CardTheme(
         elevation: 0.5,
@@ -103,7 +110,7 @@ class MyThemes {
       shape: RoundedRectangleBorder(
           side: BorderSide(color: Colors.grey, width: 0.3),
           borderRadius: BorderRadius.circular(45)),
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       showCheckmark: false,
       disabledColor: Colors.transparent,
       selectedColor: appColor,
@@ -227,7 +234,13 @@ class MyThemes {
         color: const Color(0XFFEDEDED),
       ),
     )),
-
+    snackBarTheme: SnackBarThemeData(
+        backgroundColor: MyColors.green,
+        contentTextStyle: TextStyle(
+          fontFamily: "Montserrat",
+          fontWeight: FontWeight.w600,
+          fontSize: 10.sp,
+        )),
     cardTheme: CardTheme(
         elevation: 0.5,
         color: Colors.black,
@@ -235,12 +248,15 @@ class MyThemes {
           borderRadius: BorderRadius.circular(10),
         )),
     chipTheme: ChipThemeData(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(45)),
-      backgroundColor: Colors.grey.shade800,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(45),
+        // side: const BorderSide(color: Colors.black, width: 0.5),
+      ),
+      backgroundColor: Colors.white,
       showCheckmark: false,
-      disabledColor: Colors.grey,
-      selectedColor: appColor,
-      padding: const EdgeInsets.all(12),
+      disabledColor: Colors.white,
+      selectedColor: MyColors.green,
+      padding: const EdgeInsets.symmetric(horizontal: 2),
       labelStyle: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w600,

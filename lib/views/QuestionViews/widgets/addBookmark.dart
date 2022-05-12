@@ -1,3 +1,4 @@
+import 'package:asky/constants/assets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,6 +27,10 @@ class AddToBookMark extends StatelessWidget {
                 ? FieldValue.arrayRemove(id)
                 : FieldValue.arrayUnion(id)
           });
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: tab.contains(id[0])
+                  ? Text("Question removed ..")
+                  : Text("Question saved ..")));
         });
       },
       child: StreamBuilder<DocumentSnapshot>(

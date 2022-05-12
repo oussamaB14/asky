@@ -52,6 +52,8 @@ class _AddQuestionViewState extends State<AddQuestionView> {
           )
               .whenComplete(() {
             Navigator.of(context).pushNamed("/homepage");
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text("Question added ..")));
           });
         },
         child: const Icon(

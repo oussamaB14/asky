@@ -1,15 +1,10 @@
-import 'package:asky/models/Question.dart';
-import 'package:asky/models/user.dart';
+import 'package:asky/models/Polls.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:uuid/uuid.dart';
 
-class QuestionsServices {
-  String postId = const Uuid().v4();
+class PollsService {
   FirebaseFirestore _db = FirebaseFirestore.instance;
-
-  // ADD NEW QUESTION TO DB
-  Future addQuestion(Question question) async {
+  Future addQuestion(Polls question) async {
     try {
       await FirebaseFirestore.instance
           .collection('user')
@@ -25,23 +20,14 @@ class QuestionsServices {
         .then((value) => print(value));
   }
 
-  Future<List<Question>> getAllQuestions() async {
-    List<Question> questions = [];
+  Future<List<Polls>> getAllPolls() async {
+    List<Polls> polls = [];
     await _db.collection('questions').get().then((value) {
       value.docs.forEach((element) {
-        questions.add(Question.fromDocument(element));
+        polls.add(Polls.fromDocument(element));
       });
     });
     // print(questions);
-    return questions;
+    return polls;
   }
-
-  Future editQuestion(Question question) async {
-    await _db
-        .collection('questions')
-        .add(question.toDocument())
-        .then((value) => print(value));
-  }
-
-  uploadComment(currentUserId, String text, postId, ownerId, String mediaUrl) {}
 }

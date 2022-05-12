@@ -34,7 +34,7 @@ class _questionButtonState extends State<questionButton> {
             }),
         SpeedDialChild(
             child: const Icon(
-              Icons.poll_rounded,
+              CommunityMaterialIcons.poll,
               color: Colors.white,
             ),
             label: 'Add a poll',

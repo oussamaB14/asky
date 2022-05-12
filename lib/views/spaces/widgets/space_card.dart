@@ -20,10 +20,13 @@ class _SpaceCardState extends State<SpaceCard> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Hero(
       tag: widget.space.spacePhoto,
       child: Card(
-        color: Colors.grey.shade100,
+        color:
+            isDarkTheme ? const Color(0xFF2cb67d) : Theme.of(context).cardColor,
         elevation: 1,
         clipBehavior: Clip.antiAlias,
         margin: const EdgeInsets.all(10),
@@ -57,20 +60,31 @@ class _SpaceCardState extends State<SpaceCard> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(30),
                   child: RawChip(
-                    avatar: Icon(isSelected ? Icons.check : Icons.add,
-                        color: isSelected ? Colors.white : Colors.black),
+                    avatar: Icon(
+                      isSelected ? Icons.check : Icons.add,
+                      color: isDarkTheme
+                          ? Colors.white
+                          : isSelected
+                              ? Colors.white
+                              : Colors.black,
+                    ),
                     // checkmarkColor: Colors.white,
                     showCheckmark: false,
-                    selectedColor: const Color(0xFF7f5af0),
-                    disabledColor: const Color.fromARGB(255, 119, 118, 118),
+                    // selectedColor: const Color(0xFF7f5af0),
+                    // disabledColor: const Color.fromARGB(255, 119, 118, 118),
                     deleteIcon: const Icon(Icons.plus_one),
                     label: isSelected
                         ? const Text('Following')
                         : const Text('Follow'),
                     labelStyle: TextStyle(
-                        color: isSelected ? Colors.white : Colors.black,
+                        color: isDarkTheme
+                            ? Colors.white
+                            : isSelected
+                                ? Colors.white
+                                : Colors.black,
                         fontSize: 16),
                     selected: isSelected,
+                    backgroundColor: isDarkTheme ? Colors.black : Colors.white,
 
                     padding: const EdgeInsets.symmetric(horizontal: 2),
                     // labelPadding: const EdgeInsets.symmetric(vertical :2.0),

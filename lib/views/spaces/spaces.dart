@@ -18,6 +18,8 @@ class SpacesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return FutureBuilder<List<Space>>(
       future: SpaceService().getSpaces(),
       builder: (context, snapshot) {
@@ -43,7 +45,7 @@ class SpacesScreen extends StatelessWidget {
             ),
             floatingActionButton: spaceButton(),
             body: Container(
-              color: Theme.of(context).cardColor,
+              color: isDarkTheme ? Colors.black : Colors.white,
               child: GridView.count(
                 primary: false,
                 padding: const EdgeInsets.all(20),
