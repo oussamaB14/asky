@@ -1,5 +1,5 @@
 import 'package:asky/models/SpaceM.dart';
-import 'package:asky/views/Quizzes/loading.dart';
+import 'package:asky/styles/colors.dart';
 import 'package:asky/views/Quizzes/topic_item.dart';
 import 'package:asky/views/spaces/space_item.dart';
 import 'package:asky/views/spaces/widgets/addSpaceButton.dart';
@@ -24,7 +24,7 @@ class SpacesScreen extends StatelessWidget {
       future: SpaceService().getSpaces(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const MainLoadingScreen();
+          return const MainLoadinger();
         } else if (snapshot.hasError) {
           return ErrorMessage(message: snapshot.error.toString());
         } else if (snapshot.hasData) {
@@ -45,7 +45,7 @@ class SpacesScreen extends StatelessWidget {
             ),
             floatingActionButton: spaceButton(),
             body: Container(
-              color: isDarkTheme ? Colors.black : Colors.white,
+              color: isDarkTheme ? MyColors.black : Colors.white,
               child: GridView.count(
                 primary: false,
                 padding: const EdgeInsets.all(20),

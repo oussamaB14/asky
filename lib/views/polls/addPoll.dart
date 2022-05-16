@@ -1,5 +1,8 @@
 import 'package:asky/constants/assets.dart';
+import 'package:asky/models/Polls.dart';
+import 'package:asky/services/PollsService.dart';
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -14,7 +17,9 @@ class AddPoll extends StatefulWidget {
 
 class _AddPollState extends State<AddPoll> {
   List<TextEditingController> _controllers = [];
+  TextEditingController questionController = TextEditingController();
   List<TextField> _fields = [];
+  PollsService _pollsService = PollsService();
 
   @override
   void dispose() {
@@ -26,11 +31,28 @@ class _AddPollState extends State<AddPoll> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(
+        backgroundColor: isDarkTheme ? Colors.black : Colors.white,
         appBar: AppBar(title: const Text('add poll')),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          backgroundColor: appColor,
+          onPressed: () async {
+            List<String> options = [];
+            for (var element in _controllers) {
+              options.add(element.text);
+            }
+            PollsService().addPoll(
+                PollsModel(
+                    username:
+                        FirebaseAuth.instance.currentUser?.displayName ?? "",
+                    userPhoto: "",
+                    question: questionController.text,
+                    authorId: FirebaseAuth.instance.currentUser?.uid ?? "",
+                    options: options),
+                context);
+          },
+          backgroundColor: isDarkTheme ? MyColors.green : appColor,
           child: const Icon(
             Icons.arrow_forward,
             color: Colors.white,
@@ -41,7 +63,7 @@ class _AddPollState extends State<AddPoll> {
           child: Column(
             children: [
               TextFormField(
-                // controller: usernameController,
+                controller: questionController,
                 decoration: InputDecoration(
                   filled: true,
                   labelText: 'ask a question',
@@ -55,13 +77,23 @@ class _AddPollState extends State<AddPoll> {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
-                    borderSide: const BorderSide(color: Colors.blue),
+                    borderSide: BorderSide(color: appColor),
                     gapPadding: 10,
                   ),
                 ),
                 // validator: _requiredValidator
               ),
               _addTile(),
+              ListTile(
+                leading: Icon(
+                  Icons.warning,
+                  color: MyColors.purple,
+                ),
+                title: Text(
+                  'you can only add up to five options ',
+                  style: TextStyle(fontSize: 12.sp),
+                ),
+              ),
               Expanded(child: _listView()),
             ],
           ),
@@ -69,22 +101,30 @@ class _AddPollState extends State<AddPoll> {
   }
 
   Widget _addTile() {
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return ListTile(
-        title: const Icon(Icons.add),
+        title: Icon(
+          Icons.add,
+          color: isDarkTheme ? MyColors.green : appColor,
+          size: 4.h,
+        ),
         onTap: () {
-          final controller = TextEditingController();
-          final field = TextField(
-            controller: controller,
-            decoration: InputDecoration(
-              border: const OutlineInputBorder(),
-              labelText: "Choice ${_controllers.length + 1}",
-            ),
-          );
+          if (_controllers.length <= 4) {
+            final controller = TextEditingController();
+            final field = TextField(
+              controller: controller,
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                labelText: "Choice ${_controllers.length + 1}",
+              ),
+            );
 
-          setState(() {
-            _controllers.add(controller);
-            _fields.add(field);
-          });
+            setState(() {
+              _controllers.add(controller);
+              _fields.add(field);
+            });
+          }
         });
   }
 

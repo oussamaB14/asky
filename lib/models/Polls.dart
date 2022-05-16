@@ -5,44 +5,32 @@ import 'package:flutter/foundation.dart';
 
 import 'package:asky/models/tags.dart';
 
-class Polls {
+class PollsModel {
   String username;
   String userPhoto;
-  String id;
   String question;
-  String content;
   String authorId;
-  List<TagModel> tags;
   List<String> options;
-  Polls({
+  PollsModel({
     required this.username,
     required this.userPhoto,
-    required this.id,
     required this.question,
-    required this.content,
     required this.authorId,
-    required this.tags,
     required this.options,
   });
 
-  Polls copyWith({
+  PollsModel copyWith({
     String? username,
     String? userPhoto,
-    String? id,
     String? question,
-    String? content,
     String? authorId,
-    List<TagModel>? tags,
     List<String>? options,
   }) {
-    return Polls(
+    return PollsModel(
       username: username ?? this.username,
       userPhoto: userPhoto ?? this.userPhoto,
-      id: id ?? this.id,
       question: question ?? this.question,
-      content: content ?? this.content,
       authorId: authorId ?? this.authorId,
-      tags: tags ?? this.tags,
       options: options ?? this.options,
     );
   }
@@ -52,51 +40,42 @@ class Polls {
 
     result.addAll({'username': username});
     result.addAll({'userPhoto': userPhoto});
-    result.addAll({'id': id});
     result.addAll({'question': question});
-    result.addAll({'content': content});
     result.addAll({'authorId': authorId});
-    result.addAll({'tags': tags.map((x) => x.toMap()).toList()});
     result.addAll({'options': options});
 
     return result;
   }
 
-  factory Polls.fromDocument(DocumentSnapshot map) {
-    return Polls(
+  factory PollsModel.fromDocument(DocumentSnapshot map) {
+    return PollsModel(
       username: map['username'] ?? '',
       userPhoto: map['userPhoto'] ?? '',
-      id: map['id'] ?? '',
       question: map['question'] ?? '',
-      content: map['content'] ?? '',
       authorId: map['authorId'] ?? '',
-      tags: List<TagModel>.from(map['tags']?.map((x) => TagModel.fromMap(x))),
       options: List<String>.from(map['options']),
     );
   }
 
   String toJson() => json.encode(toDocument());
 
-  factory Polls.fromJson(String source) =>
-      Polls.fromDocument(json.decode(source));
+  factory PollsModel.fromJson(String source) =>
+      PollsModel.fromDocument(json.decode(source));
 
   @override
   String toString() {
-    return 'Polls(username: $username, userPhoto: $userPhoto, id: $id, question: $question, content: $content, authorId: $authorId, tags: $tags, options: $options)';
+    return 'PollsModel(username: $username, userPhoto: $userPhoto, question: $question, authorId: $authorId, options: $options)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is Polls &&
+    return other is PollsModel &&
         other.username == username &&
         other.userPhoto == userPhoto &&
-        other.id == id &&
         other.question == question &&
-        other.content == content &&
         other.authorId == authorId &&
-        listEquals(other.tags, tags) &&
         listEquals(other.options, options);
   }
 
@@ -104,11 +83,8 @@ class Polls {
   int get hashCode {
     return username.hashCode ^
         userPhoto.hashCode ^
-        id.hashCode ^
         question.hashCode ^
-        content.hashCode ^
         authorId.hashCode ^
-        tags.hashCode ^
         options.hashCode;
   }
 }

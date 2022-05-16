@@ -1,13 +1,11 @@
+import 'package:asky/constants/assets.dart';
+import 'package:asky/styles/colors.dart';
 import 'package:asky/views/profile/widgets/Profiledrawer.dart';
-import 'package:asky/views/spaces/widgets/addSpaceButton.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../services/QuestionsService.dart';
 
 class StudentProfile extends StatefulWidget {
@@ -39,6 +37,8 @@ class StudentProfileViewState extends State<StudentProfile> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(
         appBar: AppBar(
           title: const Text('profile'),
@@ -61,14 +61,17 @@ class StudentProfileViewState extends State<StudentProfile> {
                     .get(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: LinearProgressIndicator());
+                    return Center(
+                        child: LinearProgressIndicator(
+                      color: isDarkTheme ? MyColors.green : appColor,
+                    ));
                   }
 
                   if (snapshot.hasError) return const Text('Error');
                   var data = snapshot.data;
 
                   return Container(
-                    color: Theme.of(context).cardColor,
+                    color: isDarkTheme ? Colors.black : Colors.white,
                     // elevation: 1,
                     // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                     child: Padding(
@@ -177,11 +180,11 @@ class StudentProfileViewState extends State<StudentProfile> {
                           ////////////////////////////////////////////////QUESTION ANWSER /////////////////////////////////
                           Center(
                             child: ToggleButtons(
-                                selectedColor: const Color(0xFF7f5af0),
+                                selectedColor: appColor,
                                 disabledColor: Colors.grey,
                                 color: Colors.grey,
                                 fillColor: Colors.transparent,
-                                selectedBorderColor: const Color(0xFF7f5af0),
+                                selectedBorderColor: appColor,
                                 borderRadius: BorderRadius.circular(40),
                                 borderWidth: 0.2.h,
                                 children: [

@@ -5,12 +5,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/SpaceM.dart';
 
 class SpaceService {
-//   Future addSopace(Space space) async {
-//     await _db
-//         .collection('space')
-//         .add(space.toDocument())
-//         .then((value) => print(value));
-//   }
+  Future addSopace(Space space) async {
+    await _db
+        .collection('space')
+        .add(space.toJson())
+        .then((value) => print(value));
+  }
 
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 //

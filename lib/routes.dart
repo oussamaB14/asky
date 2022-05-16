@@ -42,6 +42,6 @@ final Map<String, WidgetBuilder> routes = {
 
   // "addanwser": (context) => AddAnwser(),
   "chatPage": (context) => const ChatPage(),
-  // 'addspace': (context) => AddSpace(),
+  'addspace': (context) => AddSpace(),
   "test": (context) => const RegestrationView(),
 };

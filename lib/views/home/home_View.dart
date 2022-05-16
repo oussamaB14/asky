@@ -1,21 +1,13 @@
 import 'package:asky/models/Question.dart';
-import 'package:asky/models/user.dart';
 import 'package:asky/services/QuestionsService.dart';
-import 'package:asky/services/user_service.dart';
-import 'package:asky/styles/colors.dart';
-import 'package:asky/views/AnwserView/widgets/anwserCard.dart';
 import 'package:asky/widgets/ask_card.dart';
 import 'package:asky/widgets/join_space_card.dart';
 import 'package:asky/widgets/quize_card.dart';
 import 'package:asky/widgets/in_app_drawer.dart';
 import 'package:asky/widgets/loading.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
-
-import '../QuestionViews/Questions_view.dart';
 import '../QuestionViews/widgets/QuestionButton.dart';
 import '../QuestionViews/widgets/QuestionCard.dart';
 
@@ -85,7 +77,7 @@ class _HomePageViewState extends State<HomePage> {
                     switch (snapshot.connectionState) {
                       case ConnectionState.waiting:
                         return const Center(
-                          child: CircularProgressIndicator(),
+                          child: MainLoadinger(),
                         );
                       case ConnectionState.done:
                         return Column(

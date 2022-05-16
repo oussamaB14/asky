@@ -1,16 +1,13 @@
-import 'package:asky/services/test.dart';
-import 'package:asky/styles/colors.dart';
-import 'package:asky/styles/theme.dart';
 import 'package:asky/views/explore/explore_view.dart';
 import 'package:asky/views/home/home_View.dart';
 import 'package:asky/views/profile/profile.dart';
 import 'package:asky/views/spaces/spaces.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 
-import 'package:community_material_icon/community_material_icon.dart';
+import 'package:iconsax/iconsax.dart';
+
+import 'package:sizer/sizer.dart';
 
 class Wrapper extends StatefulWidget {
   @override
@@ -18,13 +15,12 @@ class Wrapper extends StatefulWidget {
 }
 
 class _WrapperState extends State<Wrapper> {
-  @override
   int index = 0;
   final screens = [
-    HomePage(),
-    Explore(),
-    SpacesScreen(),
-    StudentProfile(),
+    const HomePage(),
+    const Explore(),
+    const SpacesScreen(),
+    const StudentProfile(),
   ];
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,41 +41,41 @@ class _WrapperState extends State<Wrapper> {
         destinations: [
           NavigationDestination(
               icon: Icon(
-                CommunityMaterialIcons.home_outline,
+                Iconsax.home,
                 size: 2.5.h,
               ),
               selectedIcon: Icon(
-                CommunityMaterialIcons.home,
+                Iconsax.home1,
                 size: 2.5.h,
               ),
               label: ''),
           NavigationDestination(
               icon: Icon(
-                CommunityMaterialIcons.compass_outline,
+                Iconsax.search_normal_1,
                 size: 2.5.h,
               ),
               selectedIcon: Icon(
-                CommunityMaterialIcons.compass,
+                Iconsax.search_normal_1,
                 size: 2.5.h,
               ),
               label: ''),
           NavigationDestination(
               icon: Icon(
-                CommunityMaterialIcons.forum_outline,
+                Iconsax.favorite_chart,
                 size: 2.5.h,
               ),
               selectedIcon: Icon(
-                CommunityMaterialIcons.forum,
+                Iconsax.frame_5,
                 size: 2.5.h,
               ),
               label: ''),
           NavigationDestination(
               icon: Icon(
-                CommunityMaterialIcons.account_outline,
+                Iconsax.user,
                 size: 2.5.h,
               ),
               selectedIcon: Icon(
-                CommunityMaterialIcons.account,
+                Iconsax.user,
                 size: 2.5.h,
               ),
               label: ''),

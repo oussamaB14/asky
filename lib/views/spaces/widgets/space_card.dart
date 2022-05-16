@@ -25,8 +25,7 @@ class _SpaceCardState extends State<SpaceCard> {
     return Hero(
       tag: widget.space.spacePhoto,
       child: Card(
-        color:
-            isDarkTheme ? const Color(0xFF2cb67d) : Theme.of(context).cardColor,
+        color: isDarkTheme ? Colors.black : Colors.grey.shade100,
         elevation: 1,
         clipBehavior: Clip.antiAlias,
         margin: const EdgeInsets.all(10),
