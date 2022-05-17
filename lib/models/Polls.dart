@@ -10,7 +10,7 @@ class PollsModel {
   String userPhoto;
   String question;
   String authorId;
-  List<String> options;
+  List<dynamic> options;
   PollsModel({
     required this.username,
     required this.userPhoto,
@@ -18,13 +18,14 @@ class PollsModel {
     required this.authorId,
     required this.options,
   });
+  
 
   PollsModel copyWith({
     String? username,
     String? userPhoto,
     String? question,
     String? authorId,
-    List<String>? options,
+    List<dynamic>? options,
   }) {
     return PollsModel(
       username: username ?? this.username,
@@ -37,13 +38,13 @@ class PollsModel {
 
   Map<String, dynamic> toDocument() {
     final result = <String, dynamic>{};
-
+  
     result.addAll({'username': username});
     result.addAll({'userPhoto': userPhoto});
     result.addAll({'question': question});
     result.addAll({'authorId': authorId});
     result.addAll({'options': options});
-
+  
     return result;
   }
 
@@ -53,14 +54,13 @@ class PollsModel {
       userPhoto: map['userPhoto'] ?? '',
       question: map['question'] ?? '',
       authorId: map['authorId'] ?? '',
-      options: List<String>.from(map['options']),
+      options: List<dynamic>.from(map['options']),
     );
   }
 
   String toJson() => json.encode(toDocument());
 
-  factory PollsModel.fromJson(String source) =>
-      PollsModel.fromDocument(json.decode(source));
+  factory PollsModel.fromJson(String source) => PollsModel.fromDocument(json.decode(source));
 
   @override
   String toString() {
@@ -70,21 +70,21 @@ class PollsModel {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-
+  
     return other is PollsModel &&
-        other.username == username &&
-        other.userPhoto == userPhoto &&
-        other.question == question &&
-        other.authorId == authorId &&
-        listEquals(other.options, options);
+      other.username == username &&
+      other.userPhoto == userPhoto &&
+      other.question == question &&
+      other.authorId == authorId &&
+      listEquals(other.options, options);
   }
 
   @override
   int get hashCode {
     return username.hashCode ^
-        userPhoto.hashCode ^
-        question.hashCode ^
-        authorId.hashCode ^
-        options.hashCode;
+      userPhoto.hashCode ^
+      question.hashCode ^
+      authorId.hashCode ^
+      options.hashCode;
   }
 }

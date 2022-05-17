@@ -1,10 +1,13 @@
+import 'package:asky/models/Polls.dart';
 import 'package:asky/models/Question.dart';
 import 'package:asky/services/QuestionsService.dart';
+import 'package:asky/views/polls/PollsCard.dart';
 import 'package:asky/widgets/ask_card.dart';
 import 'package:asky/widgets/join_space_card.dart';
 import 'package:asky/widgets/quize_card.dart';
 import 'package:asky/widgets/in_app_drawer.dart';
 import 'package:asky/widgets/loading.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
@@ -68,6 +71,44 @@ class _HomePageViewState extends State<HomePage> {
                   const MyAskcard()
                 ],
               ),
+              Text('Polls',
+                  style: GoogleFonts.lato(
+                      textStyle: Theme.of(context).textTheme.headline1)),
+              StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('polls')
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                    if (!snapshot.hasData) {
+                      return Text('');
+                    }
+
+                    var data = snapshot.data?.docs;
+
+                    if (data == null) {
+                      return Text('Null');
+                    }
+
+                    if (data.length == null) {
+                      return Text('Null');
+                    }
+
+                    return Column(children: [
+                      for (int i = 0; i < data.length; i++)
+                        PollCard(
+                          poll: PollsModel(
+                              username: data[i]['username'],
+                              userPhoto: data[i]['userPhoto'],
+                              question: data[i]['question'],
+                              authorId: data[i]['authorId'],
+                              options: data[i]['options']),
+                          id: data[i].id,
+                        )
+                    ]);
+                  }),
               Text('Questions',
                   style: GoogleFonts.lato(
                       textStyle: Theme.of(context).textTheme.headline1)),

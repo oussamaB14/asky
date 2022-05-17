@@ -29,6 +29,7 @@ class _AddPollState extends State<AddPoll> {
     super.dispose();
   }
 
+  final _key = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final isDarkTheme =
@@ -37,20 +38,35 @@ class _AddPollState extends State<AddPoll> {
         backgroundColor: isDarkTheme ? Colors.black : Colors.white,
         appBar: AppBar(title: const Text('add poll')),
         floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            List<String> options = [];
-            for (var element in _controllers) {
-              options.add(element.text);
+          onPressed: () {
+            if (_key.currentState != null && _key.currentState!.validate()) {
+              List<String> options = [];
+              for (var element in _controllers) {
+                // if ((element.text).trim().isEmpty) {
+                //   continue;
+                // }
+                options.add(element.text);
+              }
+
+              if (options.length > 2) {
+                PollsService().addPoll(
+                    PollsModel(
+                        username:
+                            FirebaseAuth.instance.currentUser?.displayName ??
+                                "",
+                        userPhoto: "",
+                        question: questionController.text,
+                        authorId: FirebaseAuth.instance.currentUser?.uid ?? "",
+                        options: options),
+                    context);
+              } else {
+                print('You need to add atleast to choices!');
+                const AlertDialog(
+                  title: Text('Error'),
+                  content: Text('You need to add atleast to choices!'),
+                );
+              }
             }
-            PollsService().addPoll(
-                PollsModel(
-                    username:
-                        FirebaseAuth.instance.currentUser?.displayName ?? "",
-                    userPhoto: "",
-                    question: questionController.text,
-                    authorId: FirebaseAuth.instance.currentUser?.uid ?? "",
-                    options: options),
-                context);
           },
           backgroundColor: isDarkTheme ? MyColors.green : appColor,
           child: const Icon(
@@ -63,26 +79,31 @@ class _AddPollState extends State<AddPoll> {
           child: Column(
             children: [
               TextFormField(
-                controller: questionController,
-                decoration: InputDecoration(
-                  filled: true,
-                  labelText: 'ask a question',
-                  floatingLabelBehavior: FloatingLabelBehavior.auto,
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 42, vertical: 20),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide(color: MyColors.black),
-                    gapPadding: 10,
+                  key: _key,
+                  controller: questionController,
+                  decoration: InputDecoration(
+                    filled: true,
+                    labelText: 'ask a question',
+                    floatingLabelBehavior: FloatingLabelBehavior.auto,
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 42, vertical: 20),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide(color: MyColors.black),
+                      gapPadding: 10,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide(color: appColor),
+                      gapPadding: 10,
+                    ),
                   ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide(color: appColor),
-                    gapPadding: 10,
-                  ),
-                ),
-                // validator: _requiredValidator
-              ),
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'this filed is required';
+                    }
+                    return null;
+                  }),
               _addTile(),
               ListTile(
                 leading: Icon(
@@ -113,6 +134,7 @@ class _AddPollState extends State<AddPoll> {
           if (_controllers.length <= 4) {
             final controller = TextEditingController();
             final field = TextField(
+              // validator: _requiredValidator,
               controller: controller,
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
@@ -139,4 +161,11 @@ class _AddPollState extends State<AddPoll> {
       },
     );
   }
+}
+
+String? _requiredValidator(String? text) {
+  if (text == null || text.trim().isEmpty) {
+    return 'this filed is required';
+  }
+  return null;
 }

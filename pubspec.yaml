@@ -84,6 +84,7 @@ dependencies:
   #polls: ^1.0.1
   flutter_speed_dial: ^6.0.0
   percent_indicator: ^4.2.2
+  touchable_opacity: ^1.2.0
   
   
   

@@ -47,4 +47,66 @@ class PollsService {
               }));
     }).whenComplete(() => Navigator.of(context).pushNamed("/homepage"));
   }
+
+  void voteOption(String docId, String optionName) async {
+    await FirebaseFirestore.instance
+        .collection('polls')
+        .doc(docId)
+        .get()
+        .then((doc) async {
+      List<dynamic> options = doc['options'];
+
+      options.forEach((element) async {
+        List<dynamic> option = doc[element];
+
+        if (option.contains(FirebaseAuth.instance.currentUser?.uid)) {
+          await FirebaseFirestore.instance
+              .collection('polls')
+              .doc(docId)
+              .update({
+            element:
+                FieldValue.arrayRemove([FirebaseAuth.instance.currentUser?.uid])
+          });
+        }
+
+        if (!option.contains(FirebaseAuth.instance.currentUser?.uid) &&
+            element == optionName) {
+          await FirebaseFirestore.instance
+              .collection('polls')
+              .doc(docId)
+              .update({
+            element:
+                FieldValue.arrayUnion([FirebaseAuth.instance.currentUser?.uid])
+          });
+        }
+      });
+    });
+  }
+
+  Future<double> getOptionPercentage(String docId, String optionName) async {
+    List<int> numbers = [];
+    double sum = 0;
+    int myOption = 0;
+    await FirebaseFirestore.instance
+        .collection('polls')
+        .doc(docId)
+        .get()
+        .then((doc) async {
+      List<dynamic> options = doc['options'];
+
+      options.forEach((element) async {
+        if (element == optionName) {
+          myOption = options.indexOf(element);
+        }
+
+        List<dynamic> option = doc[element];
+        numbers.add(option.length);
+      });
+    });
+
+    numbers.forEach((element) {
+      sum += element;
+    });
+    return sum == 0 ? 0.0 : numbers[myOption] / sum;
+  }
 }
