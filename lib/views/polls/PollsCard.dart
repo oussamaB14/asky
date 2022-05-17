@@ -1,13 +1,13 @@
+import 'package:asky/constants/assets.dart';
 import 'package:asky/services/PollsService.dart';
-import 'package:asky/views/Quizzes/progress_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:sizer/sizer.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
 
 import '../../models/Polls.dart';
+import '../../styles/colors.dart';
 import '../QuestionViews/widgets/Question_Menu.dart';
 
 class PollCard extends StatefulWidget {
@@ -24,6 +24,8 @@ class _PollCardState extends State<PollCard> {
   String? user = FirebaseAuth.instance.currentUser?.uid;
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(
@@ -82,25 +84,52 @@ class PoolOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         LinearPercentIndicator(
-          padding: EdgeInsets.only(top: 5, bottom: 5),
-          barRadius: Radius.circular(25),
+          padding: const EdgeInsets.only(top: 5, bottom: 5),
+          barRadius: const Radius.circular(25),
           lineHeight: 50,
           percent: percentage,
           center: Padding(
-            padding: EdgeInsets.only(left: 15, right: 15),
+            padding: const EdgeInsets.only(left: 15, right: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(text),
-                Text((percentage * 100).toInt().toString() + '%'),
+                Text(
+                  text,
+                  style: TextStyle(
+                      color: isDarkTheme
+                          ? Colors.white
+                          : (percentage * 100).toInt() > 0
+                              ? Colors.white
+                              : Colors.black),
+                ),
+                Text(
+                  (percentage * 100).toInt().toString() + '%',
+                  style: TextStyle(
+                      color: (percentage * 100).toInt() > 0
+                          ? MyColors.yellow
+                          : MyColors.black),
+                ),
               ],
             ),
           ),
-          progressColor: Colors.green,
+          // progressColor: isDarkTheme ? MyColors.green : appColor,
+          backgroundColor:
+              isDarkTheme ? Colors.grey.shade600 : Colors.grey.shade100,
+          animation: true,
+          animateFromLastPercent: true,
+          linearGradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                isDarkTheme ? Colors.green.shade200 : Colors.purple.shade200,
+                isDarkTheme ? MyColors.green : appColor
+              ]),
         )
       ],
     );

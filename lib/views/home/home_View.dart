@@ -2,6 +2,7 @@ import 'package:asky/models/Polls.dart';
 import 'package:asky/models/Question.dart';
 import 'package:asky/services/QuestionsService.dart';
 import 'package:asky/views/polls/PollsCard.dart';
+import 'package:asky/widgets/Poll_card.dart';
 import 'package:asky/widgets/ask_card.dart';
 import 'package:asky/widgets/join_space_card.dart';
 import 'package:asky/widgets/quize_card.dart';
@@ -64,13 +65,16 @@ class _HomePageViewState extends State<HomePage> {
               Text('Quick start',
                   style: GoogleFonts.lato(
                       textStyle: Theme.of(context).textTheme.headline2)),
-              Row(
-                children: [
-                  MyQuizCard(),
-                  const MySpaceCard(),
-                  const MyAskcard()
-                ],
-              ),
+              SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      MyQuizCard(),
+                      const MySpaceCard(),
+                      const CreateCard(),
+                      const MyAskcard()
+                    ],
+                  )),
               Text('Polls',
                   style: GoogleFonts.lato(
                       textStyle: Theme.of(context).textTheme.headline1)),
@@ -80,20 +84,21 @@ class _HomePageViewState extends State<HomePage> {
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: CircularProgressIndicator());
+                      return const Center(
+                          child: const CircularProgressIndicator());
                     }
                     if (!snapshot.hasData) {
-                      return Text('');
+                      return const Text('');
                     }
 
                     var data = snapshot.data?.docs;
 
                     if (data == null) {
-                      return Text('Null');
+                      return const Text('Null');
                     }
 
                     if (data.length == null) {
-                      return Text('Null');
+                      return const Text('Null');
                     }
 
                     return Column(children: [

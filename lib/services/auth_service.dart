@@ -147,15 +147,15 @@ class AuthService with ChangeNotifier {
       await showDialog(
           context: context,
           builder: (context) => AlertDialog(
-                title: Text('Sign up Succeeded'),
+                title: const Text('Sign up Succeeded'),
                 content:
-                    Text('Now add your informations complete your account !'),
+                    const Text('Now add your informations complete your account !'),
                 actions: [
                   TextButton(
                       onPressed: () {
                         Navigator.of(context).pushReplacementNamed('test');
                       },
-                      child: Text('ok'))
+                      child: const Text('ok'))
                 ],
               ));
       Navigator.of(context).pushReplacementNamed('test');

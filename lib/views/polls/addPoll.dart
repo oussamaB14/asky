@@ -5,6 +5,7 @@ import 'package:community_material_icon/community_material_icon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:timeago/timeago.dart';
 
 import '../../styles/colors.dart';
 
@@ -60,11 +61,25 @@ class _AddPollState extends State<AddPoll> {
                         options: options),
                     context);
               } else {
-                print('You need to add atleast to choices!');
-                const AlertDialog(
-                  title: Text('Error'),
-                  content: Text('You need to add atleast to choices!'),
-                );
+                // print('You need to add atleast to choices!');
+                // const AlertDialog(
+                //   title: Text('Error'),
+                //   content: Text('You need to add atleast to choices!'),
+                // );
+                showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                          title: const Text('Error'),
+                          content: const Text(
+                              'You need to add atleast tow choices !'),
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('ok'))
+                          ],
+                        ));
               }
             }
           },
@@ -78,33 +93,39 @@ class _AddPollState extends State<AddPoll> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              TextFormField(
-                  key: _key,
-                  controller: questionController,
-                  decoration: InputDecoration(
-                    filled: true,
-                    labelText: 'ask a question',
-                    floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 42, vertical: 20),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide(color: MyColors.black),
-                      gapPadding: 10,
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide(color: appColor),
-                      gapPadding: 10,
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'this filed is required';
-                    }
-                    return null;
-                  }),
-              _addTile(),
+              Form(
+                key: _key,
+                child: Column(
+                  children: [
+                    TextFormField(
+                        controller: questionController,
+                        decoration: InputDecoration(
+                          filled: true,
+                          labelText: 'ask a question',
+                          // floatingLabelBehavior: FloatingLabelBehavior.auto,
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 42, vertical: 20),
+                          enabledBorder: OutlineInputBorder(
+                            // borderRadius: BorderRadius.circular(15),
+                            borderSide: BorderSide(color: MyColors.black),
+                            gapPadding: 10,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            // borderRadius: BorderRadius.circular(15),
+                            borderSide: BorderSide(color: appColor),
+                            gapPadding: 10,
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return 'this filed is required';
+                          }
+                          return null;
+                        }),
+                    _addTile(),
+                  ],
+                ),
+              ),
               ListTile(
                 leading: Icon(
                   Icons.warning,
