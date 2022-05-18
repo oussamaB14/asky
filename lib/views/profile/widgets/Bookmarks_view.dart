@@ -3,6 +3,7 @@ import 'package:asky/views/QuestionViews/widgets/QuestionCard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class Bookmarks extends StatelessWidget {
   const Bookmarks({Key? key}) : super(key: key);
@@ -10,7 +11,7 @@ class Bookmarks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('My Bookmarks')),
+      appBar: AppBar(title: const Text('My Bookmarks')),
       body: StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance
             .collection('user')
@@ -35,7 +36,10 @@ class Bookmarks extends StatelessWidget {
                       return const CircularProgressIndicator();
                     }
                     if (!snap.hasData) {
-                      return const Text('no bookmarks saved yet');
+                      return Image.asset(
+                        'assets/images/_Pngtree_no_result_search_icon_6511543-removebg-preview.png',
+                        height: 35.h,
+                      );
                     }
                     var data2 = snap.data?.docs;
 

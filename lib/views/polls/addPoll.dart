@@ -49,7 +49,7 @@ class _AddPollState extends State<AddPoll> {
                 options.add(element.text);
               }
 
-              if (options.length > 2) {
+              if (options.length > 1) {
                 PollsService().addPoll(
                     PollsModel(
                         username:
@@ -182,11 +182,4 @@ class _AddPollState extends State<AddPoll> {
       },
     );
   }
-}
-
-String? _requiredValidator(String? text) {
-  if (text == null || text.trim().isEmpty) {
-    return 'this filed is required';
-  }
-  return null;
 }

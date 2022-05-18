@@ -1,6 +1,3 @@
-
-
-import 'package:asky/views/AnwserView/AddAnwserView.dart';
 import 'package:asky/views/QuestionViews/AddQuestionView.dart';
 import 'package:asky/views/Quizzes/topics.dart';
 import 'package:asky/views/Wrapper.dart';
@@ -8,8 +5,6 @@ import 'package:asky/views/authentification/signin_view.dart';
 import 'package:asky/views/authentification/signup_view.dart';
 import 'package:asky/views/authentification/welcome_view.dart';
 import 'package:asky/views/chat/chat_view.dart';
-import 'package:asky/views/explore/explore_view.dart';
-import 'package:asky/views/home/home_View.dart';
 import 'package:asky/views/polls/addPoll.dart';
 import 'package:asky/views/profile/widgets/Settings_view.dart';
 import 'package:asky/views/profile/widgets/Bookmarks_view.dart';

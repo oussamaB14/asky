@@ -1,9 +1,9 @@
-import 'package:asky/constants/assets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:community_material_icon/community_material_icon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
+
+import '../../../constants/assets.dart';
+import '../../../styles/colors.dart';
 
 class AddToBookMark extends StatelessWidget {
   final List<String> id;
@@ -11,6 +11,8 @@ class AddToBookMark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return GestureDetector(
       onTap: () async {
         await FirebaseFirestore.instance
@@ -29,8 +31,8 @@ class AddToBookMark extends StatelessWidget {
           });
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: tab.contains(id[0])
-                  ? Text("Question removed ..")
-                  : Text("Question saved ..")));
+                  ? const Text("Question removed ..")
+                  : const Text(" saved ..")));
         });
       },
       child: StreamBuilder<DocumentSnapshot>(
@@ -40,7 +42,7 @@ class AddToBookMark extends StatelessWidget {
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Text('');
+              return const Center(child: CircularProgressIndicator());
             }
 
             if (!snapshot.hasData) {
@@ -52,7 +54,7 @@ class AddToBookMark extends StatelessWidget {
 
             return Icon(
               tab.contains(id[0]) ? Icons.bookmark : Icons.bookmark_outline,
-              color: const Color(0xFF7f5af0),
+             color: isDarkTheme ? MyColors.green : appColor,
             );
           }),
     );

@@ -1,11 +1,10 @@
 import 'package:asky/models/user.dart';
-import 'package:asky/widgets/view_image.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:path/path.dart' as Path;
 
 import 'package:asky/views/Wrapper.dart';
-import 'package:asky/views/home/home_View.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -148,8 +147,8 @@ class AuthService with ChangeNotifier {
           context: context,
           builder: (context) => AlertDialog(
                 title: const Text('Sign up Succeeded'),
-                content:
-                    const Text('Now add your informations complete your account !'),
+                content: const Text(
+                    'Now add your informations complete your account !'),
                 actions: [
                   TextButton(
                       onPressed: () {

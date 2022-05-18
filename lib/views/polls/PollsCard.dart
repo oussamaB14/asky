@@ -8,7 +8,7 @@ import 'package:touchable_opacity/touchable_opacity.dart';
 
 import '../../models/Polls.dart';
 import '../../styles/colors.dart';
-import '../QuestionViews/widgets/Question_Menu.dart';
+import 'Poll_menu.dart';
 
 class PollCard extends StatefulWidget {
   final String id;
@@ -43,7 +43,7 @@ class _PollCardState extends State<PollCard> {
               SizedBox(width: 2.h),
               Text(widget.poll.username),
               const Spacer(),
-              const QuestionPopMenu(),
+              const PollPopMenu(),
             ],
           ),
           Divider(
@@ -111,9 +111,13 @@ class PoolOption extends StatelessWidget {
                 Text(
                   (percentage * 100).toInt().toString() + '%',
                   style: TextStyle(
-                      color: (percentage * 100).toInt() > 0
-                          ? MyColors.yellow
-                          : MyColors.black),
+                      color: isDarkTheme
+                          ? (percentage * 100).toInt() > 0
+                              ? MyColors.yellow
+                              : Colors.white
+                          : (percentage * 100).toInt() > 0
+                              ? MyColors.yellow
+                              : MyColors.black),
                 ),
               ],
             ),

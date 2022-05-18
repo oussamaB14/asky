@@ -1,3 +1,4 @@
+import 'package:asky/constants/assets.dart';
 import 'package:asky/services/user_service.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../services/AnwserService.dart';
+import '../../../styles/colors.dart';
 
 class AnswerButton extends StatelessWidget {
   final String id;
@@ -13,6 +15,8 @@ class AnswerButton extends StatelessWidget {
   TextEditingController _anwserController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return GestureDetector(
       onTap: () {
         showModalBottomSheet<void>(
@@ -75,9 +79,9 @@ class AnswerButton extends StatelessWidget {
             },
             context: context);
       },
-      child: const Icon(
+      child: Icon(
         CommunityMaterialIcons.card_text_outline,
-        color: Color(0xFF7f5af0),
+        color: isDarkTheme ? MyColors.green : appColor,
       ),
     );
   }

@@ -84,8 +84,7 @@ class _HomePageViewState extends State<HomePage> {
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                          child: const CircularProgressIndicator());
+                      return const Center(child: MainLoadinger());
                     }
                     if (!snapshot.hasData) {
                       return const Text('');

@@ -1,19 +1,14 @@
 import 'package:asky/routes.dart';
 import 'package:asky/services/auth_service.dart';
-import 'package:asky/views/QuestionViews/widgets/polls.dart';
 import 'package:asky/views/Quizzes/firestore.dart';
 import 'package:asky/views/Quizzes/models.dart';
-import 'package:asky/views/authentification/registration/registration.dart';
 import 'package:asky/views/explore/controllers/exploreViewController.dart';
-import 'package:asky/views/profile/test_Profile.dart';
 import 'package:asky/views/profile/widgets/EditProfile_view.dart';
 
 import 'package:asky/widgets/SplashScreen.dart';
-import 'package:asky/widgets/Splash_view.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:asky/styles/theme.dart';
-import 'package:asky/views/Wrapper.dart';
-import 'package:asky/views/authentification/welcome_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';

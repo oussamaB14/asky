@@ -1,17 +1,17 @@
+import 'package:asky/constants/assets.dart';
 import 'package:asky/views/QuestionViews/EditQuestion.dart';
 import 'package:flutter/material.dart';
 
-import '../../../constants/assets.dart';
-import '../../../styles/colors.dart';
+import '../../styles/colors.dart';
 
-class QuestionPopMenu extends StatefulWidget {
-  const QuestionPopMenu({Key? key}) : super(key: key);
+class PollPopMenu extends StatefulWidget {
+  const PollPopMenu({Key? key}) : super(key: key);
 
   @override
-  State<QuestionPopMenu> createState() => _QuestionPopMenuState();
+  State<PollPopMenu> createState() => _PollPopMenuState();
 }
 
-class _QuestionPopMenuState extends State<QuestionPopMenu> {
+class _PollPopMenuState extends State<PollPopMenu> {
   @override
   Widget build(BuildContext context) {
     final isDarkTheme =
@@ -30,18 +30,6 @@ class _QuestionPopMenuState extends State<QuestionPopMenu> {
         itemBuilder: (context) => [
               PopupMenuItem<int>(
                   value: 0,
-                  child: ListTile(
-                    title: Text(
-                      'Edit',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: isDarkTheme ? MyColors.green : appColor),
-                    ),
-                    leading: Icon(Icons.edit,
-                        color: isDarkTheme ? MyColors.green : appColor),
-                  )),
-              PopupMenuItem<int>(
-                  value: 1,
                   child: ListTile(
                       title: Text(
                         'Delete',
