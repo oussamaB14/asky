@@ -2,10 +2,8 @@ import 'package:asky/views/explore/explore_view.dart';
 import 'package:asky/views/home/home_View.dart';
 import 'package:asky/views/profile/profile.dart';
 import 'package:asky/views/spaces/spaces.dart';
-
+import 'package:ternav_icons/ternav_icons.dart';
 import 'package:flutter/material.dart';
-
-import 'package:iconsax/iconsax.dart';
 
 import 'package:sizer/sizer.dart';
 
@@ -41,41 +39,41 @@ class _WrapperState extends State<Wrapper> {
         destinations: [
           NavigationDestination(
               icon: Icon(
-                Iconsax.home,
+                TernavIcons.lightOutline.home,
                 size: 2.5.h,
               ),
               selectedIcon: Icon(
-                Iconsax.home1,
+                TernavIcons.bold.home,
                 size: 2.5.h,
               ),
               label: ''),
           NavigationDestination(
               icon: Icon(
-                Iconsax.search_normal_1,
+                TernavIcons.lightOutline.search,
                 size: 2.5.h,
               ),
               selectedIcon: Icon(
-                Iconsax.search_normal_1,
+                TernavIcons.bold.search,
                 size: 2.5.h,
               ),
               label: ''),
           NavigationDestination(
               icon: Icon(
-                Iconsax.favorite_chart,
+                TernavIcons.lightOutline.chat,
                 size: 2.5.h,
               ),
               selectedIcon: Icon(
-                Iconsax.frame_5,
+                TernavIcons.bold.chat,
                 size: 2.5.h,
               ),
               label: ''),
           NavigationDestination(
               icon: Icon(
-                Iconsax.user,
+                TernavIcons.lightOutline.profile,
                 size: 2.5.h,
               ),
               selectedIcon: Icon(
-                Iconsax.user,
+                TernavIcons.bold.profile,
                 size: 2.5.h,
               ),
               label: ''),

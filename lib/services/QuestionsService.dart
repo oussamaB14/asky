@@ -32,7 +32,7 @@ class QuestionsServices {
         questions.add(Question.fromDocument(element));
       });
     });
-    // print(questions);
+
     return questions;
   }
 

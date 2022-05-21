@@ -1,5 +1,7 @@
 import 'package:asky/routes.dart';
 import 'package:asky/services/auth_service.dart';
+import 'package:asky/views/Admin/login_page.dart';
+import 'package:asky/views/QuestionViews/AddQuestionView.dart';
 import 'package:asky/views/Quizzes/firestore.dart';
 import 'package:asky/views/Quizzes/models.dart';
 import 'package:asky/views/explore/controllers/exploreViewController.dart';
@@ -35,6 +37,7 @@ class _RunnerState extends State<Runner> {
                 create: (context) => UserProfileInfoProvider()),
             ChangeNotifierProvider<ExploreViewController>(
                 create: (context) => ExploreViewController()),
+            ChangeNotifierProvider<TagsProv>(create: (context) => TagsProv()),
             StreamProvider(
               create: (_) => FirestoreService().streamReport(),
               initialData: Report(),

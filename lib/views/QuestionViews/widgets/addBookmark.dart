@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ternav_icons/ternav_icons.dart';
 
 import '../../../constants/assets.dart';
 import '../../../styles/colors.dart';
@@ -53,8 +54,10 @@ class AddToBookMark extends StatelessWidget {
             List<dynamic> tab = data!['Bookmarks'];
 
             return Icon(
-              tab.contains(id[0]) ? Icons.bookmark : Icons.bookmark_outline,
-             color: isDarkTheme ? MyColors.green : appColor,
+              tab.contains(id[0])
+                  ? TernavIcons.bold.bookmark
+                  : TernavIcons.lightOutline.bookmark,
+              color: isDarkTheme ? MyColors.green : appColor,
             );
           }),
     );

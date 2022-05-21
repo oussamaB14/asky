@@ -59,9 +59,9 @@ class MyThemes {
         selectedItemColor: MyColors.black,
         backgroundColor: Colors.white,
         elevation: 1.0),
-    navigationBarTheme: NavigationBarThemeData(
-        indicatorColor: const Color(0xFF7f5af0).withOpacity(0.3),
-        backgroundColor: Colors.white),
+    navigationBarTheme: const NavigationBarThemeData(
+        indicatorColor:  Colors.transparent,
+        backgroundColor:  Colors.white),
     bottomAppBarTheme: BottomAppBarTheme(color: MyColors.green, elevation: 1.0),
 
     buttonTheme: const ButtonThemeData(

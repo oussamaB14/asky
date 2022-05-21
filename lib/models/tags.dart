@@ -20,9 +20,9 @@ class TagModel {
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
-  
+
     result.addAll({'tag': tag});
-  
+
     return result;
   }
 
@@ -34,7 +34,8 @@ class TagModel {
 
   String toJson() => json.encode(toMap());
 
-  factory TagModel.fromJson(String source) => TagModel.fromMap(json.decode(source));
+  factory TagModel.fromJson(String source) =>
+      TagModel.fromMap(json.decode(source));
 
   @override
   String toString() => 'TagModel(tag: $tag)';
@@ -42,9 +43,8 @@ class TagModel {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
-    return other is TagModel &&
-      other.tag == tag;
+
+    return other is TagModel && other.tag == tag;
   }
 
   @override

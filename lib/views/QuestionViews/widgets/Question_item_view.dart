@@ -7,6 +7,8 @@ import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../constants/assets.dart';
+import '../../../styles/colors.dart';
 import '../../AnwserView/widgets/anwserCard.dart';
 import 'addBookmark.dart';
 
@@ -16,6 +18,8 @@ class QuestionScreen extends StatelessWidget {
   TextEditingController _anwserController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+      final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
@@ -56,6 +60,28 @@ class QuestionScreen extends StatelessWidget {
                         question.content,
                         style: Theme.of(context).textTheme.bodyText2,
                       ),
+                     Row(
+                children: [
+                  for (int i = 0; i < question.tags.length; i++)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: RawChip(
+                        shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                                color: isDarkTheme ? MyColors.green : appColor,
+                                width: 0.4),
+                            borderRadius: BorderRadius.circular(45)),
+                        backgroundColor: isDarkTheme ? Colors.black : appColor,
+                        label: Text(
+                          question.tags[i],
+                          style: TextStyle(
+                              fontSize: 11.sp,
+                              color: isDarkTheme ? Colors.white : appColor),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
                       SizedBox(height: 1.5.h),
                       Row(
                         children: [

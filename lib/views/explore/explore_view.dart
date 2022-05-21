@@ -17,8 +17,6 @@ class Explore extends StatefulWidget {
 class _ExploreState extends State<Explore> {
   TextEditingController _searchController = TextEditingController();
   // final TagsView tag = new TagsView();
-  List<TagModel>? selectedtagList = [];
-  List<TagModel> tagList = [];
   bool isSelected = false;
   @override
   Widget build(BuildContext context) {

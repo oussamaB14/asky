@@ -4,6 +4,7 @@ import 'package:community_material_icon/community_material_icon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:ternav_icons/ternav_icons.dart';
 
 import '../../../services/AnwserService.dart';
 import '../../../styles/colors.dart';
@@ -80,7 +81,7 @@ class AnswerButton extends StatelessWidget {
             context: context);
       },
       child: Icon(
-        CommunityMaterialIcons.card_text_outline,
+        TernavIcons.lightOutline.chat,
         color: isDarkTheme ? MyColors.green : appColor,
       ),
     );

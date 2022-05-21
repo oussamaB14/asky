@@ -12,7 +12,7 @@ class Question {
   String content;
   String authorId;
   String mediaUrl;
-  List<TagModel> tags;
+  List<dynamic> tags;
   List<Anwser> anwsers;
   Question({
     required this.username,
@@ -21,7 +21,7 @@ class Question {
     required this.content,
     required this.authorId,
     required this.id,
-    this.tags = const [],
+    required this.tags,
     this.anwsers = const [],
     required this.mediaUrl,
   });
@@ -45,6 +45,7 @@ class Question {
       authorId: authorId ?? this.authorId,
       id: id ?? this.id,
       mediaUrl: mediaUrl ?? this.mediaUrl,
+      tags: tags ?? this.tags,
     );
   }
 
@@ -72,6 +73,7 @@ class Question {
       content: data['content'] ?? '',
       authorId: data['authorId'] ?? '',
       mediaUrl: data['mediaUrl'] ?? '',
+      tags: data['tags'] ?? [],
     );
   }
 

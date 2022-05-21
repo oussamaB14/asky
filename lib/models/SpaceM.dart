@@ -7,7 +7,7 @@ class Space {
   final String spaceName;
   final String description;
   final String spacePhoto;
-  final List<TagModel> tags;
+  final List<String> tags;
 
   Space({
     this.id = '',
@@ -26,10 +26,10 @@ Space _$SpaceFromJson(Map<String, dynamic> json) => Space(
       spaceName: json['spaceName'] as String? ?? '',
       description: json['description'] as String? ?? '',
       spacePhoto: json['spacePhoto'] as String? ?? 'default.png',
-      tags: (json['quizzes'] as List<dynamic>?)
-              ?.map((e) => TagModel.fromMap(e as Map<String, dynamic>))
-              .toList() ??
-          const [],
+      // tags: (json['quizzes'] as List<dynamic>?)
+      //         ?.map((e) => TagModel.fromMap(e as Map<String, dynamic>))
+      //         .toList() ??
+      //     const [],
     );
 
 Map<String, dynamic> _$SpaceToJson(Space instance) => <String, dynamic>{

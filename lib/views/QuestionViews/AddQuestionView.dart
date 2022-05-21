@@ -6,21 +6,14 @@ import 'package:community_material_icon/community_material_icon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../constants/tags.dart';
 
-class AddQuestionView extends StatefulWidget {
-  const AddQuestionView({
-    Key? key,
-  }) : super(key: key);
+class AddQuestionView extends StatelessWidget {
+  AddQuestionView({Key? key}) : super(key: key);
 
-  @override
-  State<AddQuestionView> createState() => _AddQuestionViewState();
-}
-
-class _AddQuestionViewState extends State<AddQuestionView> {
-  int _value = 1;
   final QuestionsServices _questionsServices = QuestionsServices();
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
@@ -42,19 +35,16 @@ class _AddQuestionViewState extends State<AddQuestionView> {
             _questionsServices
                 .addQuestion(
               Question(
-                  username:
-                      FirebaseAuth.instance.currentUser?.displayName ?? 'Error',
-                  title: titleController.value.text,
-                  content: contentController.value.text,
-                  authorId: AuthService().user?.uid ?? 'ididididi',
-                  id: FirebaseFirestore.instance
-                      .collection('questions')
-                      .doc()
-                      .id,
-                  mediaUrl: '',
-                  userPhoto: '',
-                  // tags: [MyList.tags[idx]],
-                  ),
+                username:
+                    FirebaseAuth.instance.currentUser?.displayName ?? 'Error',
+                title: titleController.value.text,
+                content: contentController.value.text,
+                authorId: AuthService().user?.uid ?? 'ididididi',
+                id: FirebaseFirestore.instance.collection('questions').doc().id,
+                mediaUrl: '',
+                userPhoto: '',
+                tags: Provider.of<TagsProv>(context, listen: false).tags,
+              ),
             )
                 .whenComplete(() {
               Navigator.of(context).pushNamed("/homepage");
@@ -120,29 +110,32 @@ class _AddQuestionViewState extends State<AddQuestionView> {
                                   horizontal: 10, vertical: 10),
                               padding: const EdgeInsets.symmetric(
                                   vertical: 5, horizontal: 5),
-                              child: RawChip(
-                                  backgroundColor: Colors.grey.shade100,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(45),
-                                  ),
-                                  label: Text(MyList.tags[idx]),
-                                  labelStyle: TextStyle(
-                                    color: isDarkTheme
-                                        ? _value == idx
-                                            ? Colors.white
-                                            : Colors.black
-                                        : _value == idx
-                                            ? Colors.white
-                                            : Colors.black,
-                                  ),
-                                  selected: _value == idx,
-                                  showCheckmark: false,
-                                  onSelected: (bool selected) {
-                                    setState(() {
-                                      _value = (selected ? idx : null)!;
-                                      print(MyList.tags[idx]);
+                              child: Consumer<TagsProv>(
+                                  builder: (context, tagsProv, child) {
+                                return RawChip(
+                                    backgroundColor: Colors.grey.shade100,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(45),
+                                    ),
+                                    label: Text(MyList.tags[idx]),
+                                    labelStyle: TextStyle(
+                                      color: isDarkTheme
+                                          ? tagsProv.tags
+                                                  .contains(MyList.tags[idx])
+                                              ? Colors.white
+                                              : Colors.black
+                                          : tagsProv.tags
+                                                  .contains(MyList.tags[idx])
+                                              ? Colors.white
+                                              : Colors.black,
+                                    ),
+                                    selected: tagsProv.tags
+                                        .contains(MyList.tags[idx]),
+                                    showCheckmark: false,
+                                    onSelected: (bool selected) {
+                                      tagsProv.updateTags(MyList.tags[idx]);
                                     });
-                                  }),
+                              }),
                             );
                           },
                         ).toList(),
@@ -163,4 +156,19 @@ String? _requiredValidator(String? text) {
     return 'this filed is required';
   }
   return null;
+}
+
+class TagsProv with ChangeNotifier {
+  List<String> tags = [];
+
+  updateTags(String value) {
+    if (tags.contains(value)) {
+      tags.remove(value);
+    } else {
+      if (tags.length < 3) {
+        tags.add(value);
+      }
+    }
+    notifyListeners();
+  }
 }

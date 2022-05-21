@@ -10,7 +10,7 @@ class CreateCard extends StatelessWidget {
     final isDarkTheme =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
     return InkWell(
-      onTap: (() => Navigator.of(context).pushNamed('/topics')),
+      onTap: (() => Navigator.of(context).pushNamed('addPoll')),
       child: SizedBox(
         width: 15.h,
         height: 18.h,
@@ -41,7 +41,11 @@ class CreateCard extends StatelessWidget {
                 ),
                 // const Spacer(),
                 Stack(fit: StackFit.passthrough, children: [
-                  Positioned(child: Image.asset('assets/images/polls.png',width: 100,)),
+                  Positioned(
+                      child: Image.asset(
+                    'assets/images/polls.png',
+                    width: 100,
+                  )),
                 ]),
               ],
             ),
