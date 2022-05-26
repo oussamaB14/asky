@@ -70,7 +70,7 @@ packages:
       name: cached_network_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.2.0"
+    version: "3.2.1"
   cached_network_image_platform_interface:
     dependency: transitive
     description:
@@ -119,7 +119,7 @@ packages:
       name: chewie
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.3.2"
+    version: "1.3.3"
   chewie_audio:
     dependency: transitive
     description:
@@ -147,7 +147,7 @@ packages:
       name: cloud_firestore
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.15"
+    version: "3.1.16"
   cloud_firestore_platform_interface:
     dependency: transitive
     description:
@@ -189,7 +189,7 @@ packages:
       name: cross_file
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.3"
+    version: "0.3.3+1"
   crypto:
     dependency: transitive
     description:
@@ -341,7 +341,7 @@ packages:
       name: flutter_blurhash
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.8"
+    version: "0.7.0"
   flutter_cache_manager:
     dependency: transitive
     description:
@@ -390,7 +390,7 @@ packages:
       name: flutter_form_builder
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.1.1"
+    version: "7.2.1"
   flutter_html:
     dependency: "direct main"
     description:
@@ -517,28 +517,28 @@ packages:
       name: google_fonts
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.2"
+    version: "2.3.3"
   google_sign_in:
     dependency: "direct main"
     description:
       name: google_sign_in
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.3.1"
+    version: "5.3.2"
   google_sign_in_android:
     dependency: transitive
     description:
       name: google_sign_in_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.2.7"
+    version: "5.2.8"
   google_sign_in_ios:
     dependency: transitive
     description:
       name: google_sign_in_ios
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.2.7"
+    version: "5.3.1"
   google_sign_in_platform_interface:
     dependency: transitive
     description:
@@ -573,7 +573,7 @@ packages:
       name: http_parser
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.0"
+    version: "4.0.1"
   image:
     dependency: transitive
     description:
@@ -615,7 +615,7 @@ packages:
       name: image_picker_ios
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.5+2"
+    version: "0.8.5+5"
   image_picker_platform_interface:
     dependency: transitive
     description:
@@ -720,7 +720,7 @@ packages:
       name: octo_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.2"
   open_file:
     dependency: "direct main"
     description:
@@ -867,7 +867,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.2"
+    version: "6.0.3"
   pub_semver:
     dependency: transitive
     description:
@@ -1061,7 +1061,7 @@ packages:
       name: url_launcher_ios
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.16"
+    version: "6.0.17"
   url_launcher_linux:
     dependency: transitive
     description:
@@ -1111,13 +1111,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
-  very_good_analysis:
-    dependency: transitive
-    description:
-      name: very_good_analysis
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.4.0"
   video_player:
     dependency: transitive
     description:
@@ -1131,7 +1124,7 @@ packages:
       name: video_player_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.3"
+    version: "2.3.4"
   video_player_avfoundation:
     dependency: transitive
     description:
@@ -1215,7 +1208,7 @@ packages:
       name: webview_flutter_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.8.1"
+    version: "1.9.0"
   webview_flutter_wkwebview:
     dependency: transitive
     description:
@@ -1253,4 +1246,4 @@ packages:
     version: "3.1.1"
 sdks:
   dart: ">=2.17.0 <3.0.0"
-  flutter: ">=2.12.0"
+  flutter: ">=3.0.0"

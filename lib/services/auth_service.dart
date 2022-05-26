@@ -1,7 +1,6 @@
 import 'package:asky/models/user.dart';
 
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:path/path.dart' as Path;
 
 import 'package:asky/views/Wrapper.dart';
 
@@ -16,7 +15,7 @@ class AuthService with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final userStream = FirebaseAuth.instance.authStateChanges();
-  FirebaseFirestore _db = FirebaseFirestore.instance;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
   User? user;
   // final user = FirebaseAuth.instance.currentUser;
   User? getCurrentUser() {
@@ -44,8 +43,9 @@ class AuthService with ChangeNotifier {
     }
     user = _auth.currentUser;
     await assignUsers();
-    if (FirebaseAuth.instance.currentUser != null)
+    if (FirebaseAuth.instance.currentUser != null) {
       Navigator.pushReplacementNamed(context, '/homepage');
+    }
 
     notifyListeners();
   }
@@ -165,11 +165,20 @@ class AuthService with ChangeNotifier {
     //     .showSnackBar(SnackBar(content: Text(e.message.toString())));
   }
 
-  void updateUserInfo(String role, String educationfiled, String bio) async {
+  void updateUserInfo(
+    String role,
+    String educationfiled,
+    String bio,
+  ) async {
     await FirebaseFirestore.instance
         .collection('user')
         .doc(FirebaseAuth.instance.currentUser?.uid)
-        .update({"bio": bio, "role": role, "educationFiled": educationfiled});
+        .update({
+      "bio": bio,
+      "role": role,
+      "educationFiled": educationfiled,
+      // "imgUrl": imgUrl
+    });
   }
 
   void _handleSignUpError(FirebaseAuthException e) {

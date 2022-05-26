@@ -43,5 +43,14 @@ class QuestionsServices {
         .then((value) => print(value));
   }
 
+  Future deleteQuestion(String id) async {
+    final collection = FirebaseFirestore.instance.collection('questions');
+    collection
+        .doc(id) // <-- Doc ID to be deleted.
+        .delete() // <-- Delete
+        .then((_) => print('Deleted'))
+        .catchError((error) => print('Delete failed: $error'));
+  }
+
   uploadComment(currentUserId, String text, postId, ownerId, String mediaUrl) {}
 }

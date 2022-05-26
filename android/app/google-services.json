@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "480468269943-dhhivb29s1cvn0up2pa207n93idrqsnl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tn.asky.asky.asky",
+            "certificate_hash": "64d59f0d676578b15d802cc22c491cbda084878a"
+          }
+        },
+        {
           "client_id": "480468269943-u39do30f9kdtcb285djvvhip0pu411ij.apps.googleusercontent.com",
           "client_type": 3
         }

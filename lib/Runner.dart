@@ -1,12 +1,14 @@
 import 'package:asky/routes.dart';
 import 'package:asky/services/auth_service.dart';
+import 'package:asky/views/Admin/Dashboard.dart';
 import 'package:asky/views/Admin/login_page.dart';
+
 import 'package:asky/views/QuestionViews/AddQuestionView.dart';
 import 'package:asky/views/Quizzes/firestore.dart';
 import 'package:asky/views/Quizzes/models.dart';
+
 import 'package:asky/views/explore/controllers/exploreViewController.dart';
 import 'package:asky/views/profile/widgets/EditProfile_view.dart';
-
 import 'package:asky/widgets/SplashScreen.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -45,7 +47,7 @@ class _RunnerState extends State<Runner> {
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: const Splash(),
+            home:  const Dashboard(),
             theme: MyThemes().lightTheme,
             darkTheme: MyThemes().darkTheme,
             routes: routes,

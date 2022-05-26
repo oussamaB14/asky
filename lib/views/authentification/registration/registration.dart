@@ -1,11 +1,11 @@
+import 'dart:io';
+
 import 'package:asky/services/auth_service.dart';
-import 'package:asky/styles/colors.dart';
-import 'package:asky/views/authentification/registration/test.dart';
-import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
-import 'package:textfield_tags/textfield_tags.dart';
+import 'package:ternav_icons/ternav_icons.dart';
 
 class RegestrationView extends StatefulWidget {
   const RegestrationView({Key? key}) : super(key: key);
@@ -22,48 +22,123 @@ class _RegestrationViewState extends State<RegestrationView> {
   int _value2 = 0;
   List selected = [];
   bool isTeacher = false;
+  File? image;
+  bool isloading = false;
+  Future pickImage() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+      if (image == null) return;
+
+      final imageTemp = File(image.path);
+
+      setState(() => this.image = imageTemp);
+    } on PlatformException catch (e) {
+      print('Failed to pick image: $e');
+    }
+  }
+
+  Future pickImageC() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.camera);
+
+      if (image == null) return;
+
+      final imageTemp = File(image.path);
+
+      setState(() => this.image = imageTemp);
+    } on PlatformException catch (e) {
+      print('Failed to pick image: $e');
+    }
+  }
 
   TextEditingController bioController = TextEditingController();
-
-  TextEditingController _educationFiled = TextEditingController();
+  final TextEditingController _educationFiled = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(
+      backgroundColor: isDarkTheme ? Colors.black : Colors.white,
       appBar: AppBar(
         title: const Text('Registration'),
       ),
       body: SingleChildScrollView(
-        child: Card(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              width: double.infinity,
-              // height: double.infinity,
-              child: Column(
-                children: [
-                  const Text('pick a photo'),
-                  const Divider(),
-                  CircleAvatar(
-                    radius: 5.h,
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        _handleImageSelection();
-                      },
-                      child: const Align(
-                        alignment: AlignmentDirectional.centerStart,
-                        child: Center(
-                            child: Icon(
-                          Icons.person,
-                          size: 50,
-                        )),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              image != null
+                  ? CircleAvatar(
+                      child: ClipOval(
+                        child: Image.file(
+                          image!,
+                          width: 100,
+                          height: 100,
+                          fit: BoxFit.fitWidth,
+                        ),
+                      ),
+                      radius: 50,
+                    )
+                  : CircleAvatar(
+                      radius: 50,
+                      backgroundColor: Colors.grey.shade100,
+                      child: Icon(
+                        TernavIcons.lightOutline.camera,
+                        size: 50,
                       ),
                     ),
-                  ),
-                  SizedBox(height: 2.h),
-                  const Text(
-                    'you are a ..?',
-                  ),
+              ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.blue),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(35),
+                      ))),
+                  onPressed: () {
+                    showModalBottomSheet<void>(
+                        builder: (BuildContext context) {
+                          return Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 15),
+                            height: 15.h,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(4.h),
+                              ),
+                            ),
+                            child: Column(
+                              children: [
+                                ListTile(
+                                    leading:
+                                        Icon(TernavIcons.lightOutline.folder),
+                                    title: Text('Select from Gallery',
+                                        style: TextStyle(fontSize: 16.sp)),
+                                    onTap: () {
+                                      pickImage();
+                                    }),
+                                ListTile(
+                                    leading:
+                                        Icon(TernavIcons.lightOutline.camera),
+                                    title: Text('Select from Camera',
+                                        style: TextStyle(fontSize: 16.sp)),
+                                    onTap: () {
+                                      pickImageC();
+                                    }),
+                              ],
+                            ),
+                          );
+                        },
+                        context: context);
+                  },
+                  child: const Text('Select image')),
+              SizedBox(height: 2.h),
+              ExpansionTile(
+                leading: Icon(TernavIcons.lightOutline.profile),
+                title: const Text(
+                  'Role',
+                ),
+                children: [
                   Wrap(
                     children: List<Widget>.generate(
                       options.length,
@@ -81,7 +156,18 @@ class _RegestrationViewState extends State<RegestrationView> {
                                   borderRadius: BorderRadius.circular(45),
                                 ),
                                 // checkmarkColor: Colors.white,
-                                label: Text(options[idx]),
+                                label: Text(
+                                  options[idx],
+                                ),
+                                labelStyle: TextStyle(
+                                  color: isDarkTheme
+                                      ? _value == idx
+                                          ? Colors.white
+                                          : Colors.black
+                                      : _value == idx
+                                          ? Colors.white
+                                          : Colors.black,
+                                ),
                                 selected: _value == idx,
                                 onSelected: (bool selected) {
                                   setState(() {
@@ -91,19 +177,18 @@ class _RegestrationViewState extends State<RegestrationView> {
                                     } else
                                       (isTeacher = false);
                                   });
-                                  print(idx);
-                                  print(_value);
-                                  print(isTeacher);
-                                  print(options[idx]);
                                 }),
                           ),
                         ]);
                       },
                     ).toList(),
                   ),
-                  const Text('Education Filed'),
-                  const Divider(),
-                  SizedBox(height: 2.h),
+                ],
+              ),
+              ExpansionTile(
+                leading: Icon(TernavIcons.lightOutline.statistics_monitor),
+                title: const Text('Education Filed'),
+                children: [
                   if (isTeacher) ...[
                     // const Home(),
                     TextFormField(
@@ -136,15 +221,23 @@ class _RegestrationViewState extends State<RegestrationView> {
                             Container(
                               margin: const EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 10),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 5),
                               child: RawChip(
-                                  // avatar: selected.contains(options2[idx])
-                                  //     ? Icon(Icons.check, color: Colors.blue)
-                                  //     : null,
                                   selectedColor: Colors.blue,
                                   backgroundColor: const Color(0xFFE1E4F3),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(45)),
                                   label: Text(options2[idx]),
+                                  labelStyle: TextStyle(
+                                    color: isDarkTheme
+                                        ? _value2 == idx
+                                            ? Colors.white
+                                            : Colors.black
+                                        : _value2 == idx
+                                            ? Colors.white
+                                            : Colors.black,
+                                  ),
                                   selected: _value2 == idx,
                                   onSelected: (bool selected) {
                                     setState(() {
@@ -157,8 +250,12 @@ class _RegestrationViewState extends State<RegestrationView> {
                       ).toList(),
                     ),
                   ],
-                  SizedBox(height: 2.h),
-                  const Text('About you '),
+                ],
+              ),
+              ExpansionTile(
+                leading: Icon(TernavIcons.lightOutline.chat),
+                title: const Text('About you '),
+                children: [
                   TextFormField(
                     controller: bioController,
                     decoration: const InputDecoration(
@@ -175,61 +272,61 @@ class _RegestrationViewState extends State<RegestrationView> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 10.h),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.blue),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(35),
-                        ))),
-                    onPressed: () async {
-                      AuthService().updateUserInfo(
-                          isTeacher ? 'Teacher' : 'Student',
-                          isTeacher ? _educationFiled.text : options2[_value2],
-                          bioController.text);
-                      await showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                                title: const Text('Informations confirmed'),
-                                content: const Text(
-                                    'your account was created , you can log in now'),
-                                actions: [
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context)
-                                            .pushReplacementNamed('/signin');
-                                      },
-                                      child: const Text('ok'))
-                                ],
-                              ));
-                    },
-                    child: SizedBox(
-                      width: 20.h,
-                      height: 6.h,
-                      child: Center(
-                        child: Text(
-                          "Confirme",
-                          style: TextStyle(fontSize: 2.5.h),
-                        ),
+                ],
+              ),
+              SizedBox(height: 10.h),
+              if (isloading) ...[
+                const Center(
+                  child: CircularProgressIndicator(),
+                )
+              ],
+              if (!isloading) ...[
+                ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.blue),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(35),
+                      ))),
+                  onPressed: () async {
+                    AuthService().updateUserInfo(
+                      isTeacher ? 'Teacher' : 'Student',
+                      isTeacher ? _educationFiled.text : options2[_value2],
+                      bioController.text,
+                      // image!.toString()
+                    );
+                    await showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                              title: const Text('Informations confirmed'),
+                              content: const Text(
+                                  'your account was created , you can log in now'),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .pushReplacementNamed('/signin');
+                                    },
+                                    child: const Text('ok'))
+                              ],
+                            ));
+                  },
+                  child: SizedBox(
+                    width: 20.h,
+                    height: 6.h,
+                    child: Center(
+                      child: Text(
+                        "Confirme",
+                        style: TextStyle(fontSize: 2.5.h),
                       ),
                     ),
                   ),
-                ],
-              ),
-            ),
+                ),
+              ]
+            ],
           ),
         ),
       ),
     );
   }
-}
-
-void _handleImageSelection() async {
-  final result = await ImagePicker().pickImage(
-    imageQuality: 70,
-    maxWidth: 1440,
-    source: ImageSource.gallery,
-  );
 }

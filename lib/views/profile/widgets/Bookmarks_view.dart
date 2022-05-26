@@ -57,7 +57,8 @@ class Bookmarks extends StatelessWidget {
                                     authorId: data2[i]['authorId'],
                                     id: data2[i].id,
                                     mediaUrl: data2[i]['mediaUrl'],
-                                    tags: []),
+                                    tags: data2[i]['tags'],
+                                    anwsers: data2[i]['anwsers']),
                               )
                       ],
                     );

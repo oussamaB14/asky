@@ -22,61 +22,6 @@ class SigninViewState extends State<SigninView> {
   Map<String, dynamic>? _userData;
   AccessToken? _accessToken;
   bool _checking = true;
-
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   _checkIfisLoggedIn();
-  // }
-
-  // _checkIfisLoggedIn() async {
-  //   final accessToken = await FacebookAuth.instance.accessToken;
-
-  //   setState(() {
-  //     _checking = false;
-  //   });
-
-  //   if (accessToken != null) {
-  //     print(accessToken.toJson());
-  //     final userData = await FacebookAuth.instance.getUserData();
-  //     _accessToken = accessToken;
-  //     setState(() {
-  //       _userData = userData;
-  //     });
-  //   } else {
-  //     _login();
-  //   }
-  // }
-
-  // _login() async {
-  //   final LoginResult result = await FacebookAuth.instance.login();
-
-  //   if (result.status == LoginStatus.success) {
-  //     _accessToken = result.accessToken;
-
-  //     final userData = await FacebookAuth.instance.getUserData();
-  //     _userData = userData;
-  //   } else {
-  //     print(result.status);
-  //     print(result.message);
-  //   }
-  //   setState(() {
-  //     _checking = false;
-  //   });
-  // }
-
-  // _logout() async {
-  //   await FacebookAuth.instance.logOut();
-  //   _accessToken = null;
-  //   _userData = null;
-  //   setState(() {});
-  // }
-
-  // forgotPassword(String email) async {
-  //   await _auth.sendPasswordResetEmail(email: email);
-  // }
-
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;

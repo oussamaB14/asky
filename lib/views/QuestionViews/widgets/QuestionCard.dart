@@ -105,7 +105,7 @@ class QuestionCard extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Text(
-                      (question.anwsers).length.toString(),
+                      question.anwsers.length.toString(),
                       style: TextStyle(
                           fontSize: 10.sp,
                           color: isDarkTheme ? MyColors.green : appColor),

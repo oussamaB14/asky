@@ -44,6 +44,7 @@ class AddQuestionView extends StatelessWidget {
                 mediaUrl: '',
                 userPhoto: '',
                 tags: Provider.of<TagsProv>(context, listen: false).tags,
+                anwsers: [],
               ),
             )
                 .whenComplete(() {
