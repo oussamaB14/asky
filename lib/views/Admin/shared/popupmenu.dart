@@ -2,6 +2,7 @@ import 'package:asky/views/Admin/shared/DashboardColors.dart';
 import 'package:asky/views/AnwserView/widgets/Edit_anwser.dart';
 import 'package:asky/views/QuestionViews/EditQuestion.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class Dashboardpopup extends StatefulWidget {
   const Dashboardpopup({Key? key}) : super(key: key);
@@ -24,12 +25,12 @@ class _DashboardpopupState extends State<Dashboardpopup> {
           ),
         ),
         onSelected: (int item) => onSelected(context, item),
-        itemBuilder: (context) => const [
+        itemBuilder: (context) => [
               PopupMenuItem<int>(
                   value: 0,
                   child: ListTile(
-                    title: Text('Log out'),
-                    leading: Icon(Icons.logout_rounded),
+                    title: Text('Log out', style: TextStyle(fontSize: 6.sp)),
+                    leading: const Icon(Icons.logout_rounded),
                   )),
             ]);
   }

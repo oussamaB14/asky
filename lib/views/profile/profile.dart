@@ -211,7 +211,7 @@ class StudentProfileViewState extends State<StudentProfile> {
                                         idx++) {
                                       if (idx == newIdx) {
                                         isSelected[idx] = true;
-                                      } else {
+                                      } else { 
                                         isSelected[idx] = false;
                                       }
                                     }

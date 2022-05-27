@@ -5,21 +5,31 @@ import 'package:sizer/sizer.dart';
 
 import 'DashboardColors.dart';
 
-class MyDashboardcard extends StatelessWidget {
-  const MyDashboardcard({Key? key, required this.title, required this.color})
-      : super(key: key);
+class MyDashboardcard extends StatefulWidget {
+  const MyDashboardcard({
+    Key? key,
+    required this.title,
+    required this.color,
+  }) : super(key: key);
   final String title;
   final Color color;
+
+  @override
+  State<MyDashboardcard> createState() => _MyDashboardcardState();
+}
+
+class _MyDashboardcardState extends State<MyDashboardcard> {
+  int index = 0;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 35.h,
       height: 20.h,
       child: Card(
-        color: color,
+        color: widget.color,
         child: Column(
           children: [
-            Spacer(),
+            const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -30,7 +40,7 @@ class MyDashboardcard extends StatelessWidget {
                   size: 30,
                 ),
                 Text(
-                  title,
+                  widget.title,
                   style: GoogleFonts.overpass(
                       textStyle: Theme.of(context).textTheme.headline2,
                       fontSize: 6.sp,

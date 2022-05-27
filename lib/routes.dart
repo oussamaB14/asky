@@ -1,3 +1,12 @@
+import 'package:asky/views/Admin/shared/DaAnwsers.dart';
+import 'package:asky/views/Admin/shared/DaHome.dart';
+import 'package:asky/views/Admin/shared/DaQuestions.dart';
+import 'package:asky/views/Admin/shared/DaSettings.dart';
+import 'package:asky/views/Admin/shared/DaSpaces.dart';
+import 'package:asky/views/Admin/shared/DaTags.dart';
+import 'package:asky/views/Admin/shared/Dapolls.dart';
+import 'package:asky/views/Admin/shared/Daquizes.dart';
+import 'package:asky/views/Admin/shared/Dausers.dart';
 import 'package:asky/views/QuestionViews/AddQuestionView.dart';
 import 'package:asky/views/Quizzes/topics.dart';
 import 'package:asky/views/Wrapper.dart';
@@ -39,4 +48,13 @@ final Map<String, WidgetBuilder> routes = {
   "chatPage": (context) => const ChatPage(),
   'addspace': (context) => AddSpace(),
   "test": (context) => const RegestrationView(),
+  "Dahome": (context) => const DaHome(),
+  "DaQuestion": (context) => const DaQuestions(),
+  "Datags": (context) => const DaTags(),
+  "DaPolls": (context) => const DaPolls(),
+  "DaSettings": (context) => const DaSettings(),
+  "DaSpaces": (context) => const DaSpaces(),
+  "DaAnwsers": (context) => const DaAnwsers(),
+  "DaUsers": (context) => const DaUsers(),
+  "DaQuizzes": (context) => const DaQuizzes(),
 };
