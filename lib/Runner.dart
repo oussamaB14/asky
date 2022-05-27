@@ -1,8 +1,7 @@
 import 'package:asky/routes.dart';
 import 'package:asky/services/auth_service.dart';
-import 'package:asky/views/Admin/shared/DaAnwsers.dart';
-import 'package:asky/views/Admin/login_page.dart';
-import 'package:asky/views/Admin/shared/DaHome.dart';
+
+import 'package:asky/views/Admin/shared/screens/DaHome.dart';
 
 import 'package:asky/views/QuestionViews/AddQuestionView.dart';
 import 'package:asky/views/Quizzes/firestore.dart';

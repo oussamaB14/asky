@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'DaAppBar.dart';
-import 'DashboardColors.dart';
-import 'DashboardDrawer.dart';
+import '../DaAppBar.dart';
+import '../DashboardColors.dart';
+import '../DashboardDrawer.dart';
 
 class DaQuestions extends StatelessWidget {
   const DaQuestions({Key? key}) : super(key: key);

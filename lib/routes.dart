@@ -1,12 +1,13 @@
-import 'package:asky/views/Admin/shared/DaAnwsers.dart';
-import 'package:asky/views/Admin/shared/DaHome.dart';
-import 'package:asky/views/Admin/shared/DaQuestions.dart';
-import 'package:asky/views/Admin/shared/DaSettings.dart';
-import 'package:asky/views/Admin/shared/DaSpaces.dart';
-import 'package:asky/views/Admin/shared/DaTags.dart';
-import 'package:asky/views/Admin/shared/Dapolls.dart';
-import 'package:asky/views/Admin/shared/Daquizes.dart';
-import 'package:asky/views/Admin/shared/Dausers.dart';
+
+import 'package:asky/views/Admin/shared/screens/DaAnwsers.dart';
+import 'package:asky/views/Admin/shared/screens/DaHome.dart';
+import 'package:asky/views/Admin/shared/screens/DaQuestions.dart';
+import 'package:asky/views/Admin/shared/screens/DaSettings.dart';
+import 'package:asky/views/Admin/shared/screens/DaSpaces.dart';
+import 'package:asky/views/Admin/shared/screens/DaTags.dart';
+import 'package:asky/views/Admin/shared/screens/Dapolls.dart';
+import 'package:asky/views/Admin/shared/screens/Daquizes.dart';
+import 'package:asky/views/Admin/shared/screens/Dausers.dart';
 import 'package:asky/views/QuestionViews/AddQuestionView.dart';
 import 'package:asky/views/Quizzes/topics.dart';
 import 'package:asky/views/Wrapper.dart';
@@ -28,10 +29,8 @@ import 'package:flutter/widgets.dart';
 import 'views/authentification/registration/registration.dart';
 
 final Map<String, WidgetBuilder> routes = {
-  // // "/welcomePage": (context) => Wrapper(),
   "/StudentProfile": (context) => StudentProfile(),
   "/spaces": (context) => const SpacesScreen(),
-  // "/explore": (context) => const Explore(),
   "/signin": (context) => const SigninView(),
   "/signup": (context) => const SignupView(),
   "/homepage": ((context) => Wrapper()),
@@ -43,10 +42,9 @@ final Map<String, WidgetBuilder> routes = {
   "EditProfile": (context) => const EditProfile(),
   '/topics': (context) => const TopicsScreen(),
   "addPoll": (context) => const AddPoll(),
-
   // "addanwser": (context) => AddAnwser(),
   "chatPage": (context) => const ChatPage(),
-  'addspace': (context) => AddSpace(),
+  'addspace': (context) => const AddSpace(),
   "test": (context) => const RegestrationView(),
   "Dahome": (context) => const DaHome(),
   "DaQuestion": (context) => const DaQuestions(),

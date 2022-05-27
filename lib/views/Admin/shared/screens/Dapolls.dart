@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-import 'DaAppBar.dart';
-import 'DashboardColors.dart';
-import 'DashboardDrawer.dart';
+import '../DaAppBar.dart';
+import '../DashboardColors.dart';
+import '../DashboardDrawer.dart';
 
 class DaPolls extends StatefulWidget {
   const DaPolls({Key? key}) : super(key: key);
