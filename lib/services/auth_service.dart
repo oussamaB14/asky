@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:asky/models/user.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
@@ -166,10 +169,14 @@ class AuthService with ChangeNotifier {
   }
 
   void updateUserInfo(
-    String role,
-    String educationfiled,
-    String bio,
-  ) async {
+      String role, String educationfiled, String bio, File file) async {
+    final UploadTask uploadTask = FirebaseStorage.instance
+        .ref()
+        .child("profilePics/$DateTime.now().toString()")
+        .putFile(file);
+    final TaskSnapshot downloadUrl = await uploadTask;
+    final String url = await downloadUrl.ref.getDownloadURL();
+
     await FirebaseFirestore.instance
         .collection('user')
         .doc(FirebaseAuth.instance.currentUser?.uid)
@@ -177,8 +184,22 @@ class AuthService with ChangeNotifier {
       "bio": bio,
       "role": role,
       "educationFiled": educationfiled,
-      // "imgUrl": imgUrl
+      "imgUrl": url
     });
+  }
+
+  Future<String> UploadImage(File file) async {
+    String filename = DateTime.now().toString();
+
+    final UploadTask uploadTask = FirebaseStorage.instance
+        .ref()
+        .child("profilePics/$filename")
+        .putFile(file);
+    final TaskSnapshot downloadUrl = await uploadTask;
+
+    final String url = await downloadUrl.ref.getDownloadURL();
+    return url;
+    //return url;
   }
 
   void _handleSignUpError(FirebaseAuthException e) {

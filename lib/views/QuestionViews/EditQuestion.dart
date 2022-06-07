@@ -1,6 +1,11 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
+
+import '../../constants/tags.dart';
+import 'AddQuestionView.dart';
 
 class EditQuestion extends StatefulWidget {
   const EditQuestion({Key? key}) : super(key: key);
@@ -33,7 +38,7 @@ class _EditQuestionState extends State<EditQuestion> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-             const ListTile(
+            const ListTile(
               title: Text('Edit Title :'),
               trailing: Icon(Icons.edit),
             ),
@@ -69,10 +74,45 @@ class _EditQuestionState extends State<EditQuestion> {
                   contentPadding: EdgeInsets.all(15),
                   border: InputBorder.none),
             )),
-             const ListTile(
-              title: Text('Edit Tag :'),
-              trailing: Icon(Icons.edit),
-            ),
+            ExpansionTile(title: const Text('Edit category'), children: [
+              Wrap(
+                children: List<Widget>.generate(
+                  MyList.tags.length,
+                  (int idx) {
+                    return Container(
+                      height: 5.h,
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 5),
+                      child: Consumer<TagsProv>(
+                          builder: (context, tagsProv, child) {
+                        return RawChip(
+                            backgroundColor: Colors.grey.shade100,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(45),
+                            ),
+                            label: Text(MyList.tags[idx]),
+                            labelStyle: TextStyle(
+                              color: isDarkTheme
+                                  ? tagsProv.tags.contains(MyList.tags[idx])
+                                      ? Colors.white
+                                      : Colors.black
+                                  : tagsProv.tags.contains(MyList.tags[idx])
+                                      ? Colors.white
+                                      : Colors.black,
+                            ),
+                            selected: tagsProv.tags.contains(MyList.tags[idx]),
+                            showCheckmark: false,
+                            onSelected: (bool selected) {
+                              tagsProv.updateTags(MyList.tags[idx]);
+                            });
+                      }),
+                    );
+                  },
+                ).toList(),
+              ),
+            ]),
             const Divider()
           ],
         ),

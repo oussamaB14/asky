@@ -48,6 +48,8 @@ class AnswerButton extends StatelessWidget {
                                   await UserService().getUserProfileUrl();
                               //String y = await UserService().getUserName();
                               AnwserService().addAnswer({
+                                'authorId':
+                                    FirebaseAuth.instance.currentUser!.uid,
                                 'username': FirebaseAuth
                                         .instance.currentUser?.displayName ??
                                     '',

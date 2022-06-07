@@ -3,26 +3,27 @@ import 'package:filter_list/filter_list.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:asky/styles/colors.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:sizer/sizer.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
-// class ThemeProvider extends ChangeNotifier {
-//   ThemeMode themeMode = ThemeMode.system;
+class ThemeProvider extends ChangeNotifier {
+  ThemeMode themeMode = ThemeMode.system;
 
-//   bool get isDarkMode {
-//     if (themeMode == ThemeMode.system) {
-//       final brightness = SchedulerBinding.instance!.window.platformBrightness;
-//       return brightness == Brightness.dark;
-//     } else {
-//       return themeMode == ThemeMode.dark;
-//     }
-//   }
+  bool get isDarkMode {
+    if (themeMode == ThemeMode.system) {
+      final brightness = SchedulerBinding.instance!.window.platformBrightness;
+      return brightness == Brightness.dark;
+    } else {
+      return themeMode == ThemeMode.dark;
+    }
+  }
 
-//   void toggleTheme(bool isOn) {
-//     themeMode = isOn ? ThemeMode.dark : ThemeMode.light;
-//     notifyListeners();
-//   }
-// }
+  void toggleTheme(bool isOn) {
+    themeMode = isOn ? ThemeMode.dark : ThemeMode.light;
+    notifyListeners();
+  }
+}
 
 class MyThemes {
   final lightTheme = ThemeData(
@@ -60,8 +61,9 @@ class MyThemes {
         backgroundColor: Colors.white,
         elevation: 1.0),
     navigationBarTheme: const NavigationBarThemeData(
-        indicatorColor:  Colors.transparent,
-        backgroundColor:  Colors.white),
+        indicatorColor: Colors.transparent,
+        
+         backgroundColor: Colors.white),
     bottomAppBarTheme: BottomAppBarTheme(color: MyColors.green, elevation: 1.0),
 
     buttonTheme: const ButtonThemeData(

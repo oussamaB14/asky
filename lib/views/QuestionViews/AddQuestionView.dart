@@ -25,6 +25,7 @@ class AddQuestionView extends StatelessWidget {
     final isDarkTheme =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(
+      backgroundColor: isDarkTheme ? Colors.black : Colors.white,
       appBar: AppBar(
         title: const Text("Add question"),
       ),
@@ -39,7 +40,7 @@ class AddQuestionView extends StatelessWidget {
                     FirebaseAuth.instance.currentUser?.displayName ?? 'Error',
                 title: titleController.value.text,
                 content: contentController.value.text,
-                authorId: AuthService().user?.uid ?? 'ididididi',
+                authorId: FirebaseAuth.instance.currentUser!.uid,
                 id: FirebaseFirestore.instance.collection('questions').doc().id,
                 mediaUrl: '',
                 userPhoto: '',
@@ -100,47 +101,52 @@ class AddQuestionView extends StatelessWidget {
                           validator: _requiredValidator),
                       const Divider(),
                       SizedBox(height: 2.h),
-                      const Text('add tag'),
-                      Wrap(
-                        children: List<Widget>.generate(
-                          MyList.tags.length,
-                          (int idx) {
-                            return Container(
-                              height: 5.h,
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 10),
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 5, horizontal: 5),
-                              child: Consumer<TagsProv>(
-                                  builder: (context, tagsProv, child) {
-                                return RawChip(
-                                    backgroundColor: Colors.grey.shade100,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(45),
-                                    ),
-                                    label: Text(MyList.tags[idx]),
-                                    labelStyle: TextStyle(
-                                      color: isDarkTheme
-                                          ? tagsProv.tags
-                                                  .contains(MyList.tags[idx])
-                                              ? Colors.white
-                                              : Colors.black
-                                          : tagsProv.tags
-                                                  .contains(MyList.tags[idx])
-                                              ? Colors.white
-                                              : Colors.black,
-                                    ),
-                                    selected: tagsProv.tags
-                                        .contains(MyList.tags[idx]),
-                                    showCheckmark: false,
-                                    onSelected: (bool selected) {
-                                      tagsProv.updateTags(MyList.tags[idx]);
-                                    });
-                              }),
-                            );
-                          },
-                        ).toList(),
-                      )
+                      ExpansionTile(
+                          title: const Text('Add a category'),
+                          children: [
+                            Wrap(
+                              children: List<Widget>.generate(
+                                MyList.tags.length,
+                                (int idx) {
+                                  return Container(
+                                    height: 5.h,
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 10),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 5, horizontal: 5),
+                                    child: Consumer<TagsProv>(
+                                        builder: (context, tagsProv, child) {
+                                      return RawChip(
+                                          backgroundColor: Colors.grey.shade100,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(45),
+                                          ),
+                                          label: Text(MyList.tags[idx]),
+                                          labelStyle: TextStyle(
+                                            color: isDarkTheme
+                                                ? tagsProv.tags.contains(
+                                                        MyList.tags[idx])
+                                                    ? Colors.white
+                                                    : Colors.black
+                                                : tagsProv.tags.contains(
+                                                        MyList.tags[idx])
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                          ),
+                                          selected: tagsProv.tags
+                                              .contains(MyList.tags[idx]),
+                                          showCheckmark: false,
+                                          onSelected: (bool selected) {
+                                            tagsProv
+                                                .updateTags(MyList.tags[idx]);
+                                          });
+                                    }),
+                                  );
+                                },
+                              ).toList(),
+                            ),
+                          ])
                     ],
                   )),
               // AddTag(),

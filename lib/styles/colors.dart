@@ -12,4 +12,5 @@ class MyColors {
   static Color lightBleu = Color(0xff3da9fc);
   static Color darkGrey = Color(0xff72757e);
   static Color yellow = Color(0xfff9bc60);
+  static Color backgroundColor = Color(0xff16161a);
 }

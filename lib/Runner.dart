@@ -1,15 +1,17 @@
 import 'package:asky/routes.dart';
 import 'package:asky/services/auth_service.dart';
-
+import 'package:asky/views/Admin/login_page.dart';
 import 'package:asky/views/Admin/shared/screens/DaHome.dart';
 
 import 'package:asky/views/QuestionViews/AddQuestionView.dart';
 import 'package:asky/views/Quizzes/firestore.dart';
 import 'package:asky/views/Quizzes/models.dart';
+import 'package:asky/views/authentification/registration/registration.dart';
 
 import 'package:asky/views/explore/controllers/exploreViewController.dart';
 import 'package:asky/views/profile/widgets/EditProfile_view.dart';
 import 'package:asky/widgets/SplashScreen.dart';
+import 'package:asky/widgets/Splash_view.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:asky/styles/theme.dart';
@@ -43,13 +45,16 @@ class _RunnerState extends State<Runner> {
             StreamProvider(
               create: (_) => FirestoreService().streamReport(),
               initialData: Report(),
-            )
+            ),
+            ChangeNotifierProvider<ThemeProvider>(
+                create: (context) => ThemeProvider()),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
-            home:   const DaHome(),
+            home: const Splash(),
             theme: MyThemes().lightTheme,
             darkTheme: MyThemes().darkTheme,
+            // themeMode: ThemeProvider().notifyListeners(),
             routes: routes,
           ),
         );

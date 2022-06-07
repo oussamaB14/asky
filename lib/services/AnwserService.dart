@@ -29,6 +29,28 @@ class AnwserService {
   }
   // ADD NEW QUESTION TO DB
 
+//////////////////-------EDIT QUESTION-------------////////////////////////////
+  void editAnswer(
+    String answer,
+  ) async {
+    await _db
+        .collection('questions')
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .update({
+      "answer": answer,
+    });
+  }
+
+//////////////////-------Delete QUESTION-------------////////////////////////////
+  Future deleteAnswser(String id) async {
+    final collection = FirebaseFirestore.instance.collection('questions');
+    collection
+        .doc(id) // <-- Doc ID to be deleted.
+        .delete() // <-- Delete
+        .then((_) => print('Deleted'))
+        .catchError((error) => print('Delete failed: $error'));
+  }
+
   // Future addAnwser(
   //     Anwser anwser, Anwser userId, String currentUserId, String postId) async {
   //   DocumentSnapshot doc =

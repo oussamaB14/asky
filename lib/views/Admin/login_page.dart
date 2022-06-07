@@ -99,8 +99,8 @@ class _AdminLoginState extends State<AdminLogin> {
                           )),
                       SizedBox(height: 5.h),
                       SizedBox(
-                          width: 40.h,
-                          height: 8.h,
+                          width: 30.h,
+                          height: 6.h,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(40),
                             child: ElevatedButton(
@@ -113,7 +113,7 @@ class _AdminLoginState extends State<AdminLogin> {
                                 style: GoogleFonts.overpass(
                                     textStyle:
                                         Theme.of(context).textTheme.headline2,
-                                    fontSize: 8.sp,
+                                    fontSize: 6.sp,
                                     color: AdminColors.white),
                               ),
                             ),

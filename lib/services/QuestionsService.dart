@@ -8,7 +8,7 @@ class QuestionsServices {
   String postId = const Uuid().v4();
   FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  // ADD NEW QUESTION TO DB
+//////////////////-------ADd QUESTION-------------////////////////////////////
   Future addQuestion(Question question) async {
     try {
       await FirebaseFirestore.instance
@@ -24,7 +24,7 @@ class QuestionsServices {
         .add(question.toDocument())
         .then((value) => print(value));
   }
-
+//////////////////-------Get QUESTION-------------////////////////////////////
   Future<List<Question>> getAllQuestions() async {
     List<Question> questions = [];
     await _db.collection('questions').get().then((value) {
@@ -35,14 +35,14 @@ class QuestionsServices {
 
     return questions;
   }
-
-  Future editQuestion(Question question) async {
+//////////////////-------EDIT QUESTION-------------////////////////////////////
+  void editQuestion(String title, String content, List<String> tag) async {
     await _db
         .collection('questions')
-        .add(question.toDocument())
-        .then((value) => print(value));
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .update({"title": title, "content": content, "tag": tag});
   }
-
+//////////////////-------Delete QUESTION-------------////////////////////////////
   Future deleteQuestion(String id) async {
     final collection = FirebaseFirestore.instance.collection('questions');
     collection

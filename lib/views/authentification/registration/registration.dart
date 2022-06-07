@@ -289,12 +289,12 @@ class _RegestrationViewState extends State<RegestrationView> {
                         borderRadius: BorderRadius.circular(35),
                       ))),
                   onPressed: () async {
+                    //AuthService().UploadImage(image!);
                     AuthService().updateUserInfo(
-                      isTeacher ? 'Teacher' : 'Student',
-                      isTeacher ? _educationFiled.text : options2[_value2],
-                      bioController.text,
-                      // image!.toString()
-                    );
+                        isTeacher ? 'Teacher' : 'Student',
+                        isTeacher ? _educationFiled.text : options2[_value2],
+                        bioController.text,
+                        image!);
                     await showDialog(
                         context: context,
                         builder: (context) => AlertDialog(

@@ -29,7 +29,7 @@ class _DashboardpopupState extends State<Dashboardpopup> {
               PopupMenuItem<int>(
                   value: 0,
                   child: ListTile(
-                    title: Text('Log out', style: TextStyle(fontSize: 6.sp)),
+                    title: Text('Log out', style: TextStyle(fontSize: 4.sp)),
                     leading: const Icon(Icons.logout_rounded),
                   )),
             ]);

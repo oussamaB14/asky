@@ -23,7 +23,15 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageViewState();
 }
 
-class _HomePageViewState extends State<HomePage> {
+class _HomePageViewState extends State<HomePage> with TickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
   final QuestionsServices _questionsServices = QuestionsServices();
   @override
   Widget build(BuildContext context) {
@@ -44,7 +52,25 @@ class _HomePageViewState extends State<HomePage> {
                 ? const Color(0xFF2cb67d)
                 : const Color(0xFF7f5af0)),
         automaticallyImplyLeading: false,
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: const <Widget>[
+            Tab(
+              text: 'Questions',
+            ),
+            Tab(
+              text: 'Polls',
+            ),
+          ],
+          indicatorColor:
+              isDarkTheme ? const Color(0xFF2cb67d) : const Color(0xFF7f5af0),
+          // indicator: const UnderlineTabIndicator(
+          //     borderSide: BorderSide(width: 2.0),
+          //     insets: EdgeInsets.symmetric(horizontal: 16.0)),
+          indicatorPadding: const EdgeInsets.symmetric(horizontal: 18.0),
+        ),
       ),
+      ///////////////////////////////---------------APPDRAWER-----------//////////////////////////////
       endDrawer: SafeArea(
         child: Align(
           alignment: Alignment.topRight,
@@ -56,88 +82,235 @@ class _HomePageViewState extends State<HomePage> {
         ),
       ),
       floatingActionButton: const questionButton(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Quick start',
-                  style: GoogleFonts.lato(
-                      textStyle: Theme.of(context).textTheme.headline2)),
-              SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      MyQuizCard(),
-                      const MySpaceCard(),
-                      const CreateCard(),
-                      const MyAskcard()
-                    ],
-                  )),
-              Text('Polls',
-                  style: GoogleFonts.lato(
-                      textStyle: Theme.of(context).textTheme.headline1)),
-              StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance
-                      .collection('polls')
-                      .snapshots(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: MainLoadinger());
-                    }
-                    if (!snapshot.hasData) {
-                      return const Text('');
-                    }
-
-                    var data = snapshot.data?.docs;
-
-                    if (data == null) {
-                      return const Text('Null');
-                    }
-
-                    if (data.length == null) {
-                      return const Text('Null');
-                    }
-
-                    return Column(children: [
-                      for (int i = 0; i < data.length; i++)
-                        PollCard(
-                          poll: PollsModel(
-                              username: data[i]['username'],
-                              userPhoto: data[i]['userPhoto'],
-                              question: data[i]['question'],
-                              authorId: data[i]['authorId'],
-                              options: data[i]['options']),
-                          id: data[i].id,
-                        )
-                    ]);
-                  }),
-              Text('Questions',
-                  style: GoogleFonts.lato(
-                      textStyle: Theme.of(context).textTheme.headline1)),
-              FutureBuilder<List<Question>>(
-                  future: _questionsServices.getAllQuestions(),
-                  builder: (context, snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting:
-                        return const Center(
-                          child: MainLoadinger(),
-                        );
-                      case ConnectionState.done:
-                        return Column(
-                            children: List.generate(
-                                snapshot.data!.length,
-                                (index) => QuestionCard(
-                                    question: snapshot.data![index])));
-                      default:
-                        return const Text("Error");
-                    }
-                  }),
-            ],
+      // body: NestedScrollView(
+      //   headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+      //     return <Widget>[
+      //       SliverAppBar(
+      //         title: Text('Asky',
+      //             style: GoogleFonts.k2d(
+      //                 textStyle: Theme.of(context).textTheme.headline3)),
+      //         pinned: true,
+      //         floating: true,
+      //         iconTheme: IconThemeData(
+      //             color: isDarkTheme
+      //                 ? const Color(0xFF2cb67d)
+      //                 : const Color(0xFF7f5af0)),
+      //         forceElevated: innerBoxIsScrolled,
+      //         bottom: TabBar(
+      //           controller: _tabController,
+      //           tabs: const <Widget>[
+      //             Tab(
+      //               text: 'Questions',
+      //             ),
+      //             Tab(
+      //               text: 'Polls',
+      //             ),
+      //           ],
+      //           indicatorColor: isDarkTheme
+      //               ? const Color(0xFF2cb67d)
+      //               : const Color(0xFF7f5af0),
+      //           // indicator: const UnderlineTabIndicator(
+      //           //     borderSide: BorderSide(width: 2.0),
+      //           //     insets: EdgeInsets.symmetric(horizontal: 16.0)),
+      //           indicatorPadding:
+      //               const EdgeInsets.symmetric(horizontal: 18.0),
+      //         ),
+      //       ),
+      //     ];
+      //   },
+      body: TabBarView(
+        controller: _tabController,
+        children: <Widget>[
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Quick start',
+                        style: GoogleFonts.lato(
+                            textStyle: Theme.of(context).textTheme.headline2)),
+                    SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            MyQuizCard(),
+                            const MySpaceCard(),
+                            const CreateCard(),
+                            const MyAskcard()
+                          ],
+                        )),
+                    Text('Questions',
+                        style: GoogleFonts.lato(
+                            textStyle: Theme.of(context).textTheme.headline1)),
+                    FutureBuilder<List<Question>>(
+                        future: _questionsServices.getAllQuestions(),
+                        builder: (context, snapshot) {
+                          switch (snapshot.connectionState) {
+                            case ConnectionState.waiting:
+                              return const Center(
+                                child: MainLoadinger(),
+                              );
+                            case ConnectionState.done:
+                              return Column(
+                                  children: List.generate(
+                                      snapshot.data!.length,
+                                      (index) => QuestionCard(
+                                          question: snapshot.data![index])));
+                            default:
+                              return const Text("Error");
+                          }
+                        }),
+                  ]),
+            ),
           ),
-        ),
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Quick start',
+                      style: GoogleFonts.lato(
+                          textStyle: Theme.of(context).textTheme.headline2)),
+                  SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          MyQuizCard(),
+                          const MySpaceCard(),
+                          const CreateCard(),
+                          const MyAskcard()
+                        ],
+                      )),
+                  Text('Polls',
+                      style: GoogleFonts.lato(
+                          textStyle: Theme.of(context).textTheme.headline1)),
+                  StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection('polls')
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(child: MainLoadinger());
+                        }
+                        if (!snapshot.hasData) {
+                          return const Text('no data');
+                        }
+
+                        var data = snapshot.data?.docs;
+
+                        if (data == null) {
+                          return const Text('Null');
+                        }
+
+                        if (data.length == null) {
+                          return const Text('Null');
+                        }
+
+                        return Column(children: [
+                          for (int i = 0; i < data.length; i++)
+                            PollCard(
+                              poll: PollsModel(
+                                  username: data[i]['username'],
+                                  userPhoto: data[i]['userPhoto'],
+                                  question: data[i]['question'],
+                                  authorId: data[i]['authorId'],
+                                  options: data[i]['options']),
+                              id: data[i].id,
+                            )
+                        ]);
+                      }),
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
 }
+
+//  SingleChildScrollView(
+//         child: Padding(
+//           padding: const EdgeInsets.all(10),
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//               Text('Quick start',
+//                   style: GoogleFonts.lato(
+//                       textStyle: Theme.of(context).textTheme.headline2)),
+//               SingleChildScrollView(
+//                   scrollDirection: Axis.horizontal,
+//                   child: Row(
+//                     children: [
+//                       MyQuizCard(),
+//                       const MySpaceCard(),
+//                       const CreateCard(),
+//                       const MyAskcard()
+//                     ],
+//                   )),
+//               Text('Polls',
+//                   style: GoogleFonts.lato(
+//                       textStyle: Theme.of(context).textTheme.headline1)),
+//               StreamBuilder<QuerySnapshot>(
+//                   stream: FirebaseFirestore.instance
+//                       .collection('polls')
+//                       .snapshots(),
+//                   builder: (context, snapshot) {
+//                     if (snapshot.connectionState == ConnectionState.waiting) {
+//                       return const Center(child: MainLoadinger());
+//                     }
+//                     if (!snapshot.hasData) {
+//                       return const Text('');
+//                     }
+
+//                     var data = snapshot.data?.docs;
+
+//                     if (data == null) {
+//                       return const Text('Null');
+//                     }
+
+//                     if (data.length == null) {
+//                       return const Text('Null');
+//                     }
+
+//                     return Column(children: [
+//                       for (int i = 0; i < data.length; i++)
+//                         PollCard(
+//                           poll: PollsModel(
+//                               username: data[i]['username'],
+//                               userPhoto: data[i]['userPhoto'],
+//                               question: data[i]['question'],
+//                               authorId: data[i]['authorId'],
+//                               options: data[i]['options']),
+//                           id: data[i].id,
+//                         )
+//                     ]);
+//                   }),
+//               Text('Questions',
+//                   style: GoogleFonts.lato(
+//                       textStyle: Theme.of(context).textTheme.headline1)),
+//               FutureBuilder<List<Question>>(
+//                   future: _questionsServices.getAllQuestions(),
+//                   builder: (context, snapshot) {
+//                     switch (snapshot.connectionState) {
+//                       case ConnectionState.waiting:
+//                         return const Center(
+//                           child: MainLoadinger(),
+//                         );
+//                       case ConnectionState.done:
+//                         return Column(
+//                             children: List.generate(
+//                                 snapshot.data!.length,
+//                                 (index) => QuestionCard(
+//                                     question: snapshot.data![index])));
+//                       default:
+//                         return const Text("Error");
+//                     }
+//                   }),
+//             ],
+//           ),
+//         ),
+//       ),

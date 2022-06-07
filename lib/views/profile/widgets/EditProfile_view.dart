@@ -205,7 +205,8 @@ class _EditProfileState extends State<EditProfile> {
                       controller: controller,
                       decoration: InputDecoration(
                         label: Text(labelname),
-                      )),
+                      ),
+                      validator: _requiredValidator),
                 ],
               ),
             );
@@ -213,6 +214,13 @@ class _EditProfileState extends State<EditProfile> {
         },
         context: context);
   }
+}
+
+String? _requiredValidator(String? text) {
+  if (text == null || text.trim().isEmpty) {
+    return 'this filed is required';
+  }
+  return null;
 }
 
 class UserProfileInfoProvider with ChangeNotifier {

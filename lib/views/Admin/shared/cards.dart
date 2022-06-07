@@ -10,9 +10,11 @@ class MyDashboardcard extends StatefulWidget {
     Key? key,
     required this.title,
     required this.color,
+    required this.icon,
   }) : super(key: key);
   final String title;
   final Color color;
+  final Icon icon;
 
   @override
   State<MyDashboardcard> createState() => _MyDashboardcardState();
@@ -34,11 +36,7 @@ class _MyDashboardcardState extends State<MyDashboardcard> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.question_answer,
-                  color: AdminColors.white,
-                  size: 30,
-                ),
+                widget.icon,
                 Text(
                   widget.title,
                   style: GoogleFonts.overpass(
