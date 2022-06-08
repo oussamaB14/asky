@@ -24,6 +24,7 @@ class QuestionsServices {
         .add(question.toDocument())
         .then((value) => print(value));
   }
+
 //////////////////-------Get QUESTION-------------////////////////////////////
   Future<List<Question>> getAllQuestions() async {
     List<Question> questions = [];
@@ -35,13 +36,16 @@ class QuestionsServices {
 
     return questions;
   }
+
 //////////////////-------EDIT QUESTION-------------////////////////////////////
-  void editQuestion(String title, String content, List<String> tag) async {
+  void editQuestion(
+      String title, String content, List<String> tag, String docId) async {
     await _db
         .collection('questions')
-        .doc(FirebaseAuth.instance.currentUser?.uid)
-        .update({"title": title, "content": content, "tag": tag});
+        .doc(docId)
+        .update({"title": title, "content": content, "tags": tag});
   }
+
 //////////////////-------Delete QUESTION-------------////////////////////////////
   Future deleteQuestion(String id) async {
     final collection = FirebaseFirestore.instance.collection('questions');

@@ -8,6 +8,7 @@ import 'package:asky/views/QuestionViews/widgets/Question_item_view.dart';
 import 'package:asky/views/profile/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:sizer/sizer.dart';
@@ -58,7 +59,11 @@ class QuestionCard extends StatelessWidget {
                   SizedBox(width: 2.h),
                   Text(question.username),
                   const Spacer(),
-                  const QuestionPopMenu(),
+                  if (question.authorId ==
+                      FirebaseAuth.instance.currentUser!.uid)
+                    QuestionPopMenu(
+                      docId: question.id,
+                    ),
                 ],
               ),
               SizedBox(height: 1.5.h),
@@ -100,7 +105,7 @@ class QuestionCard extends StatelessWidget {
               Row(
                 children: [
                   AnswerButton(
-                    id: question.id,
+                    parentDocId: question.id,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(4.0),

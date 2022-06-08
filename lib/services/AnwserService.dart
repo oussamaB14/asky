@@ -30,25 +30,43 @@ class AnwserService {
   // ADD NEW QUESTION TO DB
 
 //////////////////-------EDIT QUESTION-------------////////////////////////////
-  void editAnswer(
-    String answer,
-  ) async {
+  void editAnswer(String parentDocId, String id, String answer) async {
     await _db
         .collection('questions')
-        .doc(FirebaseAuth.instance.currentUser?.uid)
-        .update({
-      "answer": answer,
+        .doc(parentDocId)
+        .get()
+        .then((value) async {
+      List<dynamic> answers = value['anwsers'];
+      answers.forEach((element) {
+        if (element['id'] == id) {
+          element['answer'] = answer;
+          return;
+        }
+      });
+      await _db.collection('questions').doc(parentDocId).update({
+        "anwsers": answers,
+      });
     });
   }
 
 //////////////////-------Delete QUESTION-------------////////////////////////////
-  Future deleteAnswser(String id) async {
-    final collection = FirebaseFirestore.instance.collection('questions');
-    collection
-        .doc(id) // <-- Doc ID to be deleted.
-        .delete() // <-- Delete
-        .then((_) => print('Deleted'))
-        .catchError((error) => print('Delete failed: $error'));
+  Future deleteAnswser(String parentDocId, String id) async {
+    await _db
+        .collection('questions')
+        .doc(parentDocId)
+        .get()
+        .then((value) async {
+      List<dynamic> answers = value['anwsers'];
+      for (int i = 0; i < answers.length; i++) {
+        if (answers[i]['id'] == id) {
+          answers.removeAt(i);
+          await _db.collection('questions').doc(parentDocId).update({
+            "anwsers": answers,
+          });
+          return;
+        }
+      }
+    });
   }
 
   // Future addAnwser(

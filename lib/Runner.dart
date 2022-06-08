@@ -51,7 +51,7 @@ class _RunnerState extends State<Runner> {
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: const Splash(),
+            home: const DaHome(),
             theme: MyThemes().lightTheme,
             darkTheme: MyThemes().darkTheme,
             // themeMode: ThemeProvider().notifyListeners(),

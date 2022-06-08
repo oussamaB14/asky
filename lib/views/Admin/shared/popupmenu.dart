@@ -39,8 +39,8 @@ class _DashboardpopupState extends State<Dashboardpopup> {
 void onSelected(BuildContext context, int item) {
   switch (item) {
     case 0:
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: ((context) => const EditAnwser())));
+      /*Navigator.of(context)
+          .push(MaterialPageRoute(builder: ((context) => const EditAnwser())));*/
       break;
   }
 }

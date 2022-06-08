@@ -2,8 +2,12 @@ import 'package:asky/views/AnwserView/widgets/Edit_anwser.dart';
 import 'package:asky/views/QuestionViews/EditQuestion.dart';
 import 'package:flutter/material.dart';
 
+import '../../../services/AnwserService.dart';
+
 class AnwserPopMenu extends StatefulWidget {
-  const AnwserPopMenu({Key? key}) : super(key: key);
+  final String parentDocId, id;
+  const AnwserPopMenu({Key? key, required this.parentDocId, required this.id})
+      : super(key: key);
 
   @override
   State<AnwserPopMenu> createState() => _AnwserPopMenuState();
@@ -39,13 +43,19 @@ class _AnwserPopMenuState extends State<AnwserPopMenu> {
                       )))
             ]);
   }
-}
 
-void onSelected(BuildContext context, int item) {
-  switch (item) {
-    case 0:
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: ((context) => const EditAnwser())));
-      break;
+  void onSelected(BuildContext context, int item) {
+    switch (item) {
+      case 0:
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: ((context) => EditAnwser(
+                  parentDocId: widget.parentDocId,
+                  answerId: widget.id,
+                ))));
+        break;
+      case 1:
+        AnwserService().deleteAnswser(widget.parentDocId, widget.id);
+        break;
+    }
   }
 }

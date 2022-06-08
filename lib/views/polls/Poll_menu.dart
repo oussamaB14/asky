@@ -48,8 +48,8 @@ class _PollPopMenuState extends State<PollPopMenu> {
 void onSelected(BuildContext context, int item) {
   switch (item) {
     case 0:
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: ((context) => const EditQuestion())));
+      // Navigator.of(context).push(
+      //     MaterialPageRoute(builder: ((context) => EditQuestion())));
       break;
   }
 }

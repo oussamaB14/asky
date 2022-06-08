@@ -1,3 +1,4 @@
+import 'package:asky/services/QuestionsService.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,7 +9,8 @@ import '../../constants/tags.dart';
 import 'AddQuestionView.dart';
 
 class EditQuestion extends StatefulWidget {
-  const EditQuestion({Key? key}) : super(key: key);
+  final String docId;
+  const EditQuestion({Key? key, required this.docId}) : super(key: key);
 
   @override
   State<EditQuestion> createState() => _EditQuestionState();
@@ -25,7 +27,14 @@ class _EditQuestionState extends State<EditQuestion> {
       backgroundColor: isDarkTheme ? Colors.black : Colors.white,
       appBar: AppBar(title: const Text('Edit Question')),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          QuestionsServices().editQuestion(
+            titleController.text,
+            contentController.text,
+            Provider.of<TagsProv>(context, listen: false).tags,
+            widget.docId,
+          );
+        },
         child: const Icon(
           CommunityMaterialIcons.content_save,
           color: Colors.white,

@@ -10,8 +10,8 @@ import '../../../services/AnwserService.dart';
 import '../../../styles/colors.dart';
 
 class AnswerButton extends StatelessWidget {
-  final String id;
-  AnswerButton({Key? key, required this.id}) : super(key: key);
+  final String parentDocId;
+  AnswerButton({Key? key, required this.parentDocId}) : super(key: key);
 
   TextEditingController _anwserController = TextEditingController();
   @override
@@ -54,8 +54,10 @@ class AnswerButton extends StatelessWidget {
                                         .instance.currentUser?.displayName ??
                                     '',
                                 'imgUrl': x,
-                                'answer': _anwserController.text
-                              }, id);
+                                'answer': _anwserController.text,
+                                'id': DateTime.now().toString(),
+                                'parentDocId': parentDocId
+                              }, parentDocId);
                               Navigator.of(context).pop();
                             },
                             child: Text(

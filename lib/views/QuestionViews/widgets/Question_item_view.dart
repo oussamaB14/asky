@@ -45,7 +45,9 @@ class QuestionScreen extends StatelessWidget {
                           SizedBox(width: 2.h),
                           Text(question.username),
                           const Spacer(),
-                          const QuestionPopMenu(),
+                          QuestionPopMenu(
+                            docId: question.id,
+                          ),
                         ],
                       ),
                       SizedBox(height: 1.5.h),
@@ -90,7 +92,7 @@ class QuestionScreen extends StatelessWidget {
                       SizedBox(height: 1.5.h),
                       Row(
                         children: [
-                          AnswerButton(id: question.id),
+                          AnswerButton(parentDocId: question.id),
                           Padding(
                             padding: const EdgeInsets.all(4.0),
                             child: Text(

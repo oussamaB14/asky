@@ -30,7 +30,8 @@ class AnwserCard extends StatelessWidget {
                 SizedBox(width: 2.h),
                 Text(anwser['username']),
                 const Spacer(),
-                const AnwserPopMenu(),
+                AnwserPopMenu(
+                    parentDocId: anwser['parentDocId'], id: anwser['id']),
               ],
             ),
             SizedBox(height: 1.5.h),
