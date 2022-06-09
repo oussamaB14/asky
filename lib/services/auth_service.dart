@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:asky/models/user.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
@@ -112,7 +113,7 @@ class AuthService with ChangeNotifier {
         if (FirebaseAuth.instance.currentUser != null) {
           ScaffoldMessenger.of(context)
               .showSnackBar(const SnackBar(content: Text("You are logged in")));
-          Navigator.pushReplacementNamed(context, "/homepage");
+          Navigator.pushReplacementNamed(context, kIsWeb ? "Dahome" : "/homepage");
         }
       });
     } on FirebaseAuthException catch (e) {
@@ -142,7 +143,8 @@ class AuthService with ChangeNotifier {
           'educationFiled': "",
           'role': "",
           'Bookmarks': [],
-          'Spaces': []
+          'Spaces': [],
+          'isAdmin': false
         });
       });
 

@@ -58,41 +58,80 @@ class _SpaceCardState extends State<SpaceCard> {
                 ),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(30),
-                  child: RawChip(
-                    avatar: Icon(
-                      isSelected ? Icons.check : Icons.add,
-                      color: isDarkTheme
-                          ? Colors.white
-                          : isSelected
-                              ? Colors.white
-                              : Colors.black,
-                    ),
-                    // checkmarkColor: Colors.white,
-                    showCheckmark: false,
-                    // selectedColor: const Color(0xFF7f5af0),
-                    // disabledColor: const Color.fromARGB(255, 119, 118, 118),
-                    deleteIcon: const Icon(Icons.plus_one),
-                    label: isSelected
-                        ? const Text('Following')
-                        : const Text('Follow'),
-                    labelStyle: TextStyle(
-                        color: isDarkTheme
-                            ? Colors.white
-                            : isSelected
-                                ? Colors.white
-                                : Colors.black,
-                        fontSize: 16),
-                    selected: isSelected,
-                    backgroundColor: isDarkTheme ? Colors.black : Colors.white,
+                  child: StreamBuilder<DocumentSnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection('user')
+                          .doc(FirebaseAuth.instance.currentUser?.uid)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        }
 
-                    padding: const EdgeInsets.symmetric(horizontal: 2),
-                    // labelPadding: const EdgeInsets.symmetric(vertical :2.0),
-                    onSelected: (newBoolValue) {
-                      setState(() {
-                        isSelected = newBoolValue;
-                      });
-                    },
-                  ),
+                        if (!snapshot.hasData) {
+                          return const Text('Error');
+                        }
+
+                        return RawChip(
+                          avatar: Icon(
+                            isSelected ? Icons.check : Icons.add,
+                            color: isDarkTheme
+                                ? Colors.white
+                                : isSelected
+                                    ? Colors.white
+                                    : Colors.black,
+                          ),
+                          // checkmarkColor: Colors.white,
+                          showCheckmark: false,
+                          // selectedColor: const Color(0xFF7f5af0),
+                          // disabledColor: const Color.fromARGB(255, 119, 118, 118),
+                          deleteIcon: const Icon(Icons.plus_one),
+                          label: snapshot.data?['Spaces']
+                                  .contains(widget.space.spaceName)
+                              ? const Text('Following')
+                              : const Text('Follow'),
+                          labelStyle: TextStyle(
+                              color: isDarkTheme
+                                  ? Colors.white
+                                  : snapshot.data?['Spaces']
+                                          .contains(widget.space.spaceName)
+                                      ? Colors.white
+                                      : Colors.black,
+                              fontSize: 16),
+                          selected: snapshot.data?['Spaces']
+                              .contains(widget.space.spaceName),
+                          backgroundColor:
+                              isDarkTheme ? Colors.black : Colors.white,
+
+                          padding: const EdgeInsets.symmetric(horizontal: 2),
+                          // labelPadding: const EdgeInsets.symmetric(vertical :2.0),
+                          onSelected: (newBoolValue) {
+                            FirebaseFirestore.instance
+                                .collection('user')
+                                .doc(FirebaseAuth.instance.currentUser?.uid)
+                                .get()
+                                .then((value) {
+                              List<dynamic> spaces = value['Spaces'];
+                              FirebaseFirestore.instance
+                                  .collection('user')
+                                  .doc(FirebaseAuth.instance.currentUser?.uid)
+                                  .update({
+                                'Spaces':
+                                    spaces.contains(widget.space.spaceName)
+                                        ? FieldValue.arrayRemove(
+                                            [widget.space.spaceName])
+                                        : FieldValue.arrayUnion(
+                                            [widget.space.spaceName])
+                              });
+                            });
+
+                            setState(() {
+                              isSelected = newBoolValue;
+                            });
+                          },
+                        );
+                      }),
                 ),
               ],
             ),

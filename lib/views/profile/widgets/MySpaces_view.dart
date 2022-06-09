@@ -34,9 +34,10 @@ class _MySpacesState extends State<MySpaces> {
               } else {
                 List<dynamic> books = snapshot.data!['Spaces'];
 
-                return StreamBuilder<QuerySnapshot>(
+                return StreamBuilder<DocumentSnapshot>(
                     stream: FirebaseFirestore.instance
-                        .collection('space')
+                        .collection('user')
+                        .doc(FirebaseAuth.instance.currentUser?.uid)
                         .snapshots(),
                     builder: ((context, snap) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -45,23 +46,52 @@ class _MySpacesState extends State<MySpaces> {
                       if (!snap.hasData) {
                         return const Text('no bookmarks saved yet');
                       }
-                      var data2 = snap.data?.docs;
+                      List<dynamic> spaces = snap.data?['Spaces'];
 
-                      return Column(
-                        children: [
-                          if (data2 != null)
-                            for (int i = 0; i < data2.length; i++)
-                              if (books.contains(data2[i].id))
-                                SpaceCard(
-                                  space: Space(
-                                      spaceName: data2[i]['spaceName'],
-                                      description: data2[i]['description'],
-                                      spacePhoto: data2[i]['spacePhoto'],
-                                      id: data2[i].id,
-                                      tags: data2[i]['tags']),
-                                )
-                        ],
-                      );
+                      return StreamBuilder<QuerySnapshot>(
+                          stream: FirebaseFirestore.instance
+                              .collection('space')
+                              .snapshots(),
+                          builder: (context, snap2) {
+                            if (snap2.connectionState ==
+                                ConnectionState.waiting) {
+                              return const CircularProgressIndicator();
+                            }
+                            if (!snap2.hasData) {
+                              return const Text('no bookmarks saved yet');
+                            }
+                            var docs = snap2.data?.docs;
+                            List<dynamic> finalSpaces = [];
+                            docs!.forEach((element) {
+                              if (spaces.contains(element['spaceName'])) {
+                                finalSpaces.add(element);
+                              }
+                            });
+                            return Container(
+                              width: 95.h,
+                              height: 90.h,
+                              child: GridView.count(
+                                padding: const EdgeInsets.all(20),
+                                crossAxisSpacing: 10,
+                                crossAxisCount: 2,
+                                children:
+                                    List.generate(finalSpaces.length, (index) {
+                                  return SpaceCard(
+                                      space: Space(
+                                          id: '',
+                                          spaceName: finalSpaces[index]
+                                              ['spaceName'],
+                                          description: finalSpaces[index]
+                                              ['description'],
+                                          spacePhoto: finalSpaces[index]
+                                              ['spacePhoto'],
+                                          tags: []));
+                                }), /*spaces
+                                    .map((space) => SpaceCard(space: space))
+                                    .toList(),*/
+                              ),
+                            );
+                          });
                     }));
               }
             },

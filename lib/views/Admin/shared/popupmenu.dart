@@ -1,6 +1,7 @@
 import 'package:asky/views/Admin/shared/DashboardColors.dart';
 import 'package:asky/views/AnwserView/widgets/Edit_anwser.dart';
 import 'package:asky/views/QuestionViews/EditQuestion.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -39,8 +40,8 @@ class _DashboardpopupState extends State<Dashboardpopup> {
 void onSelected(BuildContext context, int item) {
   switch (item) {
     case 0:
-      /*Navigator.of(context)
-          .push(MaterialPageRoute(builder: ((context) => const EditAnwser())));*/
+      FirebaseAuth.instance.signOut();
+      Navigator.popAndPushNamed(context, 'adminlogin');
       break;
   }
 }

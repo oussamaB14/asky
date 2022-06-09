@@ -11,10 +11,12 @@ class MyDashboardcard extends StatefulWidget {
     required this.title,
     required this.color,
     required this.icon,
+    required this.nbr,
   }) : super(key: key);
   final String title;
   final Color color;
   final Icon icon;
+  final int nbr;
 
   @override
   State<MyDashboardcard> createState() => _MyDashboardcardState();
@@ -22,6 +24,7 @@ class MyDashboardcard extends StatefulWidget {
 
 class _MyDashboardcardState extends State<MyDashboardcard> {
   int index = 0;
+  // int? nbr;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -50,7 +53,7 @@ class _MyDashboardcardState extends State<MyDashboardcard> {
               children: [
                 const Spacer(),
                 Text(
-                  '10',
+                  widget.nbr.toString(),
                   style: GoogleFonts.overpass(
                       textStyle: Theme.of(context).textTheme.headline2,
                       fontSize: 8.sp,

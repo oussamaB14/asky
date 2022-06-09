@@ -1,8 +1,7 @@
-
+import 'package:asky/views/Admin/login_page.dart';
 import 'package:asky/views/Admin/shared/screens/DaAnwsers.dart';
 import 'package:asky/views/Admin/shared/screens/DaHome.dart';
 import 'package:asky/views/Admin/shared/screens/DaQuestions.dart';
-import 'package:asky/views/Admin/shared/screens/DaSettings.dart';
 import 'package:asky/views/Admin/shared/screens/DaSpaces.dart';
 import 'package:asky/views/Admin/shared/screens/DaTags.dart';
 import 'package:asky/views/Admin/shared/screens/Dapolls.dart';
@@ -50,9 +49,9 @@ final Map<String, WidgetBuilder> routes = {
   "DaQuestion": (context) => const DaQuestions(),
   "Datags": (context) => const DaTags(),
   "DaPolls": (context) => const DaPolls(),
-  "DaSettings": (context) => const DaSettings(),
   "DaSpaces": (context) => const DaSpaces(),
   "DaAnwsers": (context) => const DaAnwsers(),
   "DaUsers": (context) => const DaUsers(),
   "DaQuizzes": (context) => const DaQuizzes(),
+  "adminlogin": (context) => const AdminLogin(),
 };

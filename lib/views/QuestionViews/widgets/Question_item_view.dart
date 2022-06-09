@@ -128,13 +128,15 @@ class QuestionScreen extends StatelessWidget {
                     //var data = snapshot.data;
                     List<dynamic> answers = snapshot.data?['anwsers'];
 
-                    for (int i = 0; i < answers.length; i++) print(answers[i]);
-                    return Column(
-                      children: [
-                        for (int i = 0; i < answers.length; i++)
-                          AnwserCard(anwser: answers[i])
-                      ],
-                    );
+                    for (int i = 0; i < answers.length; i++) {
+                      return Column(
+                        children: [
+                          for (int i = 0; i < answers.length; i++)
+                            AnwserCard(anwser: answers[i])
+                        ],
+                      );
+                    }
+                    return const Text('no answers yet');
                   }))
             ],
           ),

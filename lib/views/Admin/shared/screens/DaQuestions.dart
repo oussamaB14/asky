@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -16,83 +17,53 @@ class DaQuestions extends StatelessWidget {
           title: 'Questions',
         ),
         drawer: const DashboardDrawer(),
-        body: Card(
-          color: AdminColors.white,
-          child: DataTable(
-            border: TableBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            columns: const <DataColumn>[
-              DataColumn(
-                label: Text(
-                  'user name ',
-                  style: TextStyle(fontStyle: FontStyle.italic),
-                ),
-              ),
-              DataColumn(
-                label: Text(
-                  'title ',
-                  style: TextStyle(fontStyle: FontStyle.italic),
-                ),
-              ),
-              DataColumn(
-                label: Text(
-                  'content',
-                  style: TextStyle(fontStyle: FontStyle.italic),
-                ),
-              ),
-            ],
-            rows: <DataRow>[
-              DataRow(
-                cells: <DataCell>[
-                  DataCell(Text(
-                    'Sarah',
-                    style: TextStyle(fontSize: 8.sp),
-                  )),
-                  DataCell(Text(
-                    '19',
-                    style: TextStyle(fontSize: 8.sp),
-                  )),
-                  DataCell(Text(
-                    'Student',
-                    style: TextStyle(fontSize: 8.sp),
-                  )),
-                ],
-              ),
-              DataRow(
-                cells: <DataCell>[
-                  DataCell(Text(
-                    'Janine',
-                    style: TextStyle(fontSize: 8.sp),
-                  )),
-                  DataCell(Text(
-                    '43',
-                    style: TextStyle(fontSize: 8.sp),
-                  )),
-                  DataCell(Text(
-                    'Professor',
-                    style: TextStyle(fontSize: 8.sp),
-                  )),
-                ],
-              ),
-              DataRow(
-                cells: <DataCell>[
-                  DataCell(Text(
-                    'William',
-                    style: TextStyle(fontSize: 8.sp),
-                  )),
-                  DataCell(Text(
-                    '27',
-                    style: TextStyle(fontSize: 8.sp),
-                  )),
-                  DataCell(Text(
-                    'Associate Professor',
-                    style: TextStyle(fontSize: 8.sp),
-                  )),
-                ],
-              ),
-            ],
-          ),
+        body: SizedBox(
+          width: double.infinity,
+          child: Card(
+              color: AdminColors.white,
+              child: StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('questions')
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    if (snapshot.hasError) return const Text('Error');
+                    var data = snapshot.data?.docs;
+                    return DataTable(columns: const [
+                      DataColumn(
+                          label: Text('Name',
+                              style: TextStyle(fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('titile',
+                              style: TextStyle(fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('content',
+                              style: TextStyle(fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Delete',
+                              style: TextStyle(fontWeight: FontWeight.bold))),
+                    ], rows: <DataRow>[
+                      if (data != null)
+                        for (int i = 0; i < data.length; i++)
+                          DataRow(cells: [
+                            DataCell(Text(data[i]['username'],
+                                style: TextStyle(fontSize: 4.sp))),
+                            DataCell(Text(data[i]['title'],
+                                style: TextStyle(fontSize: 4.sp))),
+                            DataCell(Text(data[i]['content'],
+                                style: TextStyle(fontSize: 4.sp))),
+                            DataCell(TextButton(
+                                style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all(Colors.red)),
+                                onPressed: () {},
+                                child: const Icon(Icons.delete,
+                                    color: Colors.white))),
+                          ])
+                    ]);
+                  })),
         ));
   }
 }

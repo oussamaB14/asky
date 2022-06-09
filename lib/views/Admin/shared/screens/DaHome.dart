@@ -1,7 +1,10 @@
 import 'package:asky/views/Admin/shared/DaAppBar.dart';
 import 'package:asky/views/Admin/shared/DashboardColors.dart';
 import 'package:asky/views/Admin/shared/cards.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
@@ -38,42 +41,168 @@ class DaHome extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    MyDashboardcard(
-                      color: AdminColors.green,
-                      title: 'Questions',
-                      icon: Icon(
-                        TernavIcons.lightOutline.qustion,
-                        color: AdminColors.white,
-                        size: 30,
-                      ),
-                    ),
-                    MyDashboardcard(
-                      color: AdminColors.yellow,
-                      title: 'Polls',
-                      icon: Icon(
-                        CommunityMaterialIcons.poll_box_outline,
-                        color: AdminColors.white,
-                        size: 30,
-                      ),
-                    ),
-                    MyDashboardcard(
-                      color: AdminColors.purple,
-                      title: 'Anwsers',
-                      icon: Icon(
-                        CommunityMaterialIcons.chat_outline,
-                        color: AdminColors.white,
-                        size: 30,
-                      ),
-                    ),
-                    MyDashboardcard(
-                      color: AdminColors.pink,
-                      title: 'Spaces',
-                      icon: Icon(
-                        TernavIcons.lightOutline.chat,
-                        color: AdminColors.white,
-                        size: 30,
-                      ),
-                    ),
+                    StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('questions')
+                            .snapshots(),
+                        builder: (context, snap) {
+                          if (snap.connectionState == ConnectionState.waiting) {
+                            return Text('');
+                          }
+
+                          if (!snap.hasData) {
+                            return Text('');
+                          }
+
+                          var data = snap.data;
+                          int nbQuestions = 0;
+                          int nbAnswers = 0;
+                          for (int i = 0; i < data!.docs.length; i++) {
+                            nbQuestions++;
+
+                            List<dynamic> answers = data.docs[i]['anwsers'];
+
+                            answers.forEach((element) {
+                              nbAnswers++;
+                            });
+                          }
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              MyDashboardcard(
+                                color: AdminColors.green,
+                                title: 'Questions',
+                                icon: Icon(
+                                  TernavIcons.lightOutline.qustion,
+                                  color: AdminColors.white,
+                                  size: 30,
+                                ),
+                                nbr: nbQuestions,
+                              ),
+                              MyDashboardcard(
+                                color: AdminColors.purple,
+                                title: 'Anwsers',
+                                icon: Icon(
+                                  CommunityMaterialIcons.chat_outline,
+                                  color: AdminColors.white,
+                                  size: 30,
+                                ),
+                                nbr: nbAnswers,
+                              ),
+                            ],
+                          );
+                        }),
+                    StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('polls')
+                            .snapshots(),
+                        builder: (context, snap) {
+                          if (snap.connectionState == ConnectionState.waiting) {
+                            return Text('');
+                          }
+
+                          if (!snap.hasData) {
+                            return Text('');
+                          }
+
+                          var data = snap.data;
+                          int nbPolls = 0;
+                          for (int i = 0; i < data!.docs.length; i++) {
+                            nbPolls++;
+                          }
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              MyDashboardcard(
+                                color: AdminColors.yellow,
+                                title: 'Polls',
+                                icon: Icon(
+                                  CommunityMaterialIcons.poll,
+                                  color: AdminColors.white,
+                                  size: 30,
+                                ),
+                                nbr: nbPolls,
+                              ),
+                            ],
+                          );
+                        }),
+                    StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('user')
+                            .snapshots(),
+                        builder: (context, snap) {
+                          if (snap.connectionState == ConnectionState.waiting) {
+                            return Text('');
+                          }
+                          if (!snap.hasData) {
+                            return Text('');
+                          }
+                          var data = snap.data;
+                          int nbusers = 0;
+                          for (int i = 0; i < data!.docs.length; i++) {
+                            nbusers++;
+                          }
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              MyDashboardcard(
+                                color: AdminColors.pink,
+                                title: 'Users',
+                                icon: Icon(
+                                  CommunityMaterialIcons.poll,
+                                  color: AdminColors.white,
+                                  size: 30,
+                                ),
+                                nbr: nbusers,
+                              ),
+                            ],
+                          );
+                        }),
+                    // MyDashboardcard(
+                    //   color: AdminColors.green,
+                    //   title: 'Questions',
+                    //   icon: Icon(
+                    //     TernavIcons.lightOutline.qustion,
+                    //     color: AdminColors.white,
+                    //     size: 30,
+                    //   ),
+                    // ),
+                    // MyDashboardcard(
+                    //   color: AdminColors.yellow,
+                    //   title: 'Polls',
+                    //   icon: Icon(
+                    //     CommunityMaterialIcons.poll_box_outline,
+                    //     color: AdminColors.white,
+                    //     size: 30,
+                    //   ),
+                    // ),
+                    // MyDashboardcard(
+                    //   color: AdminColors.purple,
+                    //   title: 'Anwsers',
+                    //   icon: Icon(
+                    //     CommunityMaterialIcons.chat_outline,
+                    //     color: AdminColors.white,
+                    //     size: 30,
+                    //   ),
+                    // ),
+                    // MyDashboardcard(
+                    //   color: AdminColors.pink,
+                    //   title: 'Spaces',
+                    //   icon: Icon(
+                    //     TernavIcons.lightOutline.chat,
+                    //     color: AdminColors.white,
+                    //     size: 30,
+                    //   ),
+                    // ),
+                    // MyDashboardcard(
+                    //   color: AdminColors.pink,
+                    //   title: 'Users',
+                    //   icon: Icon(
+                    //     TernavIcons.lightOutline.profile,
+                    //     color: AdminColors.white,
+                    //     size: 30,
+                    //   ),
+                    // ),
                   ],
                 )
               ],

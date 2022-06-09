@@ -92,14 +92,6 @@ class DashboardDrawer extends StatelessWidget {
                 ),
                 "Datags",
                 context),
-            dashboardMenu(
-                'Settings',
-                Icon(
-                  TernavIcons.lightOutline.settings,
-                  color: AdminColors.green,
-                ),
-                "DaSettings",
-                context),
           ])),
     );
   }

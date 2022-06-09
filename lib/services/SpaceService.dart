@@ -1,4 +1,3 @@
-
 import 'package:asky/views/spaces/widgets/AddSpace.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -22,13 +21,12 @@ class SpaceService {
     var spaces = data.map((d) => Space.fromJson(d));
     return spaces.toList();
   }
-   Future<List<Space>> getSingleSpace() async {
-    var ref = _db.collection('space').limit(1);
-    var snapshot = await ref.get();
-    var data = snapshot.docs.map((s) => s.data());
-    var spaces = data.map((d) => Space.fromJson(d));
-    return spaces.toList();
-  }
+
+  // Future<QuerySnapshot> getTableSpace() async {
+  //   var ref = _db.collection('space');
+  //   var snapshot = await ref.get();
+  //   var data = snapshot.docs.map((s) => s.data());
+  //   var spaces = data.map((d) => Space.fromJson(d));
+  //   return spaces;
+  // }
 }
-
-

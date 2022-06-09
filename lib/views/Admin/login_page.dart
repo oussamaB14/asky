@@ -1,4 +1,7 @@
+import 'package:asky/services/auth_service.dart';
 import 'package:asky/views/Admin/shared/DashboardColors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
@@ -14,6 +17,8 @@ class AdminLogin extends StatefulWidget {
 
 class _AdminLoginState extends State<AdminLogin> {
   bool isChecked = false;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -54,6 +59,7 @@ class _AdminLoginState extends State<AdminLogin> {
                         height: 8.h,
                         child: TextFormField(
                             keyboardType: TextInputType.emailAddress,
+                            controller: emailController,
                             decoration: InputDecoration(
                               labelText: 'Email ',
                               labelStyle: TextStyle(color: AdminColors.white),
@@ -78,6 +84,7 @@ class _AdminLoginState extends State<AdminLogin> {
                           width: 80.h,
                           height: 8.h,
                           child: TextFormField(
+                            controller: passwordController,
                             decoration: InputDecoration(
                               labelText: 'Password',
                               labelStyle: TextStyle(color: AdminColors.white),
@@ -107,7 +114,25 @@ class _AdminLoginState extends State<AdminLogin> {
                               style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
                                       AdminColors.purple)),
-                              onPressed: () {},
+                              onPressed: () {
+                                FirebaseFirestore.instance
+                                    .collection('user')
+                                    .get()
+                                    .then((value) {
+                                  value.docs.forEach((element) {
+                                    if (element['email'] ==
+                                        emailController.text) {
+                                      if (element['isAdmin']) {
+                                        AuthService().signInWithEmail(
+                                            emailController.text,
+                                            passwordController.text,
+                                            context);
+                                      }
+                                      return;
+                                    }
+                                  });
+                                });
+                              },
                               child: Text(
                                 'Login',
                                 style: GoogleFonts.overpass(

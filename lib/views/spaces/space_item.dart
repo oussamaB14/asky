@@ -1,10 +1,14 @@
 import 'package:asky/models/SpaceM.dart';
+import 'package:asky/views/QuestionViews/widgets/QuestionCard.dart';
 import 'package:asky/views/Quizzes/progress_bar.dart';
 import 'package:asky/views/spaces/widgets/SpaceDrawer.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../models/Question.dart';
 
 class SpaceItem extends StatelessWidget {
   final Space space;
@@ -122,15 +126,38 @@ class _SpaceScreenState extends State<SpaceScreen> {
                   ),
                 ),
               ),
-              // Visibility(
-              //   visible: isVisible,
-              //   child: Card(
-              //     child: Padding(
-              //       padding: const EdgeInsets.all(8.0),
-              //       child: Text(widget.space.description),
-              //     ),
-              //   ),
-              // )
+              ////////////////////st-re-----------////////////////////
+              StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('questions')
+                      .where('tags', arrayContains: widget.space.spaceName)
+                      .snapshots(),
+                  builder: ((context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    }
+
+                    if (!snapshot.hasData) {
+                      return const Text('Error');
+                    }
+
+                    var docs = snapshot.data!.docs;
+                    return Column(children: [
+                      for (int i = 0; i < docs.length; i++)
+                        QuestionCard(
+                          question: Question(
+                              username: docs[i]['username'],
+                              userPhoto: docs[i]['userPhoto'],
+                              title: docs[i]['title'],
+                              content: docs[i]['content'],
+                              authorId: docs[i]['authorId'],
+                              id: docs[i].id,
+                              mediaUrl: docs[i]['mediaUrl'],
+                              tags: docs[i]['tags'],
+                              anwsers: docs[i]['anwsers']),
+                        )
+                    ]);
+                  }))
             ],
           ),
         ),

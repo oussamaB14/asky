@@ -16,7 +16,7 @@ class MyList {
     'framework',
     'backend',
     'frontend',
-    'javaScript',
+    'JavaScript',
     'Angular',
     'Web',
     'mobile',
