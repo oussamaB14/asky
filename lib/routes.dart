@@ -5,7 +5,6 @@ import 'package:asky/views/Admin/shared/screens/DaQuestions.dart';
 import 'package:asky/views/Admin/shared/screens/DaSpaces.dart';
 import 'package:asky/views/Admin/shared/screens/DaTags.dart';
 import 'package:asky/views/Admin/shared/screens/Dapolls.dart';
-import 'package:asky/views/Admin/shared/screens/Daquizes.dart';
 import 'package:asky/views/Admin/shared/screens/Dausers.dart';
 import 'package:asky/views/QuestionViews/AddQuestionView.dart';
 import 'package:asky/views/Quizzes/topics.dart';
@@ -52,6 +51,5 @@ final Map<String, WidgetBuilder> routes = {
   "DaSpaces": (context) => const DaSpaces(),
   "DaAnwsers": (context) => const DaAnwsers(),
   "DaUsers": (context) => const DaUsers(),
-  "DaQuizzes": (context) => const DaQuizzes(),
   "adminlogin": (context) => const AdminLogin(),
 };

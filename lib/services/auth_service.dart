@@ -13,6 +13,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 class AuthService with ChangeNotifier {
   UserModel? userModel;
@@ -111,9 +112,12 @@ class AuthService with ChangeNotifier {
           .signInWithEmailAndPassword(email: email, password: password)
           .whenComplete(() {
         if (FirebaseAuth.instance.currentUser != null) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(const SnackBar(content: Text("You are logged in")));
-          Navigator.pushReplacementNamed(context, kIsWeb ? "Dahome" : "/homepage");
+          kIsWeb
+              ? ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("You are logged in")))
+              : null;
+          Navigator.pushReplacementNamed(
+              context, kIsWeb ? "Dahome" : "/homepage");
         }
       });
     } on FirebaseAuthException catch (e) {

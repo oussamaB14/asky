@@ -69,28 +69,12 @@ class DashboardDrawer extends StatelessWidget {
                 "DaSpaces",
                 context),
             dashboardMenu(
-                'Quizzes',
-                Icon(
-                  CommunityMaterialIcons.forum_outline,
-                  color: AdminColors.green,
-                ),
-                "DaQuizzes",
-                context),
-            dashboardMenu(
                 'Users',
                 Icon(
                   TernavIcons.lightOutline.profile,
                   color: AdminColors.green,
                 ),
                 "DaUsers",
-                context),
-            dashboardMenu(
-                'Tags',
-                Icon(
-                  TernavIcons.lightOutline.laptop,
-                  color: AdminColors.green,
-                ),
-                "Datags",
                 context),
           ])),
     );

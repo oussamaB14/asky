@@ -84,6 +84,7 @@ class _AdminLoginState extends State<AdminLogin> {
                           width: 80.h,
                           height: 8.h,
                           child: TextFormField(
+                            obscureText: true,
                             controller: passwordController,
                             decoration: InputDecoration(
                               labelText: 'Password',
