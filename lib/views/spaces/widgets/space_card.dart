@@ -66,7 +66,7 @@ class _SpaceCardState extends State<SpaceCard> {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return const CircularProgressIndicator();
+                          return const Text('');
                         }
 
                         if (!snapshot.hasData) {

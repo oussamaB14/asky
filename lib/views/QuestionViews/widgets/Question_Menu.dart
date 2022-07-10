@@ -1,4 +1,5 @@
 import 'package:asky/views/QuestionViews/EditQuestion.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants/assets.dart';
@@ -64,6 +65,13 @@ class _QuestionPopMenuState extends State<QuestionPopMenu> {
             builder: ((context) => EditQuestion(
                   docId: widget.docId,
                 ))));
+        break;
+      case 1:
+        FirebaseFirestore.instance
+            .collection('questions')
+            .doc(widget.docId)
+            .delete();
+        Navigator.of(context).pushNamed('/homepage');
         break;
     }
   }

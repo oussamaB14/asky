@@ -32,6 +32,7 @@ class SpacesScreen extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               title: const Text('Spaces'),
+              automaticallyImplyLeading: false,
             ),
             endDrawer: SafeArea(
               child: Align(

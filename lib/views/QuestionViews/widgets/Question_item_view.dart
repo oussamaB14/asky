@@ -4,6 +4,7 @@ import 'package:asky/views/QuestionViews/widgets/QuestionCard.dart';
 import 'package:asky/views/QuestionViews/widgets/Question_Menu.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -45,6 +46,8 @@ class QuestionScreen extends StatelessWidget {
                           SizedBox(width: 2.h),
                           Text(question.username),
                           const Spacer(),
+                           if (question.authorId ==
+                      FirebaseAuth.instance.currentUser!.uid)
                           QuestionPopMenu(
                             docId: question.id,
                           ),

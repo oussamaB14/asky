@@ -43,7 +43,9 @@ class _PollCardState extends State<PollCard> {
               SizedBox(width: 2.h),
               Text(widget.poll.username),
               const Spacer(),
-              const PollPopMenu(),
+              if (widget.poll.authorId ==
+                  FirebaseAuth.instance.currentUser!.uid)
+                PollPopMenu(docId: widget.id),
             ],
           ),
           Divider(

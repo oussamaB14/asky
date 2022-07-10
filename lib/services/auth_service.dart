@@ -92,7 +92,8 @@ class AuthService with ChangeNotifier {
             'educationFiled': '',
             'bio': '',
             'Bookmarks': [],
-            'Spaces': []
+            'Spaces': [],
+            'isAdmin': false
           });
         } else {
           userModel =
@@ -271,7 +272,8 @@ class AuthService with ChangeNotifier {
             'educationFiled': '',
             'bio': '',
             'Bookmarks': [],
-            'Spaces': []
+            'Spaces': [],
+            'isAdmin': false
           });
         }
       });
@@ -333,6 +335,10 @@ class AuthService with ChangeNotifier {
                 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
             'educationFiled': '',
             'bio': '',
+            'Bookmarks': [],
+            'Spaces': [],
+            'role': '',
+            'isAdmin': false
           });
         }
       });

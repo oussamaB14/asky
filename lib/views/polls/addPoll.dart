@@ -52,13 +52,14 @@ class _AddPollState extends State<AddPoll> {
               if (options.length > 1) {
                 PollsService().addPoll(
                     PollsModel(
-                        username:
-                            FirebaseAuth.instance.currentUser?.displayName ??
-                                "",
-                        userPhoto: "",
-                        question: questionController.text,
-                        authorId: FirebaseAuth.instance.currentUser?.uid ?? "",
-                        options: options),
+                      username:
+                          FirebaseAuth.instance.currentUser?.displayName ?? "",
+                      userPhoto: "",
+                      question: questionController.text,
+                      authorId: FirebaseAuth.instance.currentUser?.uid ?? "",
+                      options: options,
+                      id: DateTime.now().toString(),
+                    ),
                     context);
               } else {
                 // print('You need to add atleast to choices!');

@@ -61,7 +61,12 @@ class _DaPollsState extends State<DaPolls> {
                                         backgroundColor:
                                             MaterialStateProperty.all(
                                                 Colors.red)),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      FirebaseFirestore.instance
+                                          .collection('polls')
+                                          .doc(data[i].id)
+                                          .delete();
+                                    },
                                     child: const Icon(Icons.delete,
                                         color: Colors.white))),
                               ])

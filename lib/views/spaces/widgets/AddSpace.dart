@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:asky/services/SpaceService.dart';
 import 'package:asky/services/QuestionsService.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,6 +13,7 @@ import 'package:sizer/sizer.dart';
 import 'package:ternav_icons/ternav_icons.dart';
 
 import '../../../models/SpaceM.dart';
+import '../../../widgets/loading.dart';
 
 class AddSpace extends StatefulWidget {
   const AddSpace({Key? key}) : super(key: key);
@@ -63,99 +66,120 @@ class _AddSpaceState extends State<AddSpace> {
         ),
         backgroundColor: Colors.blue,
       ),
-      body: SingleChildScrollView(
-          child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Form(
-                child: Column(
-              children: [
-                image != null
-                    ? CircleAvatar(
-                        child: ClipOval(
-                          child: Image.file(
-                            image!,
-                            width: 100,
-                            height: 100,
-                            fit: BoxFit.fitWidth,
-                          ),
-                        ),
-                        radius: 50,
-                      )
-                    : CircleAvatar(
-                        radius: 50,
-                        backgroundColor: Colors.grey.shade100,
-                        child: Icon(
-                          TernavIcons.lightOutline.camera,
-                          size: 50,
-                        ),
-                      ),
-                ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.blue),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(35),
-                        ))),
-                    onPressed: () {
-                      showModalBottomSheet<void>(
-                          builder: (BuildContext context) {
-                            return Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 15),
-                              height: 10.h,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(4.h),
+      body: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance.collection('user').snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: MainLoadinger());
+            }
+            if (!snapshot.hasData) {
+              return const Text('no data');
+            }
+
+            var data = snapshot.data?.docs;
+            return SingleChildScrollView(
+                child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  for (int i = 0; i < data!.length; i++)
+                    if ((data[i]['role'] == 'Teacher'))
+                      Form(
+                          child: Column(
+                        children: [
+                          image != null
+                              ? CircleAvatar(
+                                  child: ClipOval(
+                                    child: Image.file(
+                                      image!,
+                                      width: 100,
+                                      height: 100,
+                                      fit: BoxFit.fitWidth,
+                                    ),
+                                  ),
+                                  radius: 50,
+                                )
+                              : CircleAvatar(
+                                  radius: 50,
+                                  backgroundColor: Colors.grey.shade100,
+                                  child: Icon(
+                                    TernavIcons.lightOutline.camera,
+                                    size: 50,
+                                  ),
                                 ),
-                              ),
-                              child: ListTile(
-                                  leading:
-                                      Icon(TernavIcons.lightOutline.folder),
-                                  title: Text('Select from Gallery',
-                                      style: TextStyle(fontSize: 16.sp)),
-                                  onTap: () {
-                                    pickImage();
-                                  }),
-                            );
-                          },
-                          context: context);
-                    },
-                    child: const Text('Select image')),
-                TextFormField(
-                    controller: spacename,
-                    style: GoogleFonts.nunitoSans(
-                        textStyle: Theme.of(context).textTheme.headline2),
-                    decoration: const InputDecoration(
-                        labelStyle: TextStyle(),
-                        contentPadding: EdgeInsets.all(15),
-                        labelText: 'Title',
-                        hintText: 'Enter title here',
-                        floatingLabelBehavior: FloatingLabelBehavior.auto,
-                        border: InputBorder.none),
-                    validator: _requiredValidator),
-                const SizedBox(height: 10),
-                const Divider(),
-                TextFormField(
-                    controller: spacename,
-                    style: GoogleFonts.nunitoSans(
-                        textStyle: Theme.of(context).textTheme.headline2),
-                    decoration: const InputDecoration(
-                        labelStyle: TextStyle(),
-                        contentPadding: EdgeInsets.all(15),
-                        labelText: 'Description',
-                        hintText: 'enter description here',
-                        floatingLabelBehavior: FloatingLabelBehavior.auto,
-                        border: InputBorder.none),
-                    validator: _requiredValidator),
-              ],
-            )),
-            // AddTag(),
-          ],
-        ),
-      )),
+                          ElevatedButton(
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.blue),
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(35),
+                                  ))),
+                              onPressed: () {
+                                showModalBottomSheet<void>(
+                                    builder: (BuildContext context) {
+                                      return Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 20, vertical: 15),
+                                        height: 10.h,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(4.h),
+                                          ),
+                                        ),
+                                        child: ListTile(
+                                            leading: Icon(TernavIcons
+                                                .lightOutline.folder),
+                                            title: Text('Select from Gallery',
+                                                style:
+                                                    TextStyle(fontSize: 16.sp)),
+                                            onTap: () {
+                                              pickImage();
+                                            }),
+                                      );
+                                    },
+                                    context: context);
+                              },
+                              child: const Text('Select image')),
+                          TextFormField(
+                              controller: spacename,
+                              style: GoogleFonts.nunitoSans(
+                                  textStyle:
+                                      Theme.of(context).textTheme.headline2),
+                              decoration: const InputDecoration(
+                                  labelStyle: TextStyle(),
+                                  contentPadding: EdgeInsets.all(15),
+                                  labelText: 'Title',
+                                  hintText: 'Enter title here',
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.auto,
+                                  border: InputBorder.none),
+                              validator: _requiredValidator),
+                          const SizedBox(height: 10),
+                          const Divider(),
+                          TextFormField(
+                              controller: spacename,
+                              style: GoogleFonts.nunitoSans(
+                                  textStyle:
+                                      Theme.of(context).textTheme.headline2),
+                              decoration: const InputDecoration(
+                                  labelStyle: TextStyle(),
+                                  contentPadding: EdgeInsets.all(15),
+                                  labelText: 'Description',
+                                  hintText: 'enter description here',
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.auto,
+                                  border: InputBorder.none),
+                              validator: _requiredValidator),
+                        ],
+                      )),
+
+                  // AddTag(),
+                ],
+              ),
+            ));
+          }),
     );
   }
 

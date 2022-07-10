@@ -25,7 +25,7 @@ class AnswerButton extends StatelessWidget {
               return Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                height: 50.h,
+                height: 70.h,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.vertical(
                     top: Radius.circular(4.h),

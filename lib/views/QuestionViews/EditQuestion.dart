@@ -19,6 +19,7 @@ class EditQuestion extends StatefulWidget {
 class _EditQuestionState extends State<EditQuestion> {
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
+  final _editquestionKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final isDarkTheme =
@@ -28,12 +29,18 @@ class _EditQuestionState extends State<EditQuestion> {
       appBar: AppBar(title: const Text('Edit Question')),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          QuestionsServices().editQuestion(
-            titleController.text,
-            contentController.text,
-            Provider.of<TagsProv>(context, listen: false).tags,
-            widget.docId,
-          );
+          if (_editquestionKey.currentState != null &&
+              _editquestionKey.currentState!.validate()) {
+            QuestionsServices().editQuestion(
+              titleController.text,
+              contentController.text,
+              Provider.of<TagsProv>(context, listen: false).tags,
+              widget.docId,
+            );
+            Navigator.of(context).pushNamed("/homepage");
+            ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text("Question updated ..")));
+          }
         },
         child: const Icon(
           CommunityMaterialIcons.content_save,
@@ -49,40 +56,45 @@ class _EditQuestionState extends State<EditQuestion> {
           children: [
             const ListTile(
               title: Text('Edit Title :'),
-              trailing: Icon(Icons.edit),
             ),
             const Divider(),
             Form(
-                child: TextFormField(
-              controller: titleController,
-              style: GoogleFonts.nunitoSans(
-                  textStyle: Theme.of(context).textTheme.headline2),
-              decoration: const InputDecoration(
-                  labelStyle: TextStyle(),
-                  contentPadding: EdgeInsets.all(15),
-                  labelText: 'Title',
-                  floatingLabelBehavior: FloatingLabelBehavior.auto,
-                  border: InputBorder.none),
-            )),
-            const ListTile(
-              title: Text('Edit Question :'),
-              trailing: Icon(Icons.edit),
+              key: _editquestionKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    validator: _requiredValidator,
+                    controller: titleController,
+                    style: GoogleFonts.nunitoSans(
+                        textStyle: Theme.of(context).textTheme.headline2),
+                    decoration: const InputDecoration(
+                        labelStyle: TextStyle(),
+                        contentPadding: EdgeInsets.all(15),
+                        labelText: 'Title',
+                        floatingLabelBehavior: FloatingLabelBehavior.auto,
+                        border: InputBorder.none),
+                  ),
+                  const ListTile(
+                    title: Text('Edit Question :'),
+                  ),
+                  const Divider(),
+                  TextFormField(
+                    validator: _requiredValidator,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    style: GoogleFonts.nunitoSans(
+                        textStyle: Theme.of(context).textTheme.headline2),
+                    controller: contentController,
+                    decoration: const InputDecoration(
+                        labelText: 'Question',
+                        floatingLabelBehavior: FloatingLabelBehavior.auto,
+                        hintMaxLines: 5,
+                        contentPadding: EdgeInsets.all(15),
+                        border: InputBorder.none),
+                  ),
+                ],
+              ),
             ),
-            const Divider(),
-            Form(
-                child: TextFormField(
-              keyboardType: TextInputType.multiline,
-              maxLines: null,
-              style: GoogleFonts.nunitoSans(
-                  textStyle: Theme.of(context).textTheme.headline2),
-              controller: contentController,
-              decoration: const InputDecoration(
-                  labelText: 'Question',
-                  floatingLabelBehavior: FloatingLabelBehavior.auto,
-                  hintMaxLines: 5,
-                  contentPadding: EdgeInsets.all(15),
-                  border: InputBorder.none),
-            )),
             ExpansionTile(title: const Text('Edit category'), children: [
               Wrap(
                 children: List<Widget>.generate(
@@ -128,4 +140,11 @@ class _EditQuestionState extends State<EditQuestion> {
       )),
     );
   }
+}
+
+String? _requiredValidator(String? text) {
+  if (text == null || text.trim().isEmpty) {
+    return 'this filed is required';
+  }
+  return null;
 }

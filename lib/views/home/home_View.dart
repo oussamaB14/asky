@@ -40,10 +40,6 @@ class _HomePageViewState extends State<HomePage> with TickerProviderStateMixin {
     return Scaffold(
       backgroundColor: Theme.of(context).cardColor,
       appBar: AppBar(
-        // leading: CircleAvatar(
-        //     backgroundColor: Colors.transparent,
-        //     radius: 3.h,
-        //     child: Image.asset('assets/images/applogo.png', height: 3.5.h)),
         title: Text('Asky',
             style: GoogleFonts.k2d(
                 textStyle: Theme.of(context).textTheme.headline3)),
@@ -143,24 +139,41 @@ class _HomePageViewState extends State<HomePage> with TickerProviderStateMixin {
                     Text('Questions',
                         style: GoogleFonts.lato(
                             textStyle: Theme.of(context).textTheme.headline1)),
-                    FutureBuilder<List<Question>>(
-                        future: _questionsServices.getAllQuestions(),
-                        builder: (context, snapshot) {
-                          switch (snapshot.connectionState) {
-                            case ConnectionState.waiting:
+                    SingleChildScrollView(
+                      child: StreamBuilder<QuerySnapshot>(
+                          stream: FirebaseFirestore.instance
+                              .collection('questions')
+                              .snapshots(),
+                          builder: ((context, snap) {
+                            if (snap.connectionState ==
+                                ConnectionState.waiting) {
                               return const Center(
-                                child: MainLoadinger(),
-                              );
-                            case ConnectionState.done:
-                              return Column(
-                                  children: List.generate(
-                                      snapshot.data!.length,
-                                      (index) => QuestionCard(
-                                          question: snapshot.data![index])));
-                            default:
-                              return const Text("Error");
-                          }
-                        }),
+                                  child: CircularProgressIndicator());
+                            }
+                            if (!snap.hasData) {
+                              return const Text('no data');
+                            }
+                            var data2 = snap.data?.docs;
+                            return Column(
+                              children: [
+                                if (data2 != null)
+                                  for (int i = 0; i < data2.length; i++)
+                                    QuestionCard(
+                                      question: Question(
+                                          username: data2[i]['username'],
+                                          userPhoto: data2[i]['userPhoto'],
+                                          title: data2[i]['title'],
+                                          content: data2[i]['content'],
+                                          authorId: data2[i]['authorId'],
+                                          id: data2[i].id,
+                                          mediaUrl: data2[i]['mediaUrl'],
+                                          tags: data2[i]['tags'],
+                                          anwsers: data2[i]['anwsers']),
+                                    )
+                              ],
+                            );
+                          })),
+                    )
                   ]),
             ),
           ),
@@ -217,7 +230,8 @@ class _HomePageViewState extends State<HomePage> with TickerProviderStateMixin {
                                   userPhoto: data[i]['userPhoto'],
                                   question: data[i]['question'],
                                   authorId: data[i]['authorId'],
-                                  options: data[i]['options']),
+                                  options: data[i]['options'],
+                                  id: data[i]['id']),
                               id: data[i].id,
                             )
                         ]);
@@ -232,85 +246,4 @@ class _HomePageViewState extends State<HomePage> with TickerProviderStateMixin {
   }
 }
 
-//  SingleChildScrollView(
-//         child: Padding(
-//           padding: const EdgeInsets.all(10),
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               Text('Quick start',
-//                   style: GoogleFonts.lato(
-//                       textStyle: Theme.of(context).textTheme.headline2)),
-//               SingleChildScrollView(
-//                   scrollDirection: Axis.horizontal,
-//                   child: Row(
-//                     children: [
-//                       MyQuizCard(),
-//                       const MySpaceCard(),
-//                       const CreateCard(),
-//                       const MyAskcard()
-//                     ],
-//                   )),
-//               Text('Polls',
-//                   style: GoogleFonts.lato(
-//                       textStyle: Theme.of(context).textTheme.headline1)),
-//               StreamBuilder<QuerySnapshot>(
-//                   stream: FirebaseFirestore.instance
-//                       .collection('polls')
-//                       .snapshots(),
-//                   builder: (context, snapshot) {
-//                     if (snapshot.connectionState == ConnectionState.waiting) {
-//                       return const Center(child: MainLoadinger());
-//                     }
-//                     if (!snapshot.hasData) {
-//                       return const Text('');
-//                     }
-
-//                     var data = snapshot.data?.docs;
-
-//                     if (data == null) {
-//                       return const Text('Null');
-//                     }
-
-//                     if (data.length == null) {
-//                       return const Text('Null');
-//                     }
-
-//                     return Column(children: [
-//                       for (int i = 0; i < data.length; i++)
-//                         PollCard(
-//                           poll: PollsModel(
-//                               username: data[i]['username'],
-//                               userPhoto: data[i]['userPhoto'],
-//                               question: data[i]['question'],
-//                               authorId: data[i]['authorId'],
-//                               options: data[i]['options']),
-//                           id: data[i].id,
-//                         )
-//                     ]);
-//                   }),
-//               Text('Questions',
-//                   style: GoogleFonts.lato(
-//                       textStyle: Theme.of(context).textTheme.headline1)),
-//               FutureBuilder<List<Question>>(
-//                   future: _questionsServices.getAllQuestions(),
-//                   builder: (context, snapshot) {
-//                     switch (snapshot.connectionState) {
-//                       case ConnectionState.waiting:
-//                         return const Center(
-//                           child: MainLoadinger(),
-//                         );
-//                       case ConnectionState.done:
-//                         return Column(
-//                             children: List.generate(
-//                                 snapshot.data!.length,
-//                                 (index) => QuestionCard(
-//                                     question: snapshot.data![index])));
-//                       default:
-//                         return const Text("Error");
-//                     }
-//                   }),
-//             ],
-//           ),
-//         ),
-//       ),
+//  

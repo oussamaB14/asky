@@ -1,11 +1,13 @@
 import 'package:asky/constants/assets.dart';
 import 'package:asky/views/QuestionViews/EditQuestion.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../styles/colors.dart';
 
 class PollPopMenu extends StatefulWidget {
-  const PollPopMenu({Key? key}) : super(key: key);
+  final String docId;
+  const PollPopMenu({Key? key, required this.docId}) : super(key: key);
 
   @override
   State<PollPopMenu> createState() => _PollPopMenuState();
@@ -43,13 +45,15 @@ class _PollPopMenuState extends State<PollPopMenu> {
                       )))
             ]);
   }
-}
 
-void onSelected(BuildContext context, int item) {
-  switch (item) {
-    case 0:
-      // Navigator.of(context).push(
-      //     MaterialPageRoute(builder: ((context) => EditQuestion())));
-      break;
+  void onSelected(BuildContext context, int item) {
+    switch (item) {
+      case 0:
+        FirebaseFirestore.instance
+            .collection('polls')
+            .doc(widget.docId)
+            .delete();
+        break;
+    }
   }
 }

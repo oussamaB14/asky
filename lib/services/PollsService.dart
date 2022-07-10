@@ -21,16 +21,16 @@ class PollsService {
         .then((value) => print(value));
   }
 
-  Future<List<PollsModel>> getAllPolls() async {
-    List<PollsModel> polls = [];
-    await _db.collection('questions').get().then((value) {
-      for (var element in value.docs) {
-        polls.add(PollsModel.fromDocument(element));
-      }
-    });
-    // print(questions);
-    return polls;
-  }
+  // Future<List<PollsModel>> getAllPolls() async {
+  //   List<PollsModel> polls = [];
+  //   await _db.collection('questions').get().then((value) {
+  //     for (var element in value.docs) {
+  //       polls.add(PollsModel.fromDocument(element));
+  //     }
+  //   });
+  //   // print(questions);
+  //   return polls;
+  // }
 
   void addPoll(PollsModel poll, context) async {
     await FirebaseFirestore.instance

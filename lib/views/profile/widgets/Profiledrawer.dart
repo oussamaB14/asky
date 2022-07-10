@@ -75,13 +75,13 @@ class PofileDrawer extends StatelessWidget {
                   Navigator.of(context).pushNamed("EditProfile");
                 },
               ),
-              ListTile(
-                leading: const Icon(Icons.settings),
-                title: const Text("Settings"),
-                onTap: () {
-                  Navigator.of(context).pushNamed("Settings");
-                },
-              ),
+              // ListTile(
+              //   leading: const Icon(Icons.settings),
+              //   title: const Text("Settings"),
+              //   onTap: () {
+              //     Navigator.of(context).pushNamed("Settings");
+              //   },
+              // ),
               ListTile(
                 leading: const Icon(CommunityMaterialIcons.logout),
                 selectedTileColor: Colors.blue,
